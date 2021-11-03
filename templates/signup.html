@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* General styling */
+        body {
+            font-family: 'Ubuntu', sans-serif;
+            color: black;
+            background-color: #ffffff;
+            font-size: 30pt;
+            text-align: center;
+        }
+
+        a{
+            text-decoration: none;
+            transition-duration: 0.4s;
+            color: black;
+        }
+
+        a:visited{
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover{
+            transition: .4s ease-in-out;
+            color: rgb(43, 102, 63);
+        }
+    </style> 
+    <meta charset="UTF-8">
+    <title>Site Name</title>
+</head>
+
+<body>
+
+    <a href="/">
+        <h1 id="title">Site Name</h1>
+    </a>
+
+    <div class="signup-block">
+        <p id="signup-title">SIGNUP</p>
+
+        <div class="signup-block-content">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="signup-flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <form id="signup-form" method="POST" action="/signup">
+                <label for="username">Username: </label>
+                <input class="signup-formfield" type="text" name="username" placeholder="Your Username"><br><br>
+                <input class="button" type="submit" value="Submit">
+            </form>
+        </div>
+
+        <a id="signup-link" href="/">Back to Login</a>
+    </div>
+
+</body>
+
+</html>

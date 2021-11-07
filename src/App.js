@@ -11,7 +11,14 @@ function App() {
   // TODO: Implement your main page as a React component.
   return (
     <div>
-      <h1>Something</h1>
+      <div>
+        <h1>Something</h1>
+      </div>
+      <div id="logout-link">
+        <a id="signup-link" href="logout">
+          Logout
+        </a>
+      </div>
     </div>
   );
 }

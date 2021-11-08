@@ -51,15 +51,9 @@
                     </ul>
                 {% endif %}
             {% endwith %}
-
-            <form id="signup-form" method="POST" action="/login">
-                <label for="username">Username: </label>
-                <input class="signup-formfield" type="text" name="username" placeholder="Your Username"><br><br>
-                <input class="button" type="submit" value="Submit">
-            </form>
+            
+            <a id="signup-link" href="/login_post">Login</a>
         </div>
-
-        <a id="signup-link" href="/signup">Signup</a>
     </div>
 
 </body>

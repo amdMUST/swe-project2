@@ -7,11 +7,12 @@ from app import db
 # UniqueID and Username db
 class UserDB(UserMixin, db.Model):
     __tablename__ = 'UserDB'
-    user_id = db.Column(db.Integer, unique=True, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
+    user_id = db.Column(db.Float, unique=True, primary_key=True)
+    email = db.Column(db.String(80), unique=True)
+    name = db.Column(db.String(80), unique=True)
 
     def __repr__(self):
-        return '<Username = %s, UserID = %s>' % (self.username, self.user_id)
+        return '<Username = %s, UserID = %s>' % (self.email, self.user_id)
 
     def get_id(self):
         """Return the id from the username."""

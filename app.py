@@ -45,6 +45,9 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
+# construct api classes
+w_client = weather_client()
+
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
 # Login Manager handlers
@@ -70,8 +73,17 @@ def main():
 @bp.route('/index')
 @login_required
 def index():
-    # TODO: insert the data fetched by your app main page here as a JSON
-    DATA = {"your": "data here"}
+    
+    city = "Atlanta" #Replace this with a function that retrieves the first index of a shuffled list of city names
+    w_client.get_weather(city)
+
+    DATA = {
+        "city" : city,
+        "weather_info": w_client.toJSON(),
+        #"user_id": current_user.user_id,
+        #"user_email": current_user.email,
+        #"user_name": current_user.name,
+    }
     data = json.dumps(DATA)
     return flask.render_template(
         "index.html",

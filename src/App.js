@@ -23,7 +23,7 @@ function App() {
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
-  const weather_info = (args.weather_info);
+  const weather_info = (JSON.parse(JSON.stringify(args.weather_info)));
   console.log(weather_info);
 
   return (
@@ -33,7 +33,7 @@ function App() {
       </div>
       
       <div id="weather">
-        <p data-testid="s132">temp: {weather_info.temp}</p>
+        <p>temp: {weather_info.temp}</p>
         <p>clouds: {weather_info.clouds}</p>
         <p>wind: {weather_info.wind}</p>
         

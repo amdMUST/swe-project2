@@ -80,9 +80,9 @@ def index():
     DATA = {
         "city" : city,
         "weather_info": w_client.toJSON(),
-        #"user_id": current_user.user_id,
-        #"user_email": current_user.email,
-        #"user_name": current_user.name,
+        "user_id": current_user.user_id,
+        "user_email": current_user.email,
+        "user_name": current_user.name,
     }
     data = json.dumps(DATA)
     return flask.render_template(

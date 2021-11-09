@@ -5,11 +5,7 @@ from dotenv import load_dotenv, find_dotenv
 # a class to handle all of the weather requests the web-app will make
 class weather_client:
     def __init__(self):
-        load_dotenv(find_dotenv())
-        self.API_KEY = os.environ.get('WEATHER_API_KEY')
-        self.BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?'
-        
-        # configuration of variabnles
+        # configuration of variables
         self.weather_main = 'null'
         self.weather_desc = 'null'
         self.temp = 'null'
@@ -23,11 +19,16 @@ class weather_client:
 
     def get_weather(self, city):
 
-        # first validate and make sure city exists and is in the right format
+        # validate and make sure city exists and is in the right format
         if not self.verifyCity(city):
             return
 
-        URL = self.BASE_URL + 'q=' + city + '&appid=' + self.API_KEY + '&units=imperial'
+        # retrieve key and url for request
+        load_dotenv(find_dotenv())
+        API_KEY = os.environ.get('WEATHER_API_KEY')
+        BASE_URL = 'https://api.openweathermap.org/data/2.5/weather?'
+
+        URL = BASE_URL + 'q=' + city + '&appid=' + API_KEY + '&units=imperial'
 
         try:
             response = requests.get(URL)

@@ -54,12 +54,26 @@ class weather_client:
 
     # function to verify the cities name is correct for the request
     def verifyCity(self, city):
+        # check to make sure city isnt blank
+        if not city:
+            return False
         return True
-
-    # function to turn serialize the class into json
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, 
-            sort_keys=False, indent=4)
+        
+    # function to return all the instance variables in an array/map form
+    def getMap(self):
+        dict = [
+            ("weather_main", self.weather_main),
+            ("weather_desc", self.weather_desc),
+            ("temp", self.temp),
+            ("feels_like", self.feels_like),
+            ("temp_min", self.temp_min),
+            ("temp_max", self.temp_max),
+            ("pressure", self.pressure),
+            ("humidity", self.humidity),
+            ("clouds", self.clouds),
+            ("wind", self.wind),
+            ]
+        return dict
 
 if __name__ == "__main__":
     weather_client()

@@ -79,7 +79,7 @@ def index():
 
     DATA = {
         "city" : city,
-        "weather_info": w_client.toJSON(),
+        "weather_info": w_client.getMap(),
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,

@@ -43,13 +43,13 @@ jobs:
         
       - name: Lint files
         run: find . -name '*.py' -exec pylint {} \;
-        
-      - name: Run Mocked tests
-        run: python -m unittest tests/mocked_unit_tests.py
-        env:
-          DATABASE_URL: ${{ env.DATABASE_URL }}
 
       - name: Run Un-Mocked tests
         run: python -m unittest tests/unmocked_unit_tests.py
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+
+      - name: Run Mocked tests
+        run: python -m unittest tests/mocked_unit_tests.py
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}

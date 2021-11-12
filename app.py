@@ -1,4 +1,4 @@
-import requests, flask, json, os
+import requests, os, json, flask
 from dotenv import load_dotenv, find_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_manager, login_required, current_user, login_user

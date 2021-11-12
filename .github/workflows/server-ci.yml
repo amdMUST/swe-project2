@@ -46,6 +46,10 @@ jobs:
         
       - name: Run Mocked tests
         run: python -m unittest tests/mocked_unit_tests.py
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
 
       - name: Run Un-Mocked tests
         run: python -m unittest tests/unmocked_unit_tests.py
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}

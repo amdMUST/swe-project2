@@ -54,7 +54,8 @@ class weather_client:
 
     # function to verify the cities name is correct for the request
     def verifyCity(self, city):
-        # check to make sure city isnt blank
+        # since we have a bank of city names already made, we dont need to validate if the city exists because
+        # we know it does so all we have to make sure there wasnt a parser error when gettng the city name
         if not city:
             return False
         return True

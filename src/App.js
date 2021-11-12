@@ -80,7 +80,7 @@ function App() {
 
         </div>
 
-        <div id="user-info">
+        <div id="user-info" data-testid="user-info">
           <p>user id: {args.user_id}</p>
           <p>email: {args.user_email}</p>
           <p>name: {args.user_name}</p>

@@ -75,7 +75,7 @@ def main():
 def index():
     
     city = "Atlanta" #Replace this with a function that retrieves the first index of a shuffled list of city names
-    w_client.get_weather(city)
+    w_client.getWeather(city)
 
     DATA = {
         "city" : city,

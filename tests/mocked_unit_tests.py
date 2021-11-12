@@ -17,6 +17,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from app import isUserInDB, UserDB
+from py_files.weather import weather_client
 
 INPUT = "INPUT"
 EXPECTED_OUTPUT = "EXPECTED_OUTPUT"
@@ -41,6 +42,30 @@ class isUserInDBTest(unittest.TestCase):
             mock_query.filter_by.return_value = mock_filtered
             self.assertEqual(isUserInDB("2"), False)
 
+# class UnitTest2(unittest.TestCase):
+#      def test_getWeather(self):
+#         with patch("openweathermap.requests.get") as mock_requests_get:
+#             mock_response = MagicMock()
+#             # side_effect lets us set a list of return values.
+#             # Each successive call to mock_response.all() will generate the next
+#             # side effect
+#             mock_response.json.side_effect = [
+#                 {},
+#                 {
+#                     "response": {
+#                         "hits": [
+#                             {
+#                                 "result": {
+#                                     "url": "https://www.youtube.com/watch?v=q6EoRBvdVPQ"
+#                                 }
+#                             }
+#                         ]
+#                     }
+#                 },
+#             ]
+#             mock_requests_get.return_value = mock_response
+#             weather = weather_client()
+#             self.assertEqual(weather.getWeather("Atlanta"))
 
 if __name__ == "__main__":
     unittest.main()

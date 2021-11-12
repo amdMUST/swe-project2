@@ -17,7 +17,7 @@ class weather_client:
         self.clouds = 'null'
         self.wind = 'null'
 
-    def get_weather(self, city):
+    def getWeather(self, city):
 
         # validate and make sure city exists and is in the right format
         if not self.verifyCity(city):
@@ -33,24 +33,27 @@ class weather_client:
         try:
             response = requests.get(URL)
             data = json.loads(response.text)
+            self.parseResponse(data)
+        except KeyError:
+            pass
+        return 
 
-            # parse out data from correct response
-            self.weather_main = data["weather"][0]["main"]
-            self.weather_desc = data["weather"][0]["description"]
-            
-            self.temp = data["main"]["temp"]
-            self.feels_like = data["main"]["feels_like"]
-            self.temp_min = data["main"]["temp_min"]
-            self.temp_max = data["main"]["temp_max"]
+    # function to parse out the Json information from the Api request and store in class variables
+    def parseResponse(self, data):
+        # parse out data from correct response
+        self.weather_main = data["weather"][0]["main"]
+        self.weather_desc = data["weather"][0]["description"]
+        
+        self.temp = data["main"]["temp"]
+        self.feels_like = data["main"]["feels_like"]
+        self.temp_min = data["main"]["temp_min"]
+        self.temp_max = data["main"]["temp_max"]
 
-            self.pressure = data["main"]["pressure"]
-            self.humidity = data["main"]["humidity"]
-            
-            self.clouds = data["clouds"]["all"]
-            self.wind = data["wind"]["speed"]
-        except:
-            # error 
-            return 
+        self.pressure = data["main"]["pressure"]
+        self.humidity = data["main"]["humidity"]
+        
+        self.clouds = data["clouds"]["all"]
+        self.wind = data["wind"]["speed"]
 
     # function to verify the cities name is correct for the request
     def verifyCity(self, city):

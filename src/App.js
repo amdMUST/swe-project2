@@ -45,7 +45,7 @@ function App() {
       ["wind", "null"],
     ],
     "opentrip": ["No Cool Locations"],
-    "opentripimages": ["https://i.ytimg.com/vi/f3cLOucMpD0/maxresdefault.jpg"],
+    "opentripimages": ["https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"],
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",

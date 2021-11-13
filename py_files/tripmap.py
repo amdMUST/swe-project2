@@ -69,7 +69,7 @@ def getPlacesImages(xid):
             image = d["preview"]["source"]
             info.append(image)
         else:
-            image = "https://i.ytimg.com/vi/f3cLOucMpD0/maxresdefault.jpg"
+            image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
             info.append(image)
     return info
 

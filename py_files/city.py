@@ -2,10 +2,11 @@
 
 import random
 
+
 def get_city_list():
 
     # open the file with cities in read mode
-    filename = open("cityList.csv", "r")
+    filename = open("py_files/cityList.csv", "r")
 
     # creating empty list to store the data
     cities = []

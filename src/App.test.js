@@ -13,3 +13,9 @@ test('Make sure location in city is rendered', () => {
   const linkElement = screen.getByTestId("CityLocation");
   expect(linkElement).toBeInTheDocument();
 });
+
+test('Make sure images of cities are rendered', () => {
+  render(<App />);
+  const linkElement = screen.getByTestId("CityImages");
+  expect(linkElement).toBeInTheDocument();
+});

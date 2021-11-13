@@ -45,6 +45,7 @@ function App() {
       ["wind", "null"],
     ],
     "opentrip": ["No Cool Locations"],
+    "opentripimages": ["https://i.ytimg.com/vi/f3cLOucMpD0/maxresdefault.jpg"],
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",
@@ -52,8 +53,7 @@ function App() {
 
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
-
-
+  let locationimg = args.opentripimages;
   return (
     <div>
 
@@ -81,6 +81,9 @@ function App() {
             <h3> Cool locations near {args.city}</h3>
             {locations.map(location => (
               <p data-testid="CityLocation">{location}</p>
+            ))}
+            {locationimg.map(img => (
+              <img data-testid="CityImages" src={img} width="100" height="100"></img>
             ))}
           </div>
 

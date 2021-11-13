@@ -35,7 +35,7 @@ def getPlaces(lon, lat):
     return xid
 
 
-def getPlacesInfo(xid):
+def getPlacesName(xid):
     load_dotenv(find_dotenv())
     length = len(xid)
     info = []
@@ -52,5 +52,31 @@ def getPlacesInfo(xid):
     return info
 
 
+def getPlacesImages(xid):
+    load_dotenv(find_dotenv())
+    length = len(xid)
+    info = []
+    for i in range(0, length):
+        Token = os.getenv("TRIPMAP_API_KEY")
+        base_url = "https://api.opentripmap.com/0.1/en/places/xid/"
+        id = xid[i]
+        key = "?apikey="
+        req = base_url + id + key + Token
+        r = requests.get(req)
+        d = r.json()
+        x = d.keys()
+        if "preview" in x:
+            image = d["preview"]["source"]
+            info.append(image)
+        else:
+            image = "https://i.ytimg.com/vi/f3cLOucMpD0/maxresdefault.jpg"
+            info.append(image)
+    return info
+
+
 def OpenTrip(city):
-    return getPlacesInfo(getPlaces(getCoordinates(city)[0], getCoordinates(city)[1]))
+    return getPlacesName(getPlaces(getCoordinates(city)[0], getCoordinates(city)[1]))
+
+
+def OpenTripImages(city):
+    return getPlacesImages(getPlaces(getCoordinates(city)[0], getCoordinates(city)[1]))

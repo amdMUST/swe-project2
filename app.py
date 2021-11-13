@@ -12,7 +12,7 @@ from flask_login.utils import logout_user
 from oauthlib.oauth2 import WebApplicationClient
 
 from py_files.nyt import *
-from py_files.tripmap import OpenTrip
+from py_files.tripmap import OpenTrip, OpenTripImages
 from py_files.weather import *
 
 app = flask.Flask(__name__, static_folder="./build/static")
@@ -86,10 +86,12 @@ def index():
     city = "Atlanta"  # Replace this with a function that retrieves the first index of a shuffled list of city names
     w_client.get_weather(city)
     opentrip = OpenTrip(city)
+    opentripimages = OpenTripImages(city)
     DATA = {
         "city": city,
         "weather_info": w_client.getMap(),
         "opentrip": opentrip,
+        "opentripimages": opentripimages,
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
@@ -193,4 +195,4 @@ def save():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
+    app.run(debug=True, host="localhost", port=int(os.getenv("PORT", 8080)))

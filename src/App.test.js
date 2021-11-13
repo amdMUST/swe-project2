@@ -6,3 +6,10 @@ test('Make sure city name is rendered', () => {
   const linkElement = screen.getByTestId("CityTitle");
   expect(linkElement).toBeInTheDocument();
 });
+
+
+test('Make sure location in city is rendered', () => {
+  render(<App />);
+  const linkElement = screen.getByTestId("CityLocation");
+  expect(linkElement).toBeInTheDocument();
+});

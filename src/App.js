@@ -44,7 +44,7 @@ function App() {
       ["clouds", "null"],
       ["wind", "null"],
     ],
-    "opentrip": "null",
+    "opentrip": ["No Cool Locations"],
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",
@@ -52,6 +52,8 @@ function App() {
 
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
+
+
   return (
     <div>
 
@@ -76,8 +78,9 @@ function App() {
           </div>
 
           <div id="OpenTripMap-panel">
+            <h3> Cool locations near {args.city}</h3>
             {locations.map(location => (
-              <p>{location}</p>
+              <p data-testid="CityLocation">{location}</p>
             ))}
           </div>
 

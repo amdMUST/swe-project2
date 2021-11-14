@@ -51,6 +51,7 @@ login_manager.login_view = "login"
 login_manager.init_app(app)
 
 # construct api classes
+n_client = nyt_client()
 w_client = weather_client()
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
@@ -85,11 +86,13 @@ def index():
 
     city = "Atlanta"  # Replace this with a function that retrieves the first index of a shuffled list of city names
     w_client.get_weather(city)
+    n_client.get_article_data(city)
     opentrip = OpenTrip(city)
     opentripimages = OpenTripImages(city)
     DATA = {
         "city": city,
         "weather_info": w_client.getMap(),
+        "article_info": n_client.getArticle(),
         "opentrip": opentrip,
         "opentripimages": opentripimages,
         "user_id": current_user.user_id,
@@ -109,7 +112,6 @@ app.register_blueprint(bp)
 @app.route("/login")
 def login():
     return flask.render_template("login.html")
-
 
 @app.route("/login_post")
 def login_post():

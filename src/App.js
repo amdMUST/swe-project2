@@ -3,7 +3,6 @@ import './App.css';
 import { useState, useRef } from 'react';
 
 function Weather(props) {
-
   return (
     <>
       <p>temp: {props.weather_info.temp}</p>
@@ -17,6 +16,9 @@ function Weather(props) {
 function Articles(props) {
   return (
     <>
+      <p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
+      <p>Abstract: {props.article_info.abstract}</p>
+      <p>Image: {props.article_info.img_url}</p>
     </>
   )
 }
@@ -27,7 +29,6 @@ function OpenTripMap(props) {
     </>
   )
 }
-
 
 function App() {
   const args = (document.getElementById('data') == null) ? ({
@@ -44,6 +45,14 @@ function App() {
       ["clouds", "null"],
       ["wind", "null"],
     ],
+    "article_info": [
+      ["nyt_main", "null"],
+      ["headlines", "null"],
+      ["abstract", "null"],
+      ["image_url", "null"],
+      ["web_url", "null"],
+      ["lead_paragraph", "null"],
+    ],
     "opentrip": ["No Cool Locations"],
     "opentripimages": ["https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"],
     "user_id": "test user_id",
@@ -51,9 +60,11 @@ function App() {
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
+  const article_info = createObject(args.article_info);
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
   let locationimg = args.opentripimages;
+
   return (
     <div>
 
@@ -74,7 +85,7 @@ function App() {
           </div>
 
           <div id="article-panel">
-            <Articles />
+            <Articles article_info={article_info} />
           </div>
 
           <div id="OpenTripMap-panel">

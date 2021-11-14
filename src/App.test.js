@@ -7,6 +7,11 @@ test('Make sure city name is rendered', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
+test('Make sure article name is rendered', () => {
+  render(<App />);
+  const linkElement = screen.getByTestId("article_data1");
+  expect(linkElement).toBeInTheDocument();
+});
 
 test('Make sure location in city is rendered', () => {
   render(<App />);

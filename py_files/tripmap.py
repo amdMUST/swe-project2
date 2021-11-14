@@ -94,9 +94,7 @@ def getPlacesImages(xid):
                 image = d["preview"]["source"]
                 info.append(image)
             else:
-                image = (
-                    "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
-                )
+                image = "https://image.freepik.com/free-icon/set-of-buildings-in-a-city_318-41262.jpg"
                 info.append(image)
     return info
 

@@ -8,7 +8,7 @@ def getCoordinates(city):
     Token = os.getenv("TRIPMAP_API_KEY")
     base_url = "https://api.opentripmap.com/0.1/en/places/geoname?"
     name = "name="
-    country = "&country=US&apikey="
+    country = "&apikey="
     req = base_url + name + city + country + Token
     r = requests.get(req)
     d = r.json()
@@ -20,7 +20,7 @@ def getCoordinates(city):
 def getPlaces(lon, lat):
     load_dotenv(find_dotenv())
     Token = os.getenv("TRIPMAP_API_KEY")
-    base_url = "https://api.opentripmap.com/0.1/en/places/radius?radius=100&"
+    base_url = "https://api.opentripmap.com/0.1/en/places/radius?radius=200&"
     lon = "lon=" + str(lon) + "&"
     lat = "lat=" + str(lat) + "&"
     key = "apikey="

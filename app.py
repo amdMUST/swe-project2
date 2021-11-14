@@ -12,7 +12,7 @@ from flask_login.utils import logout_user
 from oauthlib.oauth2 import WebApplicationClient
 
 from py_files.nyt import *
-from py_files.tripmap import *
+from py_files.tripmap import OpenTrip, OpenTripImages
 from py_files.weather import *
 from py_files.city import *
 
@@ -52,6 +52,7 @@ login_manager.login_view = "login"
 login_manager.init_app(app)
 
 # construct api classes
+n_client = nyt_client()
 w_client = weather_client()
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
@@ -83,14 +84,18 @@ def main():
 @bp.route("/index")
 @login_required
 def index():
-
-    # city = "Atlanta"  # Replace this with a function that retrieves the first index of a shuffled list of city names
     city = get_city_list()[0]
     w_client.get_weather(city)
-
+    n_client.get_article_data(city)
+    opentrip = OpenTrip(city)
+    opentripimages = OpenTripImages(city)
+    
     DATA = {
         "city": city,
         "weather_info": w_client.getMap(),
+        "article_info": n_client.getArticle(),
+        "opentrip": opentrip,
+        "opentripimages": opentripimages,
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
@@ -108,7 +113,6 @@ app.register_blueprint(bp)
 @app.route("/login")
 def login():
     return flask.render_template("login.html")
-
 
 @app.route("/login_post")
 def login_post():

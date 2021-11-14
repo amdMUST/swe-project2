@@ -85,7 +85,7 @@ def main():
 @login_required
 def index():
     city = get_city_list()[0]
-    w_client.get_weather(city)
+    w_client.getWeather(city)
     n_client.get_article_data(city)
     opentrip = OpenTrip(city)
     opentripimages = OpenTripImages(city)
@@ -94,8 +94,8 @@ def index():
         "city": city,
         "weather_info": w_client.getMap(),
         "article_info": n_client.getArticle(),
-        "opentrip": opentrip,
-        "opentripimages": opentripimages,
+        "opentrip": list(opentrip[0:3]),
+        "opentripimages": list(opentripimages[0:3]),
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
@@ -113,6 +113,7 @@ app.register_blueprint(bp)
 @app.route("/login")
 def login():
     return flask.render_template("login.html")
+
 
 @app.route("/login_post")
 def login_post():
@@ -194,9 +195,10 @@ def logout():
 def save():
     ...
 
+
 # Function for checking if a user is already in the database already
 def isUserInDB(userID):
-    
+
     result = UserDB.query.filter_by(user_id=userID).all()
 
     # if we get a non-empty result from the DB, that means they already exist
@@ -205,5 +207,6 @@ def isUserInDB(userID):
 
     return False
 
+
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))
+    app.run(debug=True, host="localhost", port=int(os.getenv("PORT", 8080)))

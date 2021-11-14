@@ -1,4 +1,4 @@
-import requests, flask, json, os
+import requests, os, json, flask
 from dotenv import load_dotenv, find_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (
@@ -89,7 +89,7 @@ def index():
     n_client.get_article_data(city)
     opentrip = OpenTrip(city)
     opentripimages = OpenTripImages(city)
-    
+
     DATA = {
         "city": city,
         "weather_info": w_client.getMap(),
@@ -165,10 +165,8 @@ def google_auth():
         return "User email not available or not verified by Google.", 400
 
     # check if user is in db
-    result = UserDB.query.filter_by(user_id=unique_id).all()
     newUser = UserDB(user_id=unique_id, email=users_email, name=users_name)
-
-    if not result:
+    if isUserInDB(unique_id) == False:
         # if not add them to db
         db.session.add(newUser)
         db.session.commit()
@@ -196,6 +194,16 @@ def logout():
 def save():
     ...
 
+# Function for checking if a user is already in the database already
+def isUserInDB(userID):
+    
+    result = UserDB.query.filter_by(user_id=userID).all()
+
+    # if we get a non-empty result from the DB, that means they already exist
+    if result:
+        return True
+
+    return False
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))

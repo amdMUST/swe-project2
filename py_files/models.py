@@ -12,7 +12,7 @@ class UserDB(UserMixin, db.Model):
     name = db.Column(db.String(80), unique=True)
 
     def __repr__(self):
-        return '<Username = %s, UserID = %s>' % (self.email, self.user_id)
+        return '<User_id = %s, Email = %s, Name = %s>' % (self.user_id, self.email, self.name)
 
     def get_id(self):
         """Return the id from the username."""

@@ -50,6 +50,9 @@ login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)
 
+# construct api classes
+n_client = nyt_client()
+
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
 # Login Manager handlers
@@ -80,7 +83,16 @@ def main():
 @login_required
 def index():
     # TODO: insert the data fetched by your app main page here as a JSON
-    DATA = {"your": "data here"}
+    city = "Atlanta"  # Replace this with a function that retrieves the first index of a shuffled list of city names
+    n_client.get_article_data(city)
+
+    DATA = {
+        "city": city,
+        "article_info": n_client.getArticle(),
+        "user_id": current_user.user_id,
+        "user_email": current_user.email,
+        "user_name": current_user.name,
+    }
     data = json.dumps(DATA)
     return flask.render_template(
         "index.html",

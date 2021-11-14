@@ -14,6 +14,7 @@ from oauthlib.oauth2 import WebApplicationClient
 from py_files.nyt import *
 from py_files.tripmap import OpenTrip, OpenTripImages
 from py_files.weather import *
+from py_files.city import *
 
 app = flask.Flask(__name__, static_folder="./build/static")
 
@@ -83,12 +84,12 @@ def main():
 @bp.route("/index")
 @login_required
 def index():
-
-    city = "Atlanta"  # Replace this with a function that retrieves the first index of a shuffled list of city names
+    city = get_city_list()[0]
     w_client.get_weather(city)
     n_client.get_article_data(city)
     opentrip = OpenTrip(city)
     opentripimages = OpenTripImages(city)
+    
     DATA = {
         "city": city,
         "weather_info": w_client.getMap(),

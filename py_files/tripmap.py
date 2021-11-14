@@ -29,9 +29,26 @@ def getPlaces(lon, lat):
     d = r.json()
     length = len(d["features"])
     xid = []
-    for i in range(0, length):
-        x = d["features"][i]["properties"]["xid"]
+    if length == 0:
+        x = "Nothing"
         xid.append(x)
+    else:
+        if length > 3:
+            for i in range(0, 3):
+                y = d["features"][i]["properties"]["name"]
+                if y == "":
+                    print("skip")
+                else:
+                    x = d["features"][i]["properties"]["xid"]
+                    xid.append(x)
+        else:
+            for i in range(0, length):
+                y = d["features"][i]["properties"]["name"]
+                if y == "":
+                    print("skip")
+                else:
+                    x = d["features"][i]["properties"]["xid"]
+                    xid.append(x)
     return xid
 
 
@@ -39,16 +56,20 @@ def getPlacesName(xid):
     load_dotenv(find_dotenv())
     length = len(xid)
     info = []
-    for i in range(0, length):
-        Token = os.getenv("TRIPMAP_API_KEY")
-        base_url = "https://api.opentripmap.com/0.1/en/places/xid/"
-        id = xid[i]
-        key = "?apikey="
-        req = base_url + id + key + Token
-        r = requests.get(req)
-        d = r.json()
-        name = d["name"]
-        info.append(name)
+    if xid[0] == "Nothing":
+        x = "This Place Sucks; Nothing To Do Here"
+        info.append(x)
+    else:
+        for i in range(0, length):
+            Token = os.getenv("TRIPMAP_API_KEY")
+            base_url = "https://api.opentripmap.com/0.1/en/places/xid/"
+            id = xid[i]
+            key = "?apikey="
+            req = base_url + id + key + Token
+            r = requests.get(req)
+            d = r.json()
+            name = d["name"]
+            info.append(name)
     return info
 
 
@@ -56,21 +77,25 @@ def getPlacesImages(xid):
     load_dotenv(find_dotenv())
     length = len(xid)
     info = []
-    for i in range(0, length):
-        Token = os.getenv("TRIPMAP_API_KEY")
-        base_url = "https://api.opentripmap.com/0.1/en/places/xid/"
-        id = xid[i]
-        key = "?apikey="
-        req = base_url + id + key + Token
-        r = requests.get(req)
-        d = r.json()
-        x = d.keys()
-        if "preview" in x:
-            image = d["preview"]["source"]
-            info.append(image)
-        else:
-            image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
-            info.append(image)
+    if xid[0] == "Nothing":
+        x = "https://www.drodd.com/images14/white7.jpg"
+        info.append(x)
+    else:
+        for i in range(0, length):
+            Token = os.getenv("TRIPMAP_API_KEY")
+            base_url = "https://api.opentripmap.com/0.1/en/places/xid/"
+            id = xid[i]
+            key = "?apikey="
+            req = base_url + id + key + Token
+            r = requests.get(req)
+            d = r.json()
+            x = d.keys()
+            if "preview" in x:
+                image = d["preview"]["source"]
+                info.append(image)
+            else:
+                image = "https://image.freepik.com/free-icon/set-of-buildings-in-a-city_318-41262.jpg"
+                info.append(image)
     return info
 
 

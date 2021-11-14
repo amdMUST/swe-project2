@@ -3,16 +3,17 @@ import './App.css';
 import { useState, useRef } from 'react';
 
 function Weather(props) {
-
   return (
     <>
+      <p>temp: {props.weather_info.temp}</p>
+      <p>clouds: {props.weather_info.clouds}</p>
+      <p>wind: {props.weather_info.wind}</p>
     </>
   );
 
 }
 
 function Articles(props) {
-  console.log(props.article_info.headlines)
   return (
     <>
       <p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
@@ -31,22 +32,39 @@ function OpenTripMap(props) {
 
 function App() {
   const args = (document.getElementById('data') == null) ? ({
-    "city": "Test City",
+    "city": "test city",
+    "weather_info": [
+      ["weather_main", "null"],
+      ["weather_desc", "null"],
+      ["temp", "null"],
+      ["feels_like", "null"],
+      ["temp_min", "null"],
+      ["temp_max", "null"],
+      ["pressure", "null"],
+      ["humidity", "null"],
+      ["clouds", "null"],
+      ["wind", "null"],
+    ],
     "article_info": [
-      ["nyt_main", "test1"],
-      ["headlines", "test1"],
+      ["nyt_main", "null"],
+      ["headlines", "null"],
       ["abstract", "null"],
       ["image_url", "null"],
       ["web_url", "null"],
       ["lead_paragraph", "null"],
     ],
+    "opentrip": ["No Cool Locations"],
+    "opentripimages": ["https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"],
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
   const article_info = createObject(args.article_info);
-  console.log(article_info);
+  const weather_info = createObject(args.weather_info);
+  let locations = args.opentrip;
+  let locationimg = args.opentripimages;
+
   return (
     <div>
 
@@ -63,7 +81,7 @@ function App() {
           </div>
 
           <div id="weather-panel">
-            {/* <Weather weather_info={weather_info} /> */}
+            <Weather weather_info={weather_info} />
           </div>
 
           <div id="article-panel">
@@ -71,7 +89,13 @@ function App() {
           </div>
 
           <div id="OpenTripMap-panel">
-            <OpenTripMap />
+            <h3> Cool locations near {args.city}</h3>
+            {locations.map(location => (
+              <p data-testid="CityLocation">{location}</p>
+            ))}
+            {locationimg.map(img => (
+              <img data-testid="CityImages" src={img} width="100" height="100"></img>
+            ))}
           </div>
 
         </div>

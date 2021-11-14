@@ -4,7 +4,7 @@ import { useState, useRef } from 'react';
 
 function Weather(props) {
 
-  return(
+  return (
     <>
       <p>temp: {props.weather_info.temp}</p>
       <p>clouds: {props.weather_info.clouds}</p>
@@ -15,14 +15,14 @@ function Weather(props) {
 }
 
 function Articles(props) {
-  return(
+  return (
     <>
     </>
   )
 }
 
 function OpenTripMap(props) {
-  return(
+  return (
     <>
     </>
   )
@@ -31,29 +31,32 @@ function OpenTripMap(props) {
 
 function App() {
   const args = (document.getElementById('data') == null) ? ({
-    "city" : "test city",
-    "weather_info":[
-      ["weather_main","null"],
-      ["weather_desc","null"],
-      ["temp","null"],
-      ["feels_like","null"],
-      ["temp_min","null"],
-      ["temp_max","null"],
-      ["pressure","null"],
-      ["humidity","null"],
-      ["clouds","null"],
-      ["wind","null"],
+    "city": "test city",
+    "weather_info": [
+      ["weather_main", "null"],
+      ["weather_desc", "null"],
+      ["temp", "null"],
+      ["feels_like", "null"],
+      ["temp_min", "null"],
+      ["temp_max", "null"],
+      ["pressure", "null"],
+      ["humidity", "null"],
+      ["clouds", "null"],
+      ["wind", "null"],
     ],
+    "opentrip": ["No Cool Locations"],
+    "opentripimages": ["https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"],
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
   const weather_info = createObject(args.weather_info);
-
+  let locations = args.opentrip;
+  let locationimg = args.opentripimages;
   return (
     <div>
-      
+
       <div>
         <h1>cityspit</h1>
       </div>
@@ -67,15 +70,21 @@ function App() {
           </div>
 
           <div id="weather-panel">
-            <Weather weather_info={weather_info}/>
+            <Weather weather_info={weather_info} />
           </div>
 
           <div id="article-panel">
-            <Articles/>
+            <Articles />
           </div>
 
           <div id="OpenTripMap-panel">
-            <OpenTripMap/>
+            <h3> Cool locations near {args.city}</h3>
+            {locations.map(location => (
+              <p data-testid="CityLocation">{location}</p>
+            ))}
+            {locationimg.map(img => (
+              <img data-testid="CityImages" src={img} width="100" height="100"></img>
+            ))}
           </div>
 
         </div>
@@ -98,11 +107,11 @@ function App() {
   );
 
   // function that takes the weather from the json and transforms it into an easier accessable object
-  function createObject(input_array){
+  function createObject(input_array) {
 
     var arr = {};
     // we need to map each array to its value 
-    for ( var i = 0; i < input_array.length; i++ ){
+    for (var i = 0; i < input_array.length; i++) {
       var key = input_array[i][0];
       var val = input_array[i][1];
       arr[key] = val;

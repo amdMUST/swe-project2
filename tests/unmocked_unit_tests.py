@@ -15,6 +15,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from py_files.weather import weather_client
+from py_files.city import city_manager
 
 INPUT = "INPUT"
 EXPECTED_OUTPUT = "EXPECTED_OUTPUT"
@@ -45,22 +46,22 @@ class VerifyCityName(unittest.TestCase):
 #     def setUp(self):
 #         self.success_test_params = [
 #             {
-#                 INPUT: "",
-#                 EXPECTED_OUTPUT: False,
+#                 INPUT: ("LONDON\nPARIS\nNEW YORK"),
+#                 EXPECTED_OUTPUT: ["LONDON", "PARIS", "NEW YORK"],
 #             },
 #             {
-#                 INPUT: None,
-#                 EXPECTED_OUTPUT: False,
+#                 INPUT: (""),
+#                 EXPECTED_OUTPUT: [],
 #             },
 #             {
-#                 INPUT: "Washington",
-#                 EXPECTED_OUTPUT: True,
+#                 INPUT: ("       LONDON    \n           PARIS       \n        NEW YORK       "),
+#                 EXPECTED_OUTPUT: ["LONDON", "PARIS", "NEW YORK"],
 #             },
 #         ]
 
-#     def testUnitTest2(self):
+#     def test_getCity(self):
 #         for test in self.success_test_params:
-#             self.assertEqual(weather_client.verifyCity(test[INPUT]), test[EXPECTED_OUTPUT])
+#             self.assertEqual(city_manager.get_city(test[INPUT]), test[EXPECTED_OUTPUT])
 
 if __name__ == "__main__":
     unittest.main()

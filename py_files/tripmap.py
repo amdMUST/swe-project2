@@ -12,8 +12,12 @@ def getCoordinates(city):
     req = base_url + name + city + country + Token
     r = requests.get(req)
     d = r.json()
-    lon = d["lon"]
-    lat = d["lat"]
+    try:
+        lon = d["lon"]
+        lat = d["lat"]
+    except:
+        lon = 0
+        lat = 0
     return lon, lat
 
 
@@ -37,7 +41,7 @@ def getPlaces(lon, lat):
             for i in range(0, 3):
                 y = d["features"][i]["properties"]["name"]
                 if y == "":
-                    print("skip")
+                    print("places skip 0-3")
                 else:
                     x = d["features"][i]["properties"]["xid"]
                     xid.append(x)
@@ -45,7 +49,7 @@ def getPlaces(lon, lat):
             for i in range(0, length):
                 y = d["features"][i]["properties"]["name"]
                 if y == "":
-                    print("skip")
+                    print("places skip 0-len")
                 else:
                     x = d["features"][i]["properties"]["xid"]
                     xid.append(x)

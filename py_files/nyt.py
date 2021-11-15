@@ -43,7 +43,7 @@ class nyt_client:
             self.lead_paragraph = article["lead_paragraph"]
 
         except:
-            print("error")
+            print("nyt parsing error")
             return
 
     # function to verify the cities name is correct for the request

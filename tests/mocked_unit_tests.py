@@ -54,7 +54,7 @@ class getCoordinatesTest(unittest.TestCase):
     def test_getCoordinates(self):
         with patch("requests.get") as mock_requests_get:
             mock_response = MagicMock()
-            k = mock_response.patch.dict(os.getenv, {"TRIPMAP_API_KEY": "rand_APIKEY"})
+            k = mock_response.patch.dict(os.environ, {"TRIPMAP_API_KEY": "rand_APIKEY"})
 
             # mocking a key error aka a bad request so the return would be 0,0
             mock_response.json.side_effect = [

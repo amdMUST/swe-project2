@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, useRef } from 'react';
+//import { useState, useRef } from 'react';
 
 function Weather(props) {
   return (
@@ -26,6 +25,13 @@ function Articles(props) {
 function OpenTripMap(props) {
   return (
     <>
+      <h3>Cool locations near {props.city}</h3>
+      {props.locations.map(location => (
+        <p data-testid="CityLocation">{location}</p>
+      ))}
+      {props.locationimg.map(img => (
+        <img data-testid="CityImages" alt="location" src={img} width="100" height="100"></img>
+      ))}
     </>
   )
 }
@@ -60,42 +66,43 @@ function App() {
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
+  const city = args.city;
   const article_info = createObject(args.article_info);
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
   let locationimg = args.opentripimages;
 
   return (
+
+
     <div>
 
-      <div>
-        <h1>cityspit</h1>
-      </div>
+      <a href="/">
+        <h1 id="title">cityspit</h1>
+      </a>
 
       <div className="page-container">
 
         <div className="panels-container">
 
-          <div>
-            <p data-testid="CityTitle">{args.city}</p>
-          </div>
+          <div id="panel">
+            <p id="panel-title" data-testid="CityTitle">{city}</p>
 
-          <div id="weather-panel">
-            <Weather weather_info={weather_info} />
-          </div>
+            <div className="grid-container">
 
-          <div id="article-panel">
-            <Articles article_info={article_info} />
-          </div>
+              <div id="weather-panel">
+                <Weather weather_info={weather_info} />
+              </div>
 
-          <div id="OpenTripMap-panel">
-            <h3> Cool locations near {args.city}</h3>
-            {locations.map(location => (
-              <p data-testid="CityLocation">{location}</p>
-            ))}
-            {locationimg.map(img => (
-              <img data-testid="CityImages" src={img} width="100" height="100"></img>
-            ))}
+              <div id="article-panel">
+                <Articles article_info={article_info} />
+              </div>
+
+              <div id="OpenTripMap-panel">
+                <OpenTripMap locations={locations} locationimg={locationimg} city={city}/>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -130,6 +137,7 @@ function App() {
 
     return arr;
   }
+  
 }
 
 export default App;

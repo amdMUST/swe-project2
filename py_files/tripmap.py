@@ -9,7 +9,7 @@ def getCoordinates(city):
     base_url = "https://api.opentripmap.com/0.1/en/places/geoname?"
     name = "name="
     country = "&apikey="
-    req = str(base_url + name + city + country + Token)
+    req = base_url + name + city + country + Token
     r = requests.get(req)
     d = r.json()
     try:

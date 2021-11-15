@@ -50,13 +50,12 @@ class isUserInDBTest(unittest.TestCase):
             )
 
 class getCoordinatesTest(unittest.TestCase):
-
+    @unittest.mock.patch.dict(os.environ, {"TRIPMAP_API_KEY": "rand_APIKEY"})
     def test_getCoordinates(self):
         with patch("requests.get") as mock_requests_get:
             mock_response = MagicMock()
-            k = mock_response.patch.dict(os.environ, {"TRIPMAP_API_KEY": "rand_APIKEY"})
 
-            # mocking a key error aka a bad request so the return would be 0,0
+            # 1) mocking a bad request (parsing key error) so the return would be (0,0)
             mock_response.json.side_effect = [
                 {
                     'KeyError': True,
@@ -70,6 +69,7 @@ class getCoordinatesTest(unittest.TestCase):
                 (0,0)
             )
 
+            # 2) mocking a correct parsing of the response, should return (lon,lat)
             mock_response.json.side_effect = [
                 {
                     'name': 'Barcelona', 

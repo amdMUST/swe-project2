@@ -61,7 +61,7 @@ class nyt_client:
             ("web_url", self.web_url),
             ("lead_paragraph", self.lead_paragraph),
         ]
-        print(dict)
+        #print(dict)
         return dict
 
 

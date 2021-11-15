@@ -55,7 +55,7 @@ class getCoordinatesTest(unittest.TestCase):
         with patch("requests.get") as mock_requests_get:
             mock_response = MagicMock()
 
-            # mocking a key error so the return would be 0,0
+            # mocking a key error aka a bad request so the return would be 0,0
             mock_response.json.side_effect = [
                 {
                     'KeyError': True,
@@ -65,7 +65,7 @@ class getCoordinatesTest(unittest.TestCase):
             ]
             mock_requests_get.return_value = mock_response
             self.assertEqual(
-                getCoordinates(""), 
+                getCoordinates("897797"), 
                 (0,0)
             )
 

@@ -33,7 +33,9 @@ class city_manager():
         return self.cities
 
     def get_city(self):
-        # return first item from city list
+        # return first item from city list after shuffling the list
+        random.shuffle(self.cities)
+
         return self.cities[0].lower().capitalize()
 
 

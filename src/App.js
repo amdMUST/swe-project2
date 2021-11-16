@@ -1,5 +1,5 @@
+import React, {useState, useRef} from 'react';
 import './App.css';
-//import { useState, useRef } from 'react';
 
 function Weather(props) {
   return (
@@ -74,11 +74,12 @@ function App() {
 
   return (
 
-
     <div>
 
+      <div className="wrapper"/>
+
       <a href="/">
-        <h1 id="title">cityspit</h1>
+        <h1 id="title">CitySpit</h1>
       </a>
 
       <div className="page-container">
@@ -90,16 +91,16 @@ function App() {
 
             <div className="grid-container">
 
-              <div id="weather-panel">
+              <div className="weather-panel">
                 <Weather weather_info={weather_info} />
               </div>
 
-              <div id="article-panel">
+              <div className="article-panel">
                 <Articles article_info={article_info} />
               </div>
 
-              <div id="OpenTripMap-panel">
-                <OpenTripMap locations={locations} locationimg={locationimg} city={city}/>
+              <div className="tripmap-panel">
+                <OpenTripMap locations={locations} locationimg={locationimg} city={city} />
               </div>
             </div>
 
@@ -113,7 +114,7 @@ function App() {
           <p>name: {args.user_name}</p>
         </div>
 
-        <div id="logout-link">
+        <div id="logout-link" className="button">
           <a id="signup-link" href="logout">
             Logout
           </a>
@@ -137,7 +138,7 @@ function App() {
 
     return arr;
   }
-  
+
 }
 
 export default App;

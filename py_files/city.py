@@ -3,32 +3,41 @@ import os
 import sys
 import random
 
+class city_manager():
+    def __init__(self):
+        # find the location of the csv file
+        current = os.path.dirname(os.path.realpath(__file__))
+        parent = os.path.dirname(current)
+        sys.path.append(parent)
+        # open the file with cities in read mode
+        filename = open("py_files/cityList.csv", "r")
 
-def get_city_list():
+        # initialize and fill list
+        self.cities = self.fill_list(filename)
 
-    # open the file with cities in read mode
-    # getting the name of the directory
-    # where the this file is present.
-    current = os.path.dirname(os.path.realpath(__file__))
+        # shuffle the list
+        random.shuffle(self.cities)
 
-    # Getting the parent directory name
-    # where the current directory is present.
-    parent = os.path.dirname(current)
+    # function to parse a string from a file and turn it into a list of cities
+    def fill_list(self, filename):
+        # iterating over each row and append values to the list
+        cities = []
+        for line in filename:
+            cities.append(line.strip())
+        
+        return cities
 
-    # adding the parent directory to
-    # the sys.path.
-    sys.path.append(parent)
-    filename = open("py_files/cityList.csv", "r")
 
-    # creating empty list to store the data
-    cities = []
+    def get_city_list(self):
+        # return list
+        return self.cities
 
-    # iterating over each row and append values to the list
-    for line in filename:
-        cities.append(line.strip())
+    def get_city(self):
+        # return first item from city list after shuffling the list
+        random.shuffle(self.cities)
 
-    # shuffle the list
-    random.shuffle(cities)
+        return self.cities[0].lower().capitalize()
 
-    # return list
-    return cities
+
+if __name__ == "__main__":
+    city_manager()

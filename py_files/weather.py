@@ -35,6 +35,7 @@ class weather_client:
             data = json.loads(response.text)
             self.parseResponse(data)
         except KeyError:
+            print("weather parsing error")
             pass
         return 
 

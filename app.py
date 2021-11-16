@@ -54,6 +54,7 @@ login_manager.init_app(app)
 # construct api classes
 n_client = nyt_client()
 w_client = weather_client()
+c_manager = city_manager()
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
@@ -84,7 +85,8 @@ def main():
 @bp.route("/index")
 @login_required
 def index():
-    city = get_city_list()[0]
+
+    city = c_manager.get_city()
     w_client.getWeather(city)
     n_client.get_article_data(city)
     opentrip = OpenTrip(city)

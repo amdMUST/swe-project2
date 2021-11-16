@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
+from io import StringIO
 import sys
 import os
 
@@ -17,7 +18,7 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 from app import isUserInDB, UserDB
-from py_files.weather import weather_client
+from py_files.tripmap import getCoordinates
 
 INPUT = "INPUT"
 EXPECTED_OUTPUT = "EXPECTED_OUTPUT"
@@ -34,38 +35,56 @@ class isUserInDBTest(unittest.TestCase):
 
             # Now that setup is done...
             # 1) Check if ID is in the DB already. Should be True
-            self.assertEqual(isUserInDB("1"), True)
+            self.assertEqual(
+                isUserInDB("1"), 
+                True
+            )
 
             # 2) Check if ID is in the DB already. Should be False
             # # what the return value should be for the second assertion
             mock_filtered.all.return_value = ''
             mock_query.filter_by.return_value = mock_filtered
-            self.assertEqual(isUserInDB("2"), False)
+            self.assertEqual(
+                isUserInDB("2"), 
+                False
+            )
 
-# class UnitTest2(unittest.TestCase):
-#      def test_getWeather(self):
-#         with patch("openweathermap.requests.get") as mock_requests_get:
-#             mock_response = MagicMock()
-#             # side_effect lets us set a list of return values.
-#             # Each successive call to mock_response.all() will generate the next
-#             # side effect
-#             mock_response.json.side_effect = [
-#                 {},
-#                 {
-#                     "response": {
-#                         "hits": [
-#                             {
-#                                 "result": {
-#                                     "url": "https://www.youtube.com/watch?v=q6EoRBvdVPQ"
-#                                 }
-#                             }
-#                         ]
-#                     }
-#                 },
-#             ]
-#             mock_requests_get.return_value = mock_response
-#             weather = weather_client()
-#             self.assertEqual(weather.getWeather("Atlanta"))
+class getCoordinatesTest(unittest.TestCase):
+    @unittest.mock.patch.dict(os.environ, {"TRIPMAP_API_KEY": "rand_APIKEY"})
+    def test_getCoordinates(self):
+        with patch("requests.get") as mock_requests_get:
+            mock_response = MagicMock()
+
+            # 1) mocking a bad request (parsing key error) so the return would be (0,0)
+            mock_response.json.side_effect = [
+                {
+                    'KeyError': True,
+                    'lat': 0, 
+                    'lon': 0, 
+                }
+            ]
+            mock_requests_get.return_value = mock_response
+            self.assertEqual(
+                getCoordinates("897797"), 
+                (0,0)
+            )
+
+            # 2) mocking a correct parsing of the response, should return (lon,lat)
+            mock_response.json.side_effect = [
+                {
+                    'name': 'Barcelona', 
+                    'country': 'ES', 
+                    'lat': 41.38879, 
+                    'lon': 2.15899, 
+                    'population': 1621537, 
+                    'timezone': 'Europe/Madrid', 
+                    'status': 'OK'
+                }
+            ]
+            self.assertEqual(
+                getCoordinates("Barcelona"),
+                (2.15899, 41.38879),
+            )
 
 if __name__ == "__main__":
     unittest.main()

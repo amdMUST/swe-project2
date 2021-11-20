@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
 function Weather(props) {
@@ -13,11 +13,13 @@ function Weather(props) {
 }
 
 function Articles(props) {
+
   return (
     <>
       <p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
       <p>Abstract: {props.article_info.abstract}</p>
-      <p>Image: {props.article_info.img_url}</p>
+      <img src={props.article_info.img_url} alt="Article Image" width="100" height="100"></img>
+      <p>Want More: <a href={props.article_info.web_url}> Click Me!</a></p>
     </>
   )
 }
@@ -55,7 +57,7 @@ function App() {
       ["nyt_main", "null"],
       ["headlines", "null"],
       ["abstract", "null"],
-      ["image_url", "null"],
+      ["img_url", "null"],
       ["web_url", "null"],
       ["lead_paragraph", "null"],
     ],
@@ -66,7 +68,7 @@ function App() {
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
-  const city = args.city;
+  const city = "Atlanta" //args.city;
   const article_info = createObject(args.article_info);
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
@@ -76,7 +78,7 @@ function App() {
 
     <div>
 
-      <div className="wrapper"/>
+      <div className="wrapper" />
 
       <a href="/">
         <h1 id="title">CitySpit</h1>

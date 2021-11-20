@@ -27,18 +27,14 @@ class nyt_client:
             "q": city,
             "api-key": API_KEY,
         }
-        # URL = BASE_URL + "api-key=" + API_KEY + "&q=" + city
         try:
             response = requests.get(BASE_URL, params=params)
-            # data = json.loads(response.text)
             data = response.json()
             article = data["response"]["docs"][0]
 
-            # parse out data from correct response
-            # self.nyt_main = article
             self.headlines = article["headline"]["main"]
             self.abstract = article["abstract"]
-            self.img_url = article["multimedia"][1]["url"]
+            self.img_url = "https://static01.nyt.com/" + article["multimedia"][0]["url"]
             self.web_url = article["web_url"]
             self.lead_paragraph = article["lead_paragraph"]
 
@@ -57,11 +53,11 @@ class nyt_client:
         dict = [
             ("headlines", self.headlines),
             ("abstract", self.abstract),
-            ("image_url", self.img_url),
+            ("img_url", self.img_url),
             ("web_url", self.web_url),
             ("lead_paragraph", self.lead_paragraph),
         ]
-        #print(dict)
+        # print(dict)
         return dict
 
 

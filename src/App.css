@@ -27,8 +27,8 @@ a:hover {
 	padding-bottom: 2%;
 }
 
-/* Panel styling */
 
+/* Panel styling */
 .panels-container {
 	display: grid;
 	column-gap: 5%;
@@ -37,7 +37,6 @@ a:hover {
 #title,
 #panel-title,
 #panel-subheading {
-	font-family: "Dela Gothic One", cursive;
 	font-family: "Sansita Swashed", cursive;
 	text-decoration: none;
 	margin: 0 auto;
@@ -54,7 +53,7 @@ a:hover {
 	height: fit-content;
 	max-width: 80%;
 
-	background-color: #97BC9E;
+	background-color: #E4CCCB;
 	box-shadow: 0px 10px;
 	border-radius: 40px;
 }
@@ -65,25 +64,96 @@ a:hover {
 	grid-template-rows: 1fr 1fr;
 	gap: 5px 5px;
 	grid-template-areas:
-		"weather-panel weather-panel"
-		"article-panel tripmap-panel";
+		"article-panel tripmap-panel"
+    "weather-panel like-panel";
 }
 
+/* Weather Styling */
 .weather-panel {
-	border: 5px solid red;
+  margin: 2%;
+  padding: 1%;
+  border-radius: 4px;
 	grid-area: weather-panel;
 }
+#weather-left{
+  text-align: left;
+  font-size: 16px;
+  float: left;
+}
+#weather-icon{
+  font-size: 100px;
+  margin: 3%;
+}
+#temp{
+  margin: 0;
+  font-size: 40px;
+}
+#weather-highlow p{
+  margin: 0;
+  display: inline;
+  font-size: 16px;
+}
+#weather-feels-like{
+  margin: 0;
+  font-size: 20px;
+}
+#weather-desc{
+  margin: 0;
+  font-size: 19px;
+}
+#weather-clouds{
+  margin: 0;
+  font-size: 18px;
+}
+#weather-humidity{
+  margin: 0;
+  font-size: 18px;
+}
 
+
+#cold{
+  background-color: #4BCFFD;
+}
+#cool{
+  background-color: #AEEAFF;
+}
+#average{
+  background-color: #89D78D;
+}
+#warm{
+  background-color: #EEC672;
+}
+#hot{
+  background-color: #EE7472;
+}
+
+/* Article Styling */
 .article-panel {
+  margin: 2%;
+  padding: 1%;
+  border-radius: 4px;
 	border: 5px solid rgb(0, 255, 255);
 	grid-area: article-panel;
 }
 
+/* TripMap Styling */
 .tripmap-panel {
+  margin: 2%;
+  padding: 1%;
+  border-radius: 4px;
 	border: 5px solid rgb(0, 255, 34);
 	grid-area: tripmap-panel;
 }
 
+/* Like/Dislike Styling */
+.like-panel {
+  margin: 2%;
+  padding: 1%;
+  border-radius: 4px;
+	grid-area: like-panel;
+}
+
+/* Button Styling */
 #signup-link {
   color: white;
   text-decoration: none;
@@ -111,6 +181,7 @@ a:hover {
   color: white;
 }
 
+/* Gradient Styling */
 .wrapper {
   z-index: -1;
   width: 100%;

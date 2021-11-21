@@ -21,17 +21,20 @@ class nyt_client:
         # retrieve key and url for request
         load_dotenv(find_dotenv())
         API_KEY = os.environ.get("NYT_API_KEY")
-        BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?"
+        BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
 
-        params = {
-            "q": city,
-            "api-key": API_KEY,
-        }
         try:
+
+            params = {
+                "q": city,
+                "api-key": API_KEY,
+            }
             response = requests.get(BASE_URL, params=params)
             data = response.json()
+            # Requires [] due to the need to refrence which article from the json
+            # TODO: Make a list to iterate through the articles with the front end
+            # set [i] to be referenced from the frontend but it only goes to about 9 articles
             article = data["response"]["docs"][0]
-
             self.headlines = article["headline"]["main"]
             self.abstract = article["abstract"]
             self.img_url = "https://static01.nyt.com/" + article["multimedia"][0]["url"]

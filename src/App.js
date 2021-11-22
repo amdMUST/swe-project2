@@ -8,7 +8,7 @@ function Weather(props) {
     <>
       <div id="weather-left">
         <div id="weather-icon">
-          <i class={getTempIcon(props.weather_info.desc)}></i>
+          <i class={getTempIcon(props.weather_info.weather_main)}></i>
         </div>
         <p id="temp">{props.weather_info.temp} °F</p>
         <div id="weather-highlow">
@@ -26,11 +26,62 @@ function Weather(props) {
   // function for getting the correct weather icon from our icon list
   function getTempIcon(desc){
 
-    //wi-owm-200
+    // set up base weather as sunny 
+    const base = "wi wi-";
+    var weather = "";
 
-    var className = "wi wi-day-sunny";
+    switch(desc){
+      case "Thunderstorm":
+        weather = "thunderstorm";
+        break;
+      case "Drizzle":
+        weather = "sprinkle";
+        break;
+      case "Rain":
+        weather = "rain";
+        break;
+      case "Snow":
+        weather = "snow";
+        break;
+      case "Mist":
+        weather = "rain-mix";
+        break;
+      case "Smoke":
+        weather = "owm-711";
+        break;
+      case "Haze":
+        weather = "owm-721";
+        break;
+      case "Fog":
+        weather = "owm-741";
+        break;
+      case "Sand":
+        weather = "sandstorm";
+        break;
+      case "Dust":
+        weather = "dust";
+        break;
+      case "Ash":
+        weather = "volcano";
+        break;
+      case "Squall":
+        weather = "alien";
+        break;
+      case "Tornado":
+        weather = "tornado";
+        break;
+      case "Clear":
+        weather = "day-sunny";
+        break;
+      case "Clouds":
+        weather = "cloudy";
+        break;
+      default:
+        weather = "thermometer"
+    }
 
-    return className;
+    var finalClassName = base + weather;
+    return finalClassName;
   }
 
 }
@@ -87,6 +138,7 @@ function App() {
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",
+    "user_pic": "https://i.pinimg.com/736x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg",
   }) : JSON.parse(document.getElementById('data').text);
 
   const city = args.city;
@@ -131,6 +183,7 @@ function App() {
 
               <div className="like-panel">
                 <div id="user-info" data-testid="user-info">
+                  <img id="profile-pic" src={args.user_pic} alt="profile pic"/>
                   <p>user id: {args.user_id}</p>
                   <p>email: {args.user_email}</p>
                   <p>name: {args.user_name}</p>

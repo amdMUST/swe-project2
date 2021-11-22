@@ -101,6 +101,7 @@ def index():
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
+        "user_pic": current_user.pic,
     }
     data = json.dumps(DATA)
     return flask.render_template(
@@ -168,7 +169,7 @@ def google_auth():
         return "User email not available or not verified by Google.", 400
 
     # check if user is in db
-    newUser = UserDB(user_id=unique_id, email=users_email, name=users_name)
+    newUser = UserDB(user_id=unique_id, email=users_email, name=users_name, pic=picture)
     if isUserInDB(unique_id) == False:
         # if not add them to db
         db.session.add(newUser)

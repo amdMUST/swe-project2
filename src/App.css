@@ -153,6 +153,12 @@ a:hover {
 	grid-area: like-panel;
 }
 
+#profile-pic{
+  max-width: 50px;
+  border-radius: 5%;
+}
+
+
 /* Button Styling */
 #signup-link {
   color: white;

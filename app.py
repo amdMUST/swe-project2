@@ -97,7 +97,7 @@ def index():
 
     DATA = {
         "city": city,
-        "city_img_url": i_client.getCityImg(),
+        "city_image": i_client.getCityImg(),
         "weather_info": w_client.getMap(),
         "article_info": n_client.getArticle(),
         "opentrip": list(opentrip[0:3]),

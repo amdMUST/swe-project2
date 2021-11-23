@@ -22,7 +22,7 @@ class cityimg_client:
 
         params = {
             "query": city,
-            "api-key": UNSPLASH_ACCESS_KEY,
+            "client_id": UNSPLASH_ACCESS_KEY,
         }
 
         try:
@@ -44,7 +44,6 @@ class cityimg_client:
         dict = [
             ("image_url", self.img_url),
         ]
-        # print(dict)
         return dict
 
 

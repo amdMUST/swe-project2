@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 
 function Weather(props) {
@@ -76,7 +76,7 @@ function App() {
 
     <div>
 
-      <div className="wrapper"/>
+      <div className="wrapper" />
 
       <a href="/">
         <h1 id="title">CitySpit</h1>

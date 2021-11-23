@@ -80,6 +80,24 @@ class OpenTripMap:
                     img.append(image)
         self.img = img
         self.names = names
+    
+# used to specifically get coordinates instead of creating a new class, might be useful later for react
+def getCoordinates(city):
+    load_dotenv(find_dotenv())
+    Token = os.getenv("TRIPMAP_API_KEY")
+    base_url = "https://api.opentripmap.com/0.1/en/places/geoname?"
+    name = "name="
+    country = "&apikey="
+    req = base_url + name + city + country + Token
+    r = requests.get(req)
+    d = r.json()
+    try:
+        lon = d["lon"]
+        lat = d["lat"]
+    except:
+        lon = 0
+        lat = 0
+    return lon, lat
 
 
 if __name__ == "__main__":

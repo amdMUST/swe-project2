@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
 
+
 function Weather(props) {
   return (
     <>
@@ -39,6 +40,9 @@ function OpenTripMap(props) {
 function App() {
   const args = (document.getElementById('data') == null) ? ({
     "city": "test city",
+    "city_image": [
+      ["image_url", "null"]
+    ],
     "weather_info": [
       ["weather_main", "null"],
       ["weather_desc", "null"],
@@ -67,6 +71,7 @@ function App() {
   }) : JSON.parse(document.getElementById('data').text);
 
   const city = args.city;
+  const city_image = createObject(args.city_image);
   const article_info = createObject(args.article_info);
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
@@ -87,6 +92,9 @@ function App() {
         <div className="panels-container">
 
           <div id="panel">
+
+            <img src={city_image.image_url} alt="" width="600" height="400" style={{ objectFit: 'cover' }} />
+
             <p id="panel-title" data-testid="CityTitle">{city}</p>
 
             <div className="grid-container">

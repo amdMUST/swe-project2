@@ -1,15 +1,89 @@
 import React, { useState, useRef } from 'react';
 import './App.css';
+import './weatherIcon.css';
 
 
 function Weather(props) {
+
   return (
     <>
-      <p>temp: {props.weather_info.temp}</p>
-      <p>clouds: {props.weather_info.clouds}</p>
-      <p>wind: {props.weather_info.wind}</p>
+      <div id="weather-left">
+        <div id="weather-icon">
+          <i class={getTempIcon(props.weather_info.weather_main)}></i>
+        </div>
+        <p id="temp">{props.weather_info.temp} °F</p>
+        <div id="weather-highlow">
+          <p>{Math.floor(props.weather_info.temp_max)} / </p>
+          <p>{Math.floor(props.weather_info.temp_min)}</p>
+        </div>
+        <p id="weather-feels-like">Currently feels like {props.weather_info.feels_like} °F</p>
+        <p id="weather-desc">{props.weather_info.weather_desc}</p>
+        <p id="weather-clouds">{props.weather_info.clouds}% Cloudy</p>
+        <p id="weather-humidity">{props.weather_info.humidity}% Humidity</p>
+      </div>
     </>
   );
+
+  // function for getting the correct weather icon from our icon list
+  function getTempIcon(desc){
+
+    // set up base weather as sunny 
+    const base = "wi wi-";
+    var weather = "";
+
+    switch(desc){
+      case "Thunderstorm":
+        weather = "thunderstorm";
+        break;
+      case "Drizzle":
+        weather = "sprinkle";
+        break;
+      case "Rain":
+        weather = "rain";
+        break;
+      case "Snow":
+        weather = "snow";
+        break;
+      case "Mist":
+        weather = "rain-mix";
+        break;
+      case "Smoke":
+        weather = "owm-711";
+        break;
+      case "Haze":
+        weather = "owm-721";
+        break;
+      case "Fog":
+        weather = "owm-741";
+        break;
+      case "Sand":
+        weather = "sandstorm";
+        break;
+      case "Dust":
+        weather = "dust";
+        break;
+      case "Ash":
+        weather = "volcano";
+        break;
+      case "Squall":
+        weather = "alien";
+        break;
+      case "Tornado":
+        weather = "tornado";
+        break;
+      case "Clear":
+        weather = "day-sunny";
+        break;
+      case "Clouds":
+        weather = "cloudy";
+        break;
+      default:
+        weather = "thermometer"
+    }
+
+    var finalClassName = base + weather;
+    return finalClassName;
+  }
 
 }
 
@@ -68,6 +142,7 @@ function App() {
     "user_id": "test user_id",
     "user_email": "test email",
     "user_name": "test",
+    "user_pic": "https://i.pinimg.com/736x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg",
   }) : JSON.parse(document.getElementById('data').text);
 
   const city = args.city;
@@ -76,6 +151,9 @@ function App() {
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
   let locationimg = args.opentripimages;
+
+  const [temp, setTemp] = useState(weather_info.temp)
+  const weatherPanelColor = changeColor(temp);
 
   return (
 
@@ -99,8 +177,8 @@ function App() {
 
             <div className="grid-container">
 
-              <div className="weather-panel">
-                <Weather weather_info={weather_info} />
+              <div className="weather-panel" id={weatherPanelColor}>
+                <Weather weather_info={weather_info}/>
               </div>
 
               <div className="article-panel">
@@ -110,28 +188,59 @@ function App() {
               <div className="tripmap-panel">
                 <OpenTripMap locations={locations} locationimg={locationimg} city={city} />
               </div>
+
+              <div className="like-panel">
+                <div id="user-info" data-testid="user-info">
+                  <img id="profile-pic" src={args.user_pic} alt="profile pic"/>
+                  <p>user id: {args.user_id}</p>
+                  <p>email: {args.user_email}</p>
+                  <p>name: {args.user_name}</p>
+                </div>
+
+                <div id="logout-link" className="button">
+                  <a id="signup-link" href="logout">
+                    Logout
+                  </a>
+                </div>
+                
+              </div>
             </div>
 
           </div>
 
         </div>
 
-        <div id="user-info" data-testid="user-info">
-          <p>user id: {args.user_id}</p>
-          <p>email: {args.user_email}</p>
-          <p>name: {args.user_name}</p>
-        </div>
-
-        <div id="logout-link" className="button">
-          <a id="signup-link" href="logout">
-            Logout
-          </a>
-        </div>
-
       </div>
 
     </div>
   );
+
+  // function that changes the color of the weather tab according to the temperature
+  function changeColor(temp){
+    var className = "average"
+
+    if( temp === null || temp === ""){
+      return "average";
+    }
+
+    if( temp <= 50 ){
+      className = "cold";
+    }
+    else if( temp >= 51 && temp <= 65 ){
+      className = "cool";
+    }
+    else if( temp >= 66 && temp <= 74 ){
+      className = "average";
+    }
+    else if( temp >= 75 && temp <= 81 ){
+      className = "warm";
+    }
+    else if( temp >= 82 ){
+      className = "hot";
+    }
+
+    return className;
+  }
 
   // function that takes the weather from the json and transforms it into an easier accessable object
   function createObject(input_array) {

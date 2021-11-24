@@ -12,9 +12,10 @@ from flask_login.utils import logout_user
 from oauthlib.oauth2 import WebApplicationClient
 
 from py_files.nyt import *
-from py_files.tripmap import OpenTrip, OpenTripImages
+from py_files.tripmap import *
 from py_files.weather import *
 from py_files.city import *
+from py_files.cityimg import *
 
 app = flask.Flask(__name__, static_folder="./build/static")
 
@@ -54,6 +55,8 @@ login_manager.init_app(app)
 n_client = nyt_client()
 w_client = weather_client()
 c_manager = city_manager()
+OpenMap = OpenTripMap()
+i_client = cityimg_client()
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
@@ -86,13 +89,16 @@ def main():
 def index():
 
     city = c_manager.get_city()
+    i_client.get_cityimg_url(city)
     w_client.getWeather(city)
     n_client.get_article_data(city)
-    opentrip = OpenTrip(city)
-    opentripimages = OpenTripImages(city)
+    OpenMap.getInfo(city)
+    opentrip = OpenMap.names
+    opentripimages = OpenMap.img
 
     DATA = {
         "city": city,
+        "city_image": i_client.getCityImg(),
         "weather_info": w_client.getMap(),
         "article_info": n_client.getArticle(),
         "opentrip": list(opentrip[0:3]),

@@ -1,6 +1,7 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import './weatherIcon.css';
+
 
 function Weather(props) {
 
@@ -114,6 +115,9 @@ function OpenTripMap(props) {
 function App() {
   const args = (document.getElementById('data') == null) ? ({
     "city": "test city",
+    "city_image": [
+      ["image_url", "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"]
+    ],
     "weather_info": [
       ["weather_main", "null"],
       ["weather_desc", "null"],
@@ -140,10 +144,10 @@ function App() {
     "user_email": "test email",
     "user_name": "test",
     "user_pic": "https://i.pinimg.com/736x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg",
-	  "city_pic": "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
   }) : JSON.parse(document.getElementById('data').text);
 
   const city = args.city;
+  const city_image = createObject(args.city_image);
   const article_info = createObject(args.article_info);
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;
@@ -168,7 +172,7 @@ function App() {
 
 						<div className="grid-container">
 							<div className="citypic-panel">
-								<img id="citypic" src={args.city_pic} alt="city profile pic" />
+								<img id="citypic" src={city_image.image_url} alt="city profile pic" />
 							</div>
 
 							<div className="like-panel">

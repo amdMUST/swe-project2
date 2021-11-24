@@ -3,7 +3,8 @@ import os
 import sys
 import random
 
-class city_manager():
+
+class city_manager:
     def __init__(self):
         # find the location of the csv file
         current = os.path.dirname(os.path.realpath(__file__))
@@ -24,9 +25,8 @@ class city_manager():
         cities = []
         for line in filename:
             cities.append(line.strip())
-        
-        return cities
 
+        return cities
 
     def get_city_list(self):
         # return list

@@ -97,7 +97,7 @@ a:hover {
 }
 #citypic {
 	max-width: 99%;
-	height: fit-content;
+	max-height: 420px;
 
 	box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(10.5px);

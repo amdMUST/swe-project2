@@ -4,6 +4,11 @@ from dotenv import load_dotenv, find_dotenv
 # a class to handle all of the weather requests the web-app will make
 class nyt_client:
     def __init__(self):
+
+        # retrieve key and url for request
+        load_dotenv(find_dotenv())
+        self.API_KEY = os.environ.get("NYT_API_KEY")
+
         # configuration of variables
         self.nyt_main = "null"
         self.headlines = "null"
@@ -18,27 +23,24 @@ class nyt_client:
         if not self.verifyCity(city):
             return
 
-        # retrieve key and url for request
-        load_dotenv(find_dotenv())
-        API_KEY = os.environ.get("NYT_API_KEY")
-        BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?"
+        
+        BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
 
-        params = {
-            "q": city,
-            "api-key": API_KEY,
-        }
-        # URL = BASE_URL + "api-key=" + API_KEY + "&q=" + city
         try:
-            response = requests.get(BASE_URL, params=params)
-            # data = json.loads(response.text)
-            data = response.json()
-            article = data["response"]["docs"][0]
 
-            # parse out data from correct response
-            # self.nyt_main = article
+            params = {
+                "q": city,
+                "api-key": self.API_KEY,
+            }
+            response = requests.get(BASE_URL, params=params)
+            data = response.json()
+            # Requires [] due to the need to refrence which article from the json
+            # TODO: Make a list to iterate through the articles with the front end
+            # set [i] to be referenced from the frontend but it only goes to about 9 articles
+            article = data["response"]["docs"][0]
             self.headlines = article["headline"]["main"]
             self.abstract = article["abstract"]
-            self.img_url = article["multimedia"][1]["url"]
+            self.img_url = "https://static01.nyt.com/" + article["multimedia"][0]["url"]
             self.web_url = article["web_url"]
             self.lead_paragraph = article["lead_paragraph"]
 
@@ -57,11 +59,10 @@ class nyt_client:
         dict = [
             ("headlines", self.headlines),
             ("abstract", self.abstract),
-            ("image_url", self.img_url),
+            ("img_url", self.img_url),
             ("web_url", self.web_url),
             ("lead_paragraph", self.lead_paragraph),
         ]
-        #print(dict)
         return dict
 
 

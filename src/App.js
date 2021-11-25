@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import './weatherIcon.css';
 
@@ -90,7 +90,16 @@ function Articles(props) {
 		<>
 			<p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
 			<p>Abstract: {props.article_info.abstract}</p>
-			<p>Image: {props.article_info.img_url}</p>
+			<p>Image: </p>
+			<img
+				src={props.article_info.img_url}
+				alt="Article Art"
+				width="100"
+				height="100"
+			></img>
+			<p>
+				Want More: <a href={props.article_info.web_url}> Click Me!</a>
+			</p>
 		</>
 	);
 }
@@ -148,14 +157,6 @@ function App() {
 						"https://i.pinimg.com/736x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg"
 			  }
 			: JSON.parse(document.getElementById("data").text);
-	const like_img =
-		"https://img.icons8.com/material-outlined/64/000000/like--v1.png";
-	const dislike_img =
-		"https://img.icons8.com/external-becris-lineal-becris/64/000000/external-cancel-mintab-for-ios-becris-lineal-becris.png";
-	const cityList = args.city_list;
-	const [cityIndex, setCityIndex] = useState(0);
-	const [city, setCity] = useState(cityList[0]);
-
 	// the base information we need to fill out the panel
 	const [city_image, set_city_image] = useState(
 		createObject([
@@ -184,7 +185,10 @@ function App() {
 			["nyt_main", "null"],
 			["headlines", "null"],
 			["abstract", "null"],
-			["image_url", "null"],
+			[
+				"img_url",
+				"https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
+			],
 			["web_url", "null"],
 			["lead_paragraph", "null"]
 		])
@@ -193,10 +197,18 @@ function App() {
 	const [locationimg, set_locationimg] = useState([
 		"https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
 	]);
-	const [temp, setTemp] = useState(weather_info.temp);
-	const weatherPanelColor = changeColor(temp);
+	const like_img =
+		"https://img.icons8.com/material-outlined/64/000000/like--v1.png";
+	const dislike_img =
+		"https://img.icons8.com/external-becris-lineal-becris/64/000000/external-cancel-mintab-for-ios-becris-lineal-becris.png";
 
-	getCityInfo(city);
+	const cityList = args.city_list;
+	const [cityIndex, setCityIndex] = useState(0);
+	const [city, setCity] = useState(cityList[cityIndex]);
+
+	// when the index changes, change the city, then get that cities info
+	useEffect(() => setCity(cityList[cityIndex]), [cityIndex]);
+	useEffect(() => getCityInfo(city), [city]);
 
 	return (
 		<div>
@@ -212,41 +224,11 @@ function App() {
 		</div>
 	);
 
-	// function that will make a fetch request to the server for the information needed from the api's
-	function getCityInfo(city) {
-		// fetch api call
-		fetch("/get_city", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				city: city
-			})
-		})
-			.then(handleErrors)
-			.then((response) => response.json())
-			.then((data) => {
-				set_city_image(createObject(data.city_image));
-				set_weather_info(createObject(data.weather_info));
-				set_article_info(createObject(data.article_info));
-				set_locations(data.opentrip);
-				set_locationimg(data.opentripimages);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-
-		function handleErrors(response) {
-			if (!response.ok) {
-				throw Error(response.statusText);
-			}
-			return response;
-		}
-	}
-
 	// Component that updates the info about the city everytime there is a new city
 	function Panel(props) {
+
+		const weatherPanelColor = changeColor(weather_info.temp);
+
 		return (
 			<div id="panel">
 				<p id="panel-title" data-testid="CityTitle">
@@ -318,7 +300,6 @@ function App() {
 	function updateCityIndex() {
 		if (cityIndex < cityList.length) {
 			setCityIndex(cityIndex + 1);
-			setCity(cityList[cityIndex]);
 		}
 	}
 
@@ -342,7 +323,7 @@ function App() {
 			className = "hot";
 		}
 
-		return className;
+		return className
 	}
 
 	// function that takes the weather from the json and transforms it into an easier accessable object
@@ -357,6 +338,40 @@ function App() {
 
 		return arr;
 	}
+
+	// function that will make a fetch request to the server for the information needed from the api's
+	function getCityInfo(city) {
+		// fetch api call
+		fetch("/get_city", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				city: city
+			})
+		})
+			.then(handleErrors)
+			.then((response) => response.json())
+			.then((data) => {
+				set_city_image(createObject(data.city_image));
+				set_weather_info(createObject(data.weather_info));
+				set_article_info(createObject(data.article_info));
+				set_locations(data.opentrip);
+				set_locationimg(data.opentripimages);
+			})
+			.catch(function (error) {
+				console.log("This is the catch: " + error);
+			});
+
+		function handleErrors(response) {
+			if (!response.ok) {
+				throw Error(response.statusText);
+			}
+			return response;
+		}
+	}
 }
+
 
 export default App;

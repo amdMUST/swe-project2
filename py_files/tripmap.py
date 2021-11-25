@@ -5,16 +5,18 @@ import requests
 
 class OpenTripMap:
     def __init__(self):
+        load_dotenv(find_dotenv())
+        self.Token = os.getenv("TRIPMAP_API_KEY")
+
         self.names = []
         self.img = []
 
     def getInfo(self, city):
-        load_dotenv(find_dotenv())
-        Token = os.getenv("TRIPMAP_API_KEY")
+
         base_url = "https://api.opentripmap.com/0.1/en/places/geoname?"
         name = "name="
         country = "&apikey="
-        req = base_url + name + city + country + Token
+        req = base_url + name + city + country + self.Token
         r = requests.get(req)
         d = r.json()
         try:
@@ -23,11 +25,12 @@ class OpenTripMap:
         except:
             lon = 0
             lat = 0
+
         base_url = "https://api.opentripmap.com/0.1/en/places/radius?radius=200&"
         lon = "lon=" + str(lon) + "&"
         lat = "lat=" + str(lat) + "&"
         key = "apikey="
-        req = base_url + lon + lat + key + Token
+        req = base_url + lon + lat + key + self.Token
         r = requests.get(req)
         d = r.json()
         length = len(d["features"])
@@ -52,21 +55,23 @@ class OpenTripMap:
                     else:
                         x = d["features"][i]["properties"]["xid"]
                         xid.append(x)
+                        
         length = len(xid)
         names = []
         img = []
         if xid[0] == "Nothing":
+
             x = "This Place Sucks; Nothing To Do Here"
             y = "http://www.clipartbest.com/cliparts/MiL/kAz/MiLkAzLgT.png"
             names.append(x)
             img.append(y)
         else:
+
             for i in range(0, length):
-                Token = os.getenv("TRIPMAP_API_KEY")
                 base_url = "https://api.opentripmap.com/0.1/en/places/xid/"
                 id = xid[i]
                 key = "?apikey="
-                req = base_url + id + key + Token
+                req = base_url + id + key + self.Token
                 r = requests.get(req)
                 d = r.json()
                 name = d["name"]
@@ -78,6 +83,7 @@ class OpenTripMap:
                 else:
                     image = "https://image.freepik.com/free-icon/set-of-buildings-in-a-city_318-41262.jpg"
                     img.append(image)
+
         self.img = img
         self.names = names
     

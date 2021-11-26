@@ -7,7 +7,7 @@ function Weather(props) {
 		<>
 			<div id="weather-left">
 				<div id="weather-icon">
-					<i class={getTempIcon(props.weather_info.weather_main)}></i>
+					<i className={getTempIcon(props.weather_info.weather_main)}></i>
 				</div>
 				<p id="temp">{props.weather_info.temp} °F</p>
 				<div id="weather-highlow">
@@ -107,18 +107,19 @@ function Articles(props) {
 function OpenTripMap(props) {
 	return (
 		<>
-			<h3>Cool locations near {props.city}</h3>
+			<h5>Cool locations near {props.city}</h5>
 			{props.locations.map((location) => (
-				<p data-testid="CityLocation">{location}</p>
+				<p data-testid="CityLocation" key={location}>{location}</p>
 			))}
 			{props.locationimg.map((img) => (
 				<img
+					key={img}
 					data-testid="CityImages"
 					alt="location"
 					src={img}
 					width="100"
 					height="100"
-				></img>
+				/>
 			))}
 		</>
 	);
@@ -245,7 +246,7 @@ function App() {
 						<img id="citypic" src={city_image.image_url} alt="city profile pic" />
 					</div>
 
-					<div className="like-panel">
+					<div className="like-panel-mobile">
 						<div className="button" id="dislike-button">
 							<button onClick={updateCityIndex} disabled={buttonsDisabled}>
 								<img id="dislike-icon" src={dislike_img} alt="dislike icon" />
@@ -274,6 +275,24 @@ function App() {
 					</div>
 
 					<div className="interaction-panels">
+						<div className="like-panel">
+							<div className="button" id="dislike-button">
+								<button onClick={updateCityIndex} disabled={buttonsDisabled}>
+									<img id="dislike-icon" src={dislike_img} alt="dislike icon" />
+								</button>
+							</div>
+
+							<div className="button" id="like-button">
+								<button onClick={updateCityIndex} disabled={buttonsDisabled}>
+									<img id="like-icon" src={like_img} alt="like icon" />
+								</button>
+							</div>
+						</div>
+
+						<div className="weather-panel" id={weatherPanelColor}>
+							<Weather weather_info={weather_info} />
+						</div>
+
 						<div className="userinfo-panel">
 							<div id="user-info" data-testid="user-info">
 								<br></br>
@@ -294,10 +313,6 @@ function App() {
 									Logout
 								</a>
 							</div>
-						</div>
-
-						<div className="weather-panel" id={weatherPanelColor}>
-							<Weather weather_info={weather_info} />
 						</div>
 					</div>
 				</div>

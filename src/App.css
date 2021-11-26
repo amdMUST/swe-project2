@@ -205,6 +205,11 @@ a:hover {
 }
 
 /* Like/Dislike Styling */
+button {
+	cursor: pointer;
+	display: contents;
+}
+
 .like-panel {
 	margin: auto;
 	padding: 3%;

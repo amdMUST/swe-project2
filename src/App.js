@@ -158,6 +158,8 @@ function App() {
 			  }
 			: JSON.parse(document.getElementById("data").text);
 	// the base information we need to fill out the panel
+
+	// constants for widget information
 	const [city_image, set_city_image] = useState(
 		createObject([
 			[
@@ -197,11 +199,15 @@ function App() {
 	const [locationimg, set_locationimg] = useState([
 		"https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
 	]);
+
+	// like button constants
+	const [buttonsDisabled, setButtonsDisabled] = useState(false);
 	const like_img =
 		"https://img.icons8.com/material-outlined/64/000000/like--v1.png";
 	const dislike_img =
 		"https://img.icons8.com/external-becris-lineal-becris/64/000000/external-cancel-mintab-for-ios-becris-lineal-becris.png";
 
+	// city constants
 	const cityList = args.city_list;
 	const [cityIndex, setCityIndex] = useState(0);
 	const [city, setCity] = useState(cityList[cityIndex]);
@@ -226,7 +232,6 @@ function App() {
 
 	// Component that updates the info about the city everytime there is a new city
 	function Panel(props) {
-
 		const weatherPanelColor = changeColor(weather_info.temp);
 
 		return (
@@ -241,12 +246,16 @@ function App() {
 					</div>
 
 					<div className="like-panel">
-						<div className="button" id="dislike-button" onClick={updateCityIndex}>
-							<img id="dislike-icon" src={dislike_img} alt="dislike icon" />
+						<div className="button" id="dislike-button">
+							<button onClick={updateCityIndex} disabled={buttonsDisabled}>
+								<img id="dislike-icon" src={dislike_img} alt="dislike icon" />
+							</button>
 						</div>
 
-						<div className="button" id="like-button" onClick={updateCityIndex}>
-							<img id="like-icon" src={like_img} alt="like icon" />
+						<div className="button" id="like-button">
+							<button onClick={updateCityIndex} disabled={buttonsDisabled}>
+								<img id="like-icon" src={like_img} alt="like icon" />
+							</button>
 						</div>
 					</div>
 
@@ -298,8 +307,15 @@ function App() {
 
 	// function to update the value of the city index and make sure it doesnt go out of bounds
 	function updateCityIndex() {
-		if (cityIndex < cityList.length) {
+		if (cityIndex < cityList.length - 1) {
 			setCityIndex(cityIndex + 1);
+			setButtonsDisabled(true);
+
+			// enable the button
+			setTimeout(() => {
+				setButtonsDisabled(false);
+				console.log("Button re-activated");
+			}, 10000);
 		}
 	}
 
@@ -323,7 +339,7 @@ function App() {
 			className = "hot";
 		}
 
-		return className
+		return className;
 	}
 
 	// function that takes the weather from the json and transforms it into an easier accessable object
@@ -372,6 +388,5 @@ function App() {
 		}
 	}
 }
-
 
 export default App;

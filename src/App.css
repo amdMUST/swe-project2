@@ -85,7 +85,7 @@ a:hover {
 .interaction-panels {
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: .1fr .2fr .5fr;
+	grid-template-rows: 0.1fr 0.2fr 0.5fr;
 	gap: 0px 0px;
 	grid-template-areas:
 		"like-panel"
@@ -99,8 +99,10 @@ a:hover {
 	grid-area: citypic-panel;
 }
 #citypic {
+	display: block;
 	max-width: 99%;
 	max-height: 420px;
+	margin: 0 auto;
 
 	box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(10.5px);
@@ -111,6 +113,7 @@ a:hover {
 
 /* Article Styling */
 .article-panel {
+	display: block;
 	margin: 2%;
 	padding: 1%;
 	height: fit-content;
@@ -125,6 +128,7 @@ a:hover {
 
 /* TripMap Styling */
 .tripmap-panel {
+	display: block;
 	margin: 2%;
 	padding: 1%;
 	height: fit-content;
@@ -139,6 +143,7 @@ a:hover {
 
 /* Weather Styling */
 .weather-panel {
+	display: block;
 	margin: 2%;
 	padding: 3%;
 	height: fit-content;
@@ -223,6 +228,7 @@ button {
 }
 
 .like-panel {
+	display: block;
 	margin: auto;
 	padding: 3%;
 	width: 50%;
@@ -279,6 +285,7 @@ button {
 
 /* UserInfo Styling */
 .userinfo-panel {
+	display: block;
 	margin: 2%;
 	padding: 3%;
 	height: fit-content;
@@ -343,6 +350,65 @@ button {
 	}
 }
 
+/* Carousel Loading div */
+.grid-container-loading {
+	display: grid;
+	margin: 0 1%;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	gap: 0px 0px;
+}
+
+.loading-panel {
+	display: block;
+	margin: auto;
+	width: 100%;
+	height: 100%;
+	grid-area: loading-panel;
+
+	box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(10.5px);
+	-webkit-backdrop-filter: blur(10.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(0, 0, 0, 0.18);
+	z-index: 10;
+}
+
+.loading {
+	position: relative;
+	top: 40%;
+	left: 40%;
+	border-radius: 10px;
+	z-index: 10;
+}
+.loading:before,
+.loading:after {
+	content: "";
+	display: block;
+	background: #f90;
+	text-align: center;
+	width: 115px;
+	height: 80px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	border-radius: 35px;
+	animation: loading 2s linear 0s infinite;
+}
+.loading:after {
+	background: #60c;
+	animation: loading 1.5s linear 1.5s infinite;
+}
+@keyframes loading {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
 /* Responsive styling */
 @media screen and (max-width: 950px) {
 	.grid-container {
@@ -378,5 +444,3 @@ button {
 		max-width: 100%;
 	}
 }
-
-/* Carousel */

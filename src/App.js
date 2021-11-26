@@ -109,7 +109,9 @@ function OpenTripMap(props) {
 		<>
 			<h5>Cool locations near {props.city}</h5>
 			{props.locations.map((location) => (
-				<p data-testid="CityLocation" key={location}>{location}</p>
+				<p data-testid="CityLocation" key={location}>
+					{location}
+				</p>
 			))}
 			{props.locationimg.map((img) => (
 				<img
@@ -208,6 +210,9 @@ function App() {
 	const dislike_img =
 		"https://img.icons8.com/external-becris-lineal-becris/64/000000/external-cancel-mintab-for-ios-becris-lineal-becris.png";
 
+	// loading screen constants
+	const [gridContainer, setGridContainer] = useState("grid-container");
+
 	// city constants
 	const cityList = args.city_list;
 	const [cityIndex, setCityIndex] = useState(0);
@@ -233,6 +238,7 @@ function App() {
 
 	// Component that updates the info about the city everytime there is a new city
 	function Panel(props) {
+		// weather panel constant
 		const weatherPanelColor = changeColor(weather_info.temp);
 
 		return (
@@ -241,7 +247,14 @@ function App() {
 					{props.city}
 				</p>
 
-				<div className="grid-container">
+				<div className={gridContainer}>
+					<div
+						className="loading-panel"
+						style={{ display: gridContainer === "grid-container" ? "none" : "block" }}
+					>
+						<div className="loading"></div>
+					</div>
+
 					<div className="citypic-panel">
 						<img id="citypic" src={city_image.image_url} alt="city profile pic" />
 					</div>
@@ -323,14 +336,18 @@ function App() {
 	// function to update the value of the city index and make sure it doesnt go out of bounds
 	function updateCityIndex() {
 		if (cityIndex < cityList.length - 1) {
+			// before we set a timer, we update index+1 and disable the like/dislike button again
 			setCityIndex(cityIndex + 1);
 			setButtonsDisabled(true);
 
-			// enable the button
+			// now lets make the loading div visible while the timer runs
+			setGridContainer("grid-container-loading");
+
+			// once the timer finishes, it will change these two states
 			setTimeout(() => {
 				setButtonsDisabled(false);
-				console.log("Button re-activated");
-			}, 10000);
+				setGridContainer("grid-container");
+			}, 5000);
 		}
 	}
 

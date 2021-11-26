@@ -50,7 +50,7 @@ class getArticleTest(unittest.TestCase):
                 EXPECTED_OUTPUT: [
                     ("headlines", "null"),
                     ("abstract", "null"),
-                    ("image_url", "null"),
+                    ("img_url", "null"),
                     ("web_url", "null"),
                     ("lead_paragraph", "null"),
                 ],
@@ -62,7 +62,7 @@ class getArticleTest(unittest.TestCase):
                 EXPECTED_OUTPUT: [
                     ("headlines", "test headline"),
                     ("abstract", "test abstract"),
-                    ("image_url", "test image_url"),
+                    ("img_url", "test image_url"),
                     ("web_url", "test web_url"),
                     ("lead_paragraph", "test lead_paragraph"),
                 ],

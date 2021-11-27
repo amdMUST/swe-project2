@@ -267,7 +267,7 @@ function App() {
 						</div>
 
 						<div className="button" id="like-button">
-							<button onClick={updateCityIndex} disabled={buttonsDisabled}>
+							<button onClick={saveCityToDB} disabled={buttonsDisabled}>
 								<img id="like-icon" src={like_img} alt="like icon" />
 							</button>
 						</div>

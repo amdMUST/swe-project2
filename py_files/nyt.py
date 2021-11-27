@@ -34,13 +34,30 @@ class nyt_client:
             # Requires [] due to the need to refrence which article from the json
             # TODO: Make a list to iterate through the articles with the front end
             # set [i] to be referenced from the frontend but it only goes to about 9 articles
-            article = data["response"]["docs"][0]
-            self.headlines = article["headline"]["main"]
-            self.abstract = article["abstract"]
-            self.img_url = "https://static01.nyt.com/" + article["multimedia"][0]["url"]
-            self.web_url = article["web_url"]
-            self.lead_paragraph = article["lead_paragraph"]
 
+            articles = data["response"]["docs"]
+
+            def get_headline(article):
+                return article["headline"]["main"]
+
+            def get_abstract(article):
+                return article["abstract"]
+
+            def get_img_url(article):
+                return article["multimedia"][0]["url"]
+
+            # TypeError: list indices must be integers or slices, not str
+            def get_web_url(article):
+                return article["web_url"]
+
+            def get_lead_paragraph(article):
+                return article["lead_paragraph"]
+
+            self.headlines = map(get_headline, articles)
+            self.abstract = map(get_abstract, articles)
+            self.web_url = map(get_web_url, articles)
+            self.image_url = map(get_img_url, articles)
+            self.lead_paragraph = map(get_lead_paragraph, articles)
         except:
             print("nyt parsing error")
             return
@@ -54,13 +71,12 @@ class nyt_client:
 
     def getArticle(self):
         dict = [
-            ("headlines", self.headlines),
-            ("abstract", self.abstract),
-            ("img_url", self.img_url),
-            ("web_url", self.web_url),
-            ("lead_paragraph", self.lead_paragraph),
+            ("headlines", list(self.headlines)),
+            ("abstract", list(self.abstract)),
+            ("web_url", list(self.web_url)),
+            ("img_url", list(self.image_url)),
+            ("lead_paragraph", list(self.lead_paragraph)),
         ]
-        # print(dict)
         return dict
 
 

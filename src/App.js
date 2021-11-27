@@ -13,13 +13,31 @@ function Weather(props) {
 }
 
 function Articles(props) {
+  // an array of 10 items of a specific city
+  const headline = props.article_info.headlines;
+  const abstract = props.article_info.abstract;
+  const img_url = props.article_info.img_url;
+  const web_url = props.article_info.web_url;
+  console.log(img_url)
 
   return (
     <>
-      <p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
-      <p>Abstract: {props.article_info.abstract}</p>
-      <img src={props.article_info.img_url} alt="Article Image" width="100" height="100"></img>
-      <p>Want More: <a href={props.article_info.web_url}> Click Me!</a></p>
+      <div >
+        {headline.map((item, index) => {
+          console.log(index)
+          return (
+            <>
+              <div> <a href={web_url[index]}>
+                <p data-testid="article_data1">Headline: {headline[index]}</p>
+                <p>Abstract: {abstract[index]}</p>
+                <img src={"http://static01.nyt.com/" + img_url[index]} alt="Article Image" width="100" height="100"></img>
+              </a >
+              </div >
+            </>
+          )
+        })
+        }
+      </div >
     </>
   )
 }
@@ -68,7 +86,7 @@ function App() {
     "user_name": "test",
   }) : JSON.parse(document.getElementById('data').text);
 
-  const city = "Atlanta" //args.city;
+  const city = args.city;
   const article_info = createObject(args.article_info);
   const weather_info = createObject(args.weather_info);
   let locations = args.opentrip;

@@ -71,9 +71,13 @@ class OpenTripMap:
                 req = base_url + id + key + Token
                 r = requests.get(req)
                 d = r.json()
-                name = d["name"]
-                names.append(name)
                 x = d.keys()
+                if "name" in x:
+                    name = d["name"]
+                    names.append(name)
+                else:
+                    name = "Wilderness"
+                    names.append(name)
                 if "preview" in x:
                     image = d["preview"]["source"]
                     img.append(image)

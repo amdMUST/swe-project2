@@ -296,7 +296,7 @@ function App() {
 							</div>
 
 							<div className="button" id="like-button">
-								<button onClick={updateCityIndex} disabled={buttonsDisabled}>
+								<button onClick={saveCityToDB} disabled={buttonsDisabled}>
 									<img id="like-icon" src={like_img} alt="like icon" />
 								</button>
 							</div>
@@ -333,21 +333,37 @@ function App() {
 		);
 	}
 
+	// function that saves the current city to the users db and then increments the city to the next
+	function saveCityToDB(){
+
+		// here is where you make fetch to DB to save to users db
+		// just copied pasted. needs to be filled out
+		fetch("/save_city", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				// fill in what we are passing to flask
+			})
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				// fill this in if we need anything
+			}).catch(function (error) {
+				console.log("Caught error while saving city to user's DB: " + error);
+			});
+
+		// now increment the city
+		updateCityIndex();
+	}
+
 	// function to update the value of the city index and make sure it doesnt go out of bounds
 	function updateCityIndex() {
 		if (cityIndex < cityList.length - 1) {
 			// before we set a timer, we update index+1 and disable the like/dislike button again
 			setCityIndex(cityIndex + 1);
 			setButtonsDisabled(true);
-
-			// now lets make the loading div visible while the timer runs
-			setGridContainer("grid-container-loading");
-
-			// once the timer finishes, it will change these two states
-			setTimeout(() => {
-				setButtonsDisabled(false);
-				setGridContainer("grid-container");
-			}, 5000);
 		}
 	}
 
@@ -389,6 +405,9 @@ function App() {
 
 	// function that will make a fetch request to the server for the information needed from the api's
 	function getCityInfo(city) {
+		// now lets make the loading div visible while the timer runs
+		setGridContainer("grid-container-loading");
+
 		// fetch api call
 		fetch("/get_city", {
 			method: "POST",
@@ -408,8 +427,9 @@ function App() {
 				set_locations(data.opentrip);
 				set_locationimg(data.opentripimages);
 			})
+
 			.catch(function (error) {
-				console.log("This is the catch: " + error);
+				console.log("Caught error while fetching info about the next city: " + error);
 			});
 
 		function handleErrors(response) {
@@ -418,6 +438,12 @@ function App() {
 			}
 			return response;
 		}
+
+		// once the timer finishes, it will change these two states
+		setTimeout(() => {
+			setButtonsDisabled(false);
+			setGridContainer("grid-container");
+		}, 6000);
 	}
 }
 

@@ -102,6 +102,17 @@ def index():
     )
 
 # react fetch requests
+# saves city to users db and sends back an OK response if nothing goes wrong
+@app.route("/save_city", methods=["POST"])
+@login_required
+def save_city():
+
+    # need to fill out
+
+    # send information back to the react frontend page
+    return flask.jsonify({"fill out": "yes"})
+
+# gets info about the requested city and sends back the info
 @app.route("/get_city", methods=["POST"])
 @login_required
 def get_city():

@@ -32,6 +32,9 @@ a:hover {
 	display: inline-block;
 	padding-bottom: 2%;
 }
+.page-container {
+	padding: 0 15%;
+}
 
 /* Panel styling */
 .panels-container {
@@ -66,7 +69,7 @@ a:hover {
 	display: grid;
 	margin: 0 1%;
 	grid-template-columns: 1.1fr 0.9fr;
-	grid-template-rows: 0.5fr 1fr;
+	grid-template-rows: 1fr;
 	gap: 0px 0px;
 	grid-template-areas:
 		"citypic-panel  interaction-panels"
@@ -364,6 +367,7 @@ button {
 	margin: auto;
 	width: 100%;
 	height: 100%;
+	position: relative;
 	grid-area: loading-panel;
 
 	box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
@@ -375,9 +379,10 @@ button {
 }
 
 .loading {
-	position: relative;
-	top: 40%;
-	left: 40%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -30px 0 0 -50px;
 	border-radius: 10px;
 	z-index: 10;
 }
@@ -385,7 +390,7 @@ button {
 .loading:after {
 	content: "";
 	display: block;
-	background: #f90;
+	background: #fffcdc;
 	text-align: center;
 	width: 115px;
 	height: 80px;
@@ -396,7 +401,7 @@ button {
 	animation: loading 2s linear 0s infinite;
 }
 .loading:after {
-	background: #60c;
+	background: #d9a7c7;
 	animation: loading 1.5s linear 1.5s infinite;
 }
 @keyframes loading {
@@ -407,7 +412,6 @@ button {
 		transform: rotate(360deg);
 	}
 }
-
 
 /* Responsive styling */
 @media screen and (max-width: 950px) {
@@ -434,13 +438,19 @@ button {
 	.like-panel-mobile {
 		display: block;
 	}
+	#panel {
+		max-width: 100%;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.page-container {
+		padding: 0 6%;
+	}
 }
 
 @media screen and (max-width: 400px) {
 	#citypic {
 		max-width: 66%;
-	}
-	#panel {
-		max-width: 100%;
 	}
 }

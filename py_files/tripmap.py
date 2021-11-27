@@ -40,7 +40,8 @@ class OpenTripMap:
                 for i in range(0, 3):
                     y = d["features"][i]["properties"]["name"]
                     if y == "":
-                        print("places skip 0-3")
+                        x = "Nothing"
+                        xid.append(x)
                     else:
                         x = d["features"][i]["properties"]["xid"]
                         xid.append(x)

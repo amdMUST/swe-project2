@@ -102,14 +102,15 @@ function OpenTripMap(props) {
 	return (
 		<>
 			<h3>Cool locations near {props.city}</h3>
-			<div>
+			<div id="item">
 				{props.locations.map(location => (
-					<p data-testid="CityLocation">{location}</p>
+					<><p data-testid="CityLocation">{location}</p><br></br></>
 				))}
 			</div>
-			<div>
+
+			<div id="item">
 				{props.locationimg.map(img => (
-					<img data-testid="CityImages" alt="location" src={img} width="100" height="100"></img>
+					<><img data-testid="CityImages" alt="location" src={img} width="50" height="50"></img><br></br></>
 				))}
 			</div>
 

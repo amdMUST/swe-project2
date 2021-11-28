@@ -89,17 +89,7 @@ function Articles(props) {
 	return (
 		<>
 			<p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
-			<p>Abstract: {props.article_info.abstract}</p>
-			<p>Image: </p>
-			<img
-				src={props.article_info.img_url}
-				alt="Article Art"
-				width="100"
-				height="100"
-			></img>
-			<p>
-				Want More: <a href={props.article_info.web_url}> Click Me!</a>
-			</p>
+			<p>Abstract: {props.article_info.abstract}</p>		
 		</>
 	);
 }
@@ -215,7 +205,7 @@ function App() {
 	// when the index changes, change the city, then get that cities info
 	useEffect(() => setCity(cityList[cityIndex]), [cityIndex]);
 	useEffect(() => getCityInfo(city), [city]);
-
+  
 	return (
 		<div>
 			<a href="/">
@@ -323,6 +313,7 @@ function App() {
 	function changeColor(temp) {
 		var className = "average";
 
+
 		if (temp === null || temp === "") {
 			return "average";
 		}
@@ -390,3 +381,5 @@ function App() {
 }
 
 export default App;
+
+

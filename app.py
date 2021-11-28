@@ -205,6 +205,7 @@ def save():
 
 
 @app.route("/Static_City")
+@login_required
 def Static_City():
     city = "Atlanta"
     i_client.get_cityimg_url(city)

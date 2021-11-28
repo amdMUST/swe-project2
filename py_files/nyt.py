@@ -4,6 +4,11 @@ from dotenv import load_dotenv, find_dotenv
 # a class to handle all of the weather requests the web-app will make
 class nyt_client:
     def __init__(self):
+
+        # retrieve key and url for request
+        load_dotenv(find_dotenv())
+        self.API_KEY = os.environ.get("NYT_API_KEY")
+
         # configuration of variables
         self.nyt_main = "null"
         self.headlines = "null"

@@ -12,9 +12,10 @@ from flask_login.utils import logout_user
 from oauthlib.oauth2 import WebApplicationClient
 
 from py_files.nyt import *
-from py_files.tripmap import OpenTrip, OpenTripImages
+from py_files.tripmap import *
 from py_files.weather import *
 from py_files.city import *
+from py_files.cityimg import *
 
 app = flask.Flask(__name__, static_folder="./build/static")
 
@@ -34,7 +35,6 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
 GOOGLE_DISCOVERY_URL = "https://accounts.google.com/.well-known/openid-configuration"
 
-# does this work on heroku ?
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 # OAuth 2 client setup
@@ -55,6 +55,8 @@ login_manager.init_app(app)
 n_client = nyt_client()
 w_client = weather_client()
 c_manager = city_manager()
+OpenMap = OpenTripMap()
+i_client = cityimg_client()
 
 bp = flask.Blueprint("bp", __name__, template_folder="./build")
 
@@ -85,22 +87,13 @@ def main():
 @bp.route("/index")
 @login_required
 def index():
-
-    city = c_manager.get_city()
-    w_client.getWeather(city)
-    n_client.get_article_data(city)
-    opentrip = OpenTrip(city)
-    opentripimages = OpenTripImages(city)
-
+    
     DATA = {
-        "city": city,
-        "weather_info": w_client.getMap(),
-        "article_info": n_client.getArticle(),
-        "opentrip": list(opentrip[0:3]),
-        "opentripimages": list(opentripimages[0:3]),
+        "city_list": c_manager.get_city_list(),
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
+        "user_pic": current_user.pic,
     }
     data = json.dumps(DATA)
     return flask.render_template(
@@ -108,6 +101,33 @@ def index():
         data=data,
     )
 
+# react fetch requests
+@app.route("/get_city", methods=["POST"])
+@login_required
+def get_city():
+
+    # retrieve name of city that we need to render
+    city = flask.request.json.get('city')
+
+    # get all the information for that specific city
+    i_client.get_cityimg_url(city)
+    w_client.getWeather(city)
+    n_client.get_article_data(city)
+    OpenMap.getInfo(city)
+    opentrip = OpenMap.names
+    opentripimages = OpenMap.img
+
+    DATA = {
+        "city": city,
+        "city_image": i_client.getCityImg(),
+        "weather_info": w_client.getMap(),
+        "article_info": n_client.getArticle(),
+        "opentrip": list(opentrip[0:3]),
+        "opentripimages": list(opentripimages[0:3]),
+    }
+
+    # send information back to the react frontend page
+    return flask.jsonify(DATA)
 
 app.register_blueprint(bp)
 
@@ -168,7 +188,7 @@ def google_auth():
         return "User email not available or not verified by Google.", 400
 
     # check if user is in db
-    newUser = UserDB(user_id=unique_id, email=users_email, name=users_name)
+    newUser = UserDB(user_id=unique_id, email=users_email, name=users_name, pic=picture)
     if isUserInDB(unique_id) == False:
         # if not add them to db
         db.session.add(newUser)
@@ -193,10 +213,63 @@ def logout():
     return flask.redirect(flask.url_for("main"))
 
 
-@app.route("/save", methods=["POST"])
-def save():
-    ...
+@app.route("/Static_City")
+@login_required
+def Static_City():
+    city = "Atlanta"
+    i_client.get_cityimg_url(city)
+    w_client.getWeather(city)
+    n_client.get_article_data(city)
+    OpenMap.getInfo(city)
+    opentrip = OpenMap.names
+    opentripimages = OpenMap.img
+    city_imageinfo = i_client.getCityImg()
+    weather_info = w_client.getMap()
+    article_info = n_client.getArticle()
+    city_image = city_imageinfo[0][1]
+    article_info_headlines = article_info[0][1]
+    article_info_abstract = article_info[1][1]
+    article_info_img_url = article_info[2][1]
+    weather_main = weather_info[0][1]
+    weather_desc = weather_info[1][1]
+    temp = weather_info[2][1]
+    feels_like = [3][0]
+    temp_min = [4][0]
+    temp_max = [5][0]
+    pressure = weather_info[6][1]
+    humidity = weather_info[7][1]
+    clouds = weather_info[8][1]
+    wind = weather_info[9][1]
+    user_id = current_user.user_id
+    user_email = current_user.email
+    user_name = current_user.name
+    user_pic = current_user.pic
 
+    return flask.render_template(
+        "Static_City.html",
+        opentrip=opentrip,
+        opentripimages=opentripimages,
+        city=city,
+        city_image=city_image,
+        weather_info=weather_info,
+        article_info_headlines=article_info_headlines,
+        article_info_abstract=article_info_abstract,
+        article_info_img_url=article_info_img_url,
+        weather_main=weather_main,
+        weather_desc=weather_desc,
+        temp=temp,
+        feels_like=feels_like,
+        temp_min=temp_min,
+        temp_max=temp_max,
+        pressure=pressure,
+        humidity=humidity,
+        clouds=clouds,
+        wind=wind,
+        user_id=user_id,
+        user_email=user_email,
+        user_name=user_name,
+        user_pic=user_pic,
+    )
 
 # Function for checking if a user is already in the database already
 def isUserInDB(userID):

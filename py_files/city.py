@@ -3,14 +3,15 @@ import os
 import sys
 import random
 
-class city_manager():
+
+class city_manager:
     def __init__(self):
         # find the location of the csv file
         current = os.path.dirname(os.path.realpath(__file__))
         parent = os.path.dirname(current)
         sys.path.append(parent)
         # open the file with cities in read mode
-        filename = open("py_files/cityList.csv", "r")
+        filename = open("py_files/cityList.csv", "r", encoding="utf-8-sig")
 
         # initialize and fill list
         self.cities = self.fill_list(filename)
@@ -23,13 +24,14 @@ class city_manager():
         # iterating over each row and append values to the list
         cities = []
         for line in filename:
-            cities.append(line.strip())
-        
-        return cities
+            cities.append(line.strip().lower().capitalize())
 
+        return cities
 
     def get_city_list(self):
         # return list
+        random.shuffle(self.cities)
+
         return self.cities
 
     def get_city(self):

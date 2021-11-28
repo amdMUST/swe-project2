@@ -7,15 +7,19 @@
             font-family: "Ubuntu", sans-serif;
             color: black;
             background-color: #e8e9f3;
-            font-size: 30pt;
+            font-size: 30px;
             text-align: center;
-            margin: 0;
+
+            background: linear-gradient(45deg, #d9a7c7, #fffcdc);
+            background-size: 600% 100%;
+            animation: gradient 12s linear infinite;
+            animation-direction: alternate;
         }
 
         a {
             text-decoration: none;
             transition-duration: 0.4s;
-            color: black;
+            color: white;
         }
 
         a:visited {
@@ -29,11 +33,11 @@
         }
 
         #title {
+            font-size: 100px;
             margin: 0 auto;
             padding-bottom: 2%;
             display: inline-block;
             text-decoration: none;
-            font-family: "Dela Gothic One", cursive;
             font-family: "Sansita Swashed", cursive;
         }
 
@@ -42,42 +46,26 @@
             margin: 5% auto 0 auto;
             padding: 1% 0 2% 0;
             max-width: 66%;
+            align-items: center;
 
-            /*   background-color: #97bc9e;
-            border-radius: 40px;
-            box-shadow: 0px 10px; */
-
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(8.5px);
-            -webkit-backdrop-filter: blur(8.5px);
-            border-radius: 10px;
-            border: 0px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.375);
+            box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.125);
         }
-
         .signup-block-content {
             padding: 0 2%;
         }
-
         #signup-title {
             margin-top: 0;
-            font-size: larger;
+            font-size: 45px;
         }
-
         .signup-flashes {
             color: red;
             list-style: none;
             padding: 0;
             font-size: smaller;
         }
-
-        #signup-link {
-            color: white;
-            text-decoration: none;
-            transition-duration: 0.4s;
-            margin: 0 auto;
-        }
-
         .signup-formfield {
             padding: 3%;
             border-radius: 1%;
@@ -95,36 +83,35 @@
             vertical-align: baseline;
         }
 
+        /* Button Styling */
         .button {
-            background-color: #000000;
             font-family: "Dela Gothic One", cursive;
-            border: none;
-            border-radius: 16px;
-            color: white;
-            padding: 15px 30px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 33px;
             transition-duration: 0.4s;
-        }
+            text-align: center;
+            display: inline-block;
+            font-size: 30px;
+            padding: 15px 30px;
 
+            background: rgba(0, 0, 0, 0.88);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
         .button:hover {
-            background-color: rgb(37, 87, 54);
+            background-color: #bd0f43;
             cursor: pointer;
             color: white;
         }
-
-        .wrapper {
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            background: linear-gradient(45deg, #654ea3, #eaafc8);
-            background-size: 600% 100%;
-            animation: gradient 16s linear infinite;
-            animation-direction: alternate;
+        #button-link {
+            color: white;
+            text-decoration: none;
+            transition-duration: 0.4s;
+            margin: 0 auto;
         }
+
+        /* Gradient Styling */
         @keyframes gradient {
             0% {
                 background-position: 0%;
@@ -142,6 +129,7 @@
                 background-position: 100%;
             }
         }
+
     </style> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -152,8 +140,6 @@
 </head>
 
 <body>
-    <div class="wrapper"></div>
-  
     <a href="/">
       <h1 id="title">CitySpit</h1>
     </a>
@@ -173,7 +159,9 @@
             {% endif %}
         {% endwith %}
   
-        <a id="signup-link" class="button" href="/login_post">Login</a>
+        <div class="button">
+            <a id="button-link" href="/login_post">Login</a>
+        </div>
       </div>
     </div>
   

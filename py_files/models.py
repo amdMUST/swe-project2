@@ -10,9 +10,10 @@ class UserDB(UserMixin, db.Model):
     user_id = db.Column(db.Float, unique=True, primary_key=True)
     email = db.Column(db.String(80), unique=True)
     name = db.Column(db.String(80), unique=True)
+    pic = db.Column(db.String(120), unique=True)
 
     def __repr__(self):
-        return '<User_id = %s, Email = %s, Name = %s>' % (self.user_id, self.email, self.name)
+        return '<User_id = %s, Email = %s, Name = %s, Pic = %s>' % (self.user_id, self.email, self.name, self.pic)
 
     def get_id(self):
         """Return the id from the username."""

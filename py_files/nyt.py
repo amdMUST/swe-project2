@@ -44,7 +44,12 @@ class nyt_client:
                 return article["abstract"]
 
             def get_img_url(article):
-                return article["multimedia"][0]["url"]
+                image = ""
+                try:
+                    image = article["multimedia"][0]["url"]
+                except:
+                    image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
+                return image
 
             # TypeError: list indices must be integers or slices, not str
             def get_web_url(article):

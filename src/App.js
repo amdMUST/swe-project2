@@ -13,31 +13,11 @@ function Weather(props) {
 }
 
 function Articles(props) {
-  // an array of 10 items of a specific city
-  const headline = props.article_info.headlines;
-  const abstract = props.article_info.abstract;
-  const img_url = props.article_info.img_url;
-  const web_url = props.article_info.web_url;
-  console.log(img_url)
-
   return (
     <>
-      <div >
-        {headline.map((item, index) => {
-          console.log(index)
-          return (
-            <>
-              <div> <a href={web_url[index]}>
-                <p data-testid="article_data1">Headline: {headline[index]}</p>
-                <p>Abstract: {abstract[index]}</p>
-                <img src={"http://static01.nyt.com/" + img_url[index]} alt="Article Image" width="100" height="100"></img>
-              </a >
-              </div >
-            </>
-          )
-        })
-        }
-      </div >
+      <p data-testid="article_data1">Headline: {props.article_info.headlines[0]}</p>
+      <p>Abstract: {props.article_info.abstract[0]}</p>
+      <p>Web Url: {props.article_info.web_url[0]}</p>
     </>
   )
 }

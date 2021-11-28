@@ -72,7 +72,7 @@ a:hover {
 	display: grid;
 	margin: 0 1%;
 	grid-template-columns: 1.1fr 0.9fr;
-	grid-template-rows: 1fr 1fr;
+	grid-template-rows: 0.5fr 1fr;
 	gap: 0px 0px;
 	grid-template-areas:
 		"citypic-panel like-panel"
@@ -103,7 +103,7 @@ a:hover {
 }
 #citypic {
 	max-width: 99%;
-	height: fit-content;
+	max-height: 420px;
 
 	box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(10.5px);
@@ -180,7 +180,7 @@ a:hover {
 }
 #weather-feels-like {
 	margin: 0;
-	font-size: 20px;
+	font-size: 16px;
 }
 #weather-desc {
 	margin: 0;
@@ -211,6 +211,11 @@ a:hover {
 }
 
 /* Like/Dislike Styling */
+button {
+	cursor: pointer;
+	display: contents;
+}
+
 .like-panel {
 	margin: auto;
 	padding: 3%;

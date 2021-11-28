@@ -87,8 +87,29 @@ def main():
 @bp.route("/index")
 @login_required
 def index():
+    
+    DATA = {
+        "city_list": c_manager.get_city_list(),
+        "user_id": current_user.user_id,
+        "user_email": current_user.email,
+        "user_name": current_user.name,
+        "user_pic": current_user.pic,
+    }
+    data = json.dumps(DATA)
+    return flask.render_template(
+        "index.html",
+        data=data,
+    )
 
-    city = c_manager.get_city()
+# react fetch requests
+@app.route("/get_city", methods=["POST"])
+@login_required
+def get_city():
+
+    # retrieve name of city that we need to render
+    city = flask.request.json.get('city')
+
+    # get all the information for that specific city
     i_client.get_cityimg_url(city)
     w_client.getWeather(city)
     n_client.get_article_data(city)
@@ -103,17 +124,10 @@ def index():
         "article_info": n_client.getArticle(),
         "opentrip": list(opentrip[0:3]),
         "opentripimages": list(opentripimages[0:3]),
-        "user_id": current_user.user_id,
-        "user_email": current_user.email,
-        "user_name": current_user.name,
-        "user_pic": current_user.pic,
     }
-    data = json.dumps(DATA)
-    return flask.render_template(
-        "index.html",
-        data=data,
-    )
 
+    # send information back to the react frontend page
+    return flask.jsonify(DATA)
 
 app.register_blueprint(bp)
 
@@ -199,11 +213,6 @@ def logout():
     return flask.redirect(flask.url_for("main"))
 
 
-@app.route("/save", methods=["POST"])
-def save():
-    ...
-
-
 @app.route("/Static_City")
 @login_required
 def Static_City():
@@ -261,7 +270,6 @@ def Static_City():
         user_name=user_name,
         user_pic=user_pic,
     )
-
 
 # Function for checking if a user is already in the database already
 def isUserInDB(userID):

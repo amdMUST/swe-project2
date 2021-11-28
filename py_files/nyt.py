@@ -51,7 +51,7 @@ class nyt_client:
             def get_img_url(article):
                 image = ""
                 try:
-                    image = article["multimedia"][0]["url"]
+                    image = "http://static01.nyt.com/" + article["multimedia"][0]["url"]
                 except:
                     image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
                 return image

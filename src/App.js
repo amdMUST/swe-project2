@@ -5,8 +5,8 @@ import './weatherIcon.css';
 
 function Weather(props) {
 
-  return (
-    <>
+	return (
+		<>
 			<div id="weather-left">
 				<div id="weather-icon">
 					<i class={getTempIcon(props.weather_info.weather_main)}></i>
@@ -24,9 +24,9 @@ function Weather(props) {
 				<p id="weather-humidity">{props.weather_info.humidity}% Humidity</p>
 			</div>
 		</>
-  );
+	);
 
-  // function for getting the correct weather icon from our icon list
+	// function for getting the correct weather icon from our icon list
 	function getTempIcon(desc) {
 		// set up base weather as sunny
 		const base = "wi wi-";
@@ -89,74 +89,79 @@ function Weather(props) {
 }
 
 function Articles(props) {
-  return (
-    <>
-      <p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
-      <p>Abstract: {props.article_info.abstract}</p>
-      <p>Image: {props.article_info.img_url}</p>
-    </>
-  )
+	return (
+		<>
+			<p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
+			<p>Abstract: {props.article_info.abstract}</p>
+			<p>Image: {props.article_info.img_url}</p>
+		</>
+	)
 }
 
 function OpenTripMap(props) {
-  return (
-    <>
-      <h3>Cool locations near {props.city}</h3>
-      {props.locations.map(location => (
-        <p data-testid="CityLocation">{location}</p>
-      ))}
-      {props.locationimg.map(img => (
-        <img data-testid="CityImages" alt="location" src={img} width="100" height="100"></img>
-      ))}
-    </>
-  )
+	return (
+		<>
+			<h3>Cool locations near {props.city}</h3>
+			<div>
+				{props.locations.map(location => (
+					<p data-testid="CityLocation">{location}</p>
+				))}
+			</div>
+			<div>
+				{props.locationimg.map(img => (
+					<img data-testid="CityImages" alt="location" src={img} width="100" height="100"></img>
+				))}
+			</div>
+
+		</>
+	)
 }
 
 function App() {
-  const args = (document.getElementById('data') == null) ? ({
-    "city": "test city",
-    "city_image": [
-      ["image_url", "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"]
-    ],
-    "weather_info": [
-      ["weather_main", "null"],
-      ["weather_desc", "null"],
-      ["temp", "null"],
-      ["feels_like", "null"],
-      ["temp_min", "null"],
-      ["temp_max", "null"],
-      ["pressure", "null"],
-      ["humidity", "null"],
-      ["clouds", "null"],
-      ["wind", "null"],
-    ],
-    "article_info": [
-      ["nyt_main", "null"],
-      ["headlines", "null"],
-      ["abstract", "null"],
-      ["image_url", "null"],
-      ["web_url", "null"],
-      ["lead_paragraph", "null"],
-    ],
-    "opentrip": ["No Cool Locations"],
-    "opentripimages": ["https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"],
-    "user_id": "test user_id",
-    "user_email": "test email",
-    "user_name": "test",
-    "user_pic": "https://i.pinimg.com/736x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg",
-  }) : JSON.parse(document.getElementById('data').text);
+	const args = (document.getElementById('data') == null) ? ({
+		"city": "test city",
+		"city_image": [
+			["image_url", "https://images.unsplash.com/photo-1575917649705-5b59aaa12e6b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"]
+		],
+		"weather_info": [
+			["weather_main", "null"],
+			["weather_desc", "null"],
+			["temp", "null"],
+			["feels_like", "null"],
+			["temp_min", "null"],
+			["temp_max", "null"],
+			["pressure", "null"],
+			["humidity", "null"],
+			["clouds", "null"],
+			["wind", "null"],
+		],
+		"article_info": [
+			["nyt_main", "null"],
+			["headlines", "null"],
+			["abstract", "null"],
+			["image_url", "null"],
+			["web_url", "null"],
+			["lead_paragraph", "null"],
+		],
+		"opentrip": ["No Cool Locations"],
+		"opentripimages": ["https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"],
+		"user_id": "test user_id",
+		"user_email": "test email",
+		"user_name": "test",
+		"user_pic": "https://i.pinimg.com/736x/f1/da/a7/f1daa70c9e3343cebd66ac2342d5be3f.jpg",
+	}) : JSON.parse(document.getElementById('data').text);
 
-  const city = args.city;
-  const city_image = createObject(args.city_image);
-  const article_info = createObject(args.article_info);
-  const weather_info = createObject(args.weather_info);
-  let locations = args.opentrip;
-  let locationimg = args.opentripimages;
+	const city = args.city;
+	const city_image = createObject(args.city_image);
+	const article_info = createObject(args.article_info);
+	const weather_info = createObject(args.weather_info);
+	let locations = args.opentrip;
+	let locationimg = args.opentripimages;
 
-  const [temp, setTemp] = useState(weather_info.temp)
-  const weatherPanelColor = changeColor(temp);
+	const [temp, setTemp] = useState(weather_info.temp)
+	const weatherPanelColor = changeColor(temp);
 
-  return (
+	return (
 		<div>
 
 			<a href="/">
@@ -180,7 +185,7 @@ function App() {
 									<img
 										id="dislike-icon"
 										src="https://img.icons8.com/external-becris-lineal-becris/64/000000/external-cancel-mintab-for-ios-becris-lineal-becris.png"
-                    alt="dislike icon"
+										alt="dislike icon"
 									/>
 								</div>
 
@@ -188,7 +193,7 @@ function App() {
 									<img
 										id="like-icon"
 										src="https://img.icons8.com/material-outlined/64/000000/like--v1.png"
-                    alt="like icon"
+										alt="like icon"
 									/>
 								</div>
 							</div>
@@ -239,47 +244,49 @@ function App() {
 		</div>
 	);
 
-  // function that changes the color of the weather tab according to the temperature
-  function changeColor(temp){
-    var className = "average"
+	// function that changes the color of the weather tab according to the temperature
+	function changeColor(temp) {
+		var className = "average"
 
-    if( temp === null || temp === ""){
-      return "average";
-    }
+		if (temp === null || temp === "") {
+			return "average";
+		}
 
-    if( temp <= 50 ){
-      className = "cold";
-    }
-    else if( temp >= 51 && temp <= 65 ){
-      className = "cool";
-    }
-    else if( temp >= 66 && temp <= 74 ){
-      className = "average";
-    }
-    else if( temp >= 75 && temp <= 81 ){
-      className = "warm";
-    }
-    else if( temp >= 82 ){
-      className = "hot";
-    }
+		if (temp <= 50) {
+			className = "cold";
+		}
+		else if (temp >= 51 && temp <= 65) {
+			className = "cool";
+		}
+		else if (temp >= 66 && temp <= 74) {
+			className = "average";
+		}
+		else if (temp >= 75 && temp <= 81) {
+			className = "warm";
+		}
+		else if (temp >= 82) {
+			className = "hot";
+		}
 
-    return className;
-  }
+		return className;
+	}
 
-  // function that takes the weather from the json and transforms it into an easier accessable object
-  function createObject(input_array) {
+	// function that takes the weather from the json and transforms it into an easier accessable object
+	function createObject(input_array) {
 
-    var arr = {};
-    // we need to map each array to its value 
-    for (var i = 0; i < input_array.length; i++) {
-      var key = input_array[i][0];
-      var val = input_array[i][1];
-      arr[key] = val;
-    }
+		var arr = {};
+		// we need to map each array to its value 
+		for (var i = 0; i < input_array.length; i++) {
+			var key = input_array[i][0];
+			var val = input_array[i][1];
+			arr[key] = val;
+		}
 
-    return arr;
-  }
+		return arr;
+	}
 
 }
 
 export default App;
+
+

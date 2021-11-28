@@ -23,27 +23,51 @@ class nyt_client:
         if not self.verifyCity(city):
             return
 
-        
+        # retrieve key and url for request
+        load_dotenv(find_dotenv())
+        API_KEY = os.environ.get("NYT_API_KEY")
         BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
 
         try:
 
             params = {
                 "q": city,
-                "api-key": self.API_KEY,
+                "api-key": API_KEY,
             }
             response = requests.get(BASE_URL, params=params)
             data = response.json()
             # Requires [] due to the need to refrence which article from the json
             # TODO: Make a list to iterate through the articles with the front end
             # set [i] to be referenced from the frontend but it only goes to about 9 articles
-            article = data["response"]["docs"][0]
-            self.headlines = article["headline"]["main"]
-            self.abstract = article["abstract"]
-            self.img_url = "https://static01.nyt.com/" + article["multimedia"][0]["url"]
-            self.web_url = article["web_url"]
-            self.lead_paragraph = article["lead_paragraph"]
 
+            articles = data["response"]["docs"]
+
+            def get_headline(article):
+                return article["headline"]["main"]
+
+            def get_abstract(article):
+                return article["abstract"]
+
+            def get_img_url(article):
+                image = ""
+                try:
+                    image = article["multimedia"][0]["url"]
+                except:
+                    image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
+                return image
+
+            # TypeError: list indices must be integers or slices, not str
+            def get_web_url(article):
+                return article["web_url"]
+
+            def get_lead_paragraph(article):
+                return article["lead_paragraph"]
+
+            self.headlines = map(get_headline, articles)
+            self.abstract = map(get_abstract, articles)
+            self.web_url = map(get_web_url, articles)
+            self.img_url = map(get_img_url, articles)
+            self.lead_paragraph = map(get_lead_paragraph, articles)
         except:
             print("nyt parsing error")
             return
@@ -57,11 +81,11 @@ class nyt_client:
 
     def getArticle(self):
         dict = [
-            ("headlines", self.headlines),
-            ("abstract", self.abstract),
-            ("img_url", self.img_url),
-            ("web_url", self.web_url),
-            ("lead_paragraph", self.lead_paragraph),
+            ("headlines", list(self.headlines)),
+            ("abstract", list(self.abstract)),
+            ("web_url", list(self.web_url)),
+            ("img_url", list(self.img_url)),
+            ("lead_paragraph", list(self.lead_paragraph)),
         ]
         return dict
 

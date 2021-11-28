@@ -11,7 +11,13 @@ body {
 	animation: gradient 12s linear infinite;
 	animation-direction: alternate;
 }
-
+#item {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	font-size: x-small;
+	
+  }
 a {
 	text-decoration: none;
 	transition-duration: 0.4s;

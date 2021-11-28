@@ -17,6 +17,7 @@ function Articles(props) {
     <>
       <p data-testid="article_data1">Headline: {props.article_info.headlines[0]}</p>
       <p>Abstract: {props.article_info.abstract[0]}</p>
+      <p>Abstract: {props.article_info.img_url[0]}</p>
       <p>Web Url: {props.article_info.web_url[0]}</p>
     </>
   )

@@ -43,7 +43,8 @@ class OpenTripMap:
                 for i in range(0, 3):
                     y = d["features"][i]["properties"]["name"]
                     if y == "":
-                        print("places skip 0-3")
+                        x = "Nothing"
+                        xid.append(x)
                     else:
                         x = d["features"][i]["properties"]["xid"]
                         xid.append(x)
@@ -51,7 +52,8 @@ class OpenTripMap:
                 for i in range(0, length):
                     y = d["features"][i]["properties"]["name"]
                     if y == "":
-                        print("places skip 0-len")
+                        x = "Nothing"
+                        xid.append(x)
                     else:
                         x = d["features"][i]["properties"]["xid"]
                         xid.append(x)
@@ -74,9 +76,13 @@ class OpenTripMap:
                 req = base_url + id + key + self.Token
                 r = requests.get(req)
                 d = r.json()
-                name = d["name"]
-                names.append(name)
                 x = d.keys()
+                if "name" in x:
+                    name = d["name"]
+                    names.append(name)
+                else:
+                    name = "Wilderness"
+                    names.append(name)
                 if "preview" in x:
                     image = d["preview"]["source"]
                     img.append(image)
@@ -86,7 +92,8 @@ class OpenTripMap:
 
         self.img = img
         self.names = names
-    
+
+
 # used to specifically get coordinates instead of creating a new class, might be useful later for react
 def getCoordinates(city):
     load_dotenv(find_dotenv())

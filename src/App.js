@@ -86,43 +86,32 @@ function Weather(props) {
 }
 
 function Articles(props) {
-	return (
-		<>
-			<p data-testid="article_data1">Headline: {props.article_info.headlines}</p>
-			<p>Abstract: {props.article_info.abstract}</p>
-			<p>Image: </p>
-			<img
-				src={props.article_info.img_url}
-				alt="Article Art"
-				width="100"
-				height="100"
-			></img>
-			<p>
-				Want More: <a href={props.article_info.web_url}> Click Me!</a>
-			</p>
-		</>
-	);
+  return (
+    <>
+      <p data-testid="article_data1">Headline: {props.article_info.headlines[0]}</p>
+      <p>Abstract: {props.article_info.abstract[0]}</p>
+      <p>Image: {props.article_info.img_url[0]}</p>
+      <p>Web Url: {props.article_info.web_url[0]}</p>
+    </>
+  );
 }
 
 function OpenTripMap(props) {
 	return (
 		<>
 			<h5>Cool locations near {props.city}</h5>
-			{props.locations.map((location) => (
-				<p data-testid="CityLocation" key={location}>
-					{location}
-				</p>
-			))}
-			{props.locationimg.map((img) => (
-				<img
-					key={img}
-					data-testid="CityImages"
-					alt="location"
-					src={img}
-					width="100"
-					height="100"
-				/>
-			))}
+			<div id="item">
+				{props.locations.map(location => (
+					<p data-testid="CityLocation" key={location}>{location}</p>
+				))}
+			</div>
+			<br></br>
+			<div id="item">
+				{props.locationimg.map(img => (
+					<img key={img} data-testid="CityImages" alt="location" src={img} width="50" height="50"/>
+				))}
+			</div>
+			<br></br>
 		</>
 	);
 }
@@ -448,3 +437,5 @@ function App() {
 }
 
 export default App;
+
+

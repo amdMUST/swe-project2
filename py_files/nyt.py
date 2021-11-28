@@ -66,7 +66,7 @@ class nyt_client:
             self.headlines = map(get_headline, articles)
             self.abstract = map(get_abstract, articles)
             self.web_url = map(get_web_url, articles)
-            self.image_url = map(get_img_url, articles)
+            self.img_url = map(get_img_url, articles)
             self.lead_paragraph = map(get_lead_paragraph, articles)
         except:
             print("nyt parsing error")
@@ -84,7 +84,7 @@ class nyt_client:
             ("headlines", list(self.headlines)),
             ("abstract", list(self.abstract)),
             ("web_url", list(self.web_url)),
-            ("img_url", list(self.image_url)),
+            ("img_url", list(self.img_url)),
             ("lead_paragraph", list(self.lead_paragraph)),
         ]
         return dict

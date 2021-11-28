@@ -10,12 +10,12 @@ class nyt_client:
         self.API_KEY = os.environ.get("NYT_API_KEY")
 
         # configuration of variables
-        self.nyt_main = "null"
-        self.headlines = "null"
-        self.abstract = "null"
-        self.img_url = "null"
-        self.web_url = "null"
-        self.lead_paragraph = "null"
+        self.nyt_main = ""
+        self.headlines = ""
+        self.abstract = ""
+        self.img_url = ""
+        self.web_url = ""
+        self.lead_paragraph = ""
 
     def get_article_data(self, city):
 

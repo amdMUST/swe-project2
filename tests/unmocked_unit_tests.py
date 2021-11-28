@@ -44,47 +44,47 @@ class VerifyCityNameTest(unittest.TestCase):
             self.assertEqual(client.verifyCity(test[INPUT]), test[EXPECTED_OUTPUT])
 
 
-# class getArticleTest(unittest.TestCase):
-#     def setUp(self):
-#         self.success_test_params = [
-#             {
-#                 INPUT: (""),
-#                 EXPECTED_OUTPUT: [
-#                     ("headlines", "null"),
-#                     ("abstract", "null"),
-#                     ("img_url", "null"),
-#                     ("web_url", "null"),
-#                     ("lead_paragraph", "null"),
-#                 ],
-#             },
-#         ]
-#         self.failure_test_params = [
-#             {
-#                 INPUT: (""),
-#                 EXPECTED_OUTPUT: [
-#                     ("headlines", "test headline"),
-#                     ("abstract", "test abstract"),
-#                     ("img_url", "test image_url"),
-#                     ("web_url", "test web_url"),
-#                     ("lead_paragraph", "test lead_paragraph"),
-#                 ],
-#             },
-#         ]
+class getArticleTest(unittest.TestCase):
+    def setUp(self):
+        self.success_test_params = [
+            {
+                INPUT: (""),
+                EXPECTED_OUTPUT: [
+                    ("headlines", []),
+                    ("abstract", []),
+                    ("web_url", []),
+                    ("img_url", []),
+                    ("lead_paragraph", []),
+                ],
+            },
+        ]
+        self.failure_test_params = [
+            {
+                INPUT: (""),
+                EXPECTED_OUTPUT: [
+                    ("headlines", ["headline1", "headline2", "headline3", "headline4", "headline5"]),
+                    ("abstract", ["abstract1", "abstract2", "abstract3", "abstract4", "abstract5"]),
+                    ("web_url", ["web_url1", "web_url2", "web_url3", "web_url4", "web_url5"]),
+                    ("img_url", ["img_url1", "img_url2", "img_url3", "img_url4", "img_url5"]),
+                    ("lead_paragraph", ["lead_paragraph1", "lead_paragraph2", "lead_paragraph3", "lead_paragraph4", "lead_paragraph5"]),
+                ],
+            },
+        ]
 
-#     def test_getArticle(self):
-#         # Do not assign values to the class and see if the null values are being returned from the function
-#         client = nyt_client()
-#         # for test in self.success_test_params:
-#         #     self.assertEqual(client.getArticle(), test[EXPECTED_OUTPUT])
+    def test_getArticle(self):
+        # Do not assign values to the class and see if the null values are being returned from the function
+        client = nyt_client()
+        for test in self.success_test_params:
+            self.assertEqual(client.getArticle(), test[EXPECTED_OUTPUT])
 
-#         # Assign values to the class and see if the new values are being returned from the function
-#         client.headlines = "test headline"
-#         client.abstract = "test abstract"
-#         client.img_url = "test image_url"
-#         client.web_url = "test web_url"
-#         client.lead_paragraph = "test lead_paragraph"
-#         for test in self.failure_test_params:
-#             self.assertEqual(client.getArticle(), test[EXPECTED_OUTPUT])
+        # Assign values to the class and see if the new values are being returned from the function
+        client.headlines = ["headline1", "headline2", "headline3", "headline4", "headline5"]
+        client.abstract = ["abstract1", "abstract2", "abstract3", "abstract4", "abstract5"]
+        client.web_url = ["web_url1", "web_url2", "web_url3", "web_url4", "web_url5"]
+        client.img_url = ["img_url1", "img_url2", "img_url3", "img_url4", "img_url5"]
+        client.lead_paragraph = ["lead_paragraph1", "lead_paragraph2", "lead_paragraph3", "lead_paragraph4", "lead_paragraph5"]
+        for test in self.failure_test_params:
+            self.assertEqual(client.getArticle(), test[EXPECTED_OUTPUT])
 
 
 if __name__ == "__main__":

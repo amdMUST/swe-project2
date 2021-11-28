@@ -99,19 +99,28 @@ function Articles(props) {
 function OpenTripMap(props) {
 	return (
 		<>
-			<h5>Cool locations near {props.city}</h5>
-			<div id="item">
-				{props.locations.map(location => (
-					<p data-testid="CityLocation" key={location}>{location}</p>
-				))}
+			<h5 id="location-title">Cool locations in {props.city}</h5>
+			<div id="location-list">
+				<ul className="loc-list">
+					{props.locations.map((location, i) => (
+						<li key={location} className="loc-list-item">
+							<div className="loc-list-pic">
+								<img
+									data-testid="CityImages"
+									alt="location"
+									id="loc-pic"
+									src={props.locationimg[i]}
+								/>
+							</div>
+							<div className="loc-list-name">
+								<p id="loc-name" data-testid="CityLocation">
+									{location}
+								</p>
+							</div>
+						</li>
+					))}
+				</ul>
 			</div>
-			<br></br>
-			<div id="item">
-				{props.locationimg.map(img => (
-					<img key={img} data-testid="CityImages" alt="location" src={img} width="50" height="50"/>
-				))}
-			</div>
-			<br></br>
 		</>
 	);
 }

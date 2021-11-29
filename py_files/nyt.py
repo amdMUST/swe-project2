@@ -36,9 +36,6 @@ class nyt_client:
             }
             response = requests.get(BASE_URL, params=params)
             data = response.json()
-            # Requires [] due to the need to refrence which article from the json
-            # TODO: Make a list to iterate through the articles with the front end
-            # set [i] to be referenced from the frontend but it only goes to about 9 articles
 
             articles = data["response"]["docs"]
 
@@ -51,9 +48,9 @@ class nyt_client:
             def get_img_url(article):
                 image = ""
                 try:
-                    image = article["multimedia"][0]["url"]
+                    image = "http://static01.nyt.com/" + article["multimedia"][0]["url"]
                 except:
-                    image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
+                    image = "http://www.clipartbest.com/cliparts/dc7/pE6/dc7pE6Rpi.png"
                 return image
 
             # TypeError: list indices must be integers or slices, not str

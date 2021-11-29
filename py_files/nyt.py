@@ -53,7 +53,7 @@ class nyt_client:
                 try:
                     image = "https://www.nytimes.com/" + article["multimedia"][0]["url"]
                 except:
-                    image = "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
+                    image = "https://cdn0.iconfinder.com/data/icons/heroicons-ui/24/icon-menu-512.png"
                 return image
 
             # TypeError: list indices must be integers or slices, not str

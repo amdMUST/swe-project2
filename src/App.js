@@ -86,35 +86,31 @@ function Weather(props) {
 }
 
 function Articles(props) {
-  // an array of 10 items of a specific city
-  const headline = Array.from(props.article_info.headlines);
-  const abstract = Array.from(props.article_info.abstract);
-  const img_url = Array.from(props.article_info.img_url);
-  const web_url = Array.from(props.article_info.web_url);
-  console.log(headline)
+  const headlines = props.article_info.headlines;
+  const img_url = props.article_info.img_url;
+  const web_url = props.article_info.web_url;
 
   return (
     <>
-      {/* <p data-testid="article_data1">Headline: {props.article_info.headlines[0]}</p>
-      <p>Abstract: {props.article_info.abstract[0]}</p>
-      <p>Image: {props.article_info.img_url[0]}</p>
-      <p>Web Url: {props.article_info.web_url[0]}</p> */}
-      <div >
-        {headline.map((item, index) => {
-          console.log(index)
-          return (
-            <>
-              <div><a href={web_url[index]}>
-                <p data-testid="article_data1">Headline: {headline[index]}</p>
-                <img src={img_url[index]} alt="Article Image" width="100" height="100"></img>
+      <h5 id="article-title">Whats going on here</h5>
+      <div id="article-list">
+        <ul className="art-list">
+          {headlines.map((headline, i) => (
+            <li key={i} className="art-list-item">
+              <a href={web_url[i]} target="_blank" rel="noreferrer">
+                <div className="art-list-pic">
+                  <img alt="thumbnail" id="art-pic" src={img_url[i]} />
+                </div>
+                <div className="art-list-name">
+                  <p id="art-name" data-testid="article_data1">
+                    {headlines[i]}
+                  </p>
+                </div>
               </a>
-              </div>
-            </>
-          )
-        })
-        }
-
-      </div >
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 }
@@ -199,15 +195,14 @@ function App() {
   );
   const [article_info, set_article_info] = useState(
     createObject([
-      ["nyt_main", "null"],
-      ["headlines", "null"],
-      ["abstract", "null"],
+      ["headlines", ["This city has no articles :("]],
+      ["abstract", [""]],
+      ["web_url", [""]],
       [
         "img_url",
-        "https://viki.rdf.ru/media/upload/preview/No-Image-Available_1.jpg"
+        ["https://cdn0.iconfinder.com/data/icons/heroicons-ui/24/icon-menu-512.png"]
       ],
-      ["web_url", "null"],
-      ["lead_paragraph", "null"]
+      ["lead_paragraph", [""]]
     ])
   );
   const [locations, set_locations] = useState(["No Cool Locations"]);

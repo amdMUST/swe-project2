@@ -63,7 +63,7 @@ class OpenTripMap:
         img = []
         if xid[0] == "Nothing":
 
-            x = "This Place Sucks; Nothing To Do Here"
+            x = "According to our sources, this place has nothing to do :("
             y = "http://www.clipartbest.com/cliparts/MiL/kAz/MiLkAzLgT.png"
             names.append(x)
             img.append(y)

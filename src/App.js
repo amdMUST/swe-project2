@@ -3,86 +3,86 @@ import './App.css';
 import './weatherIcon.css';
 
 function Weather(props) {
-	return (
-		<>
-			<div id="weather-left">
-				<div id="weather-icon">
-					<i className={getTempIcon(props.weather_info.weather_main)}></i>
-				</div>
-				<p id="temp">{props.weather_info.temp} °F</p>
-				<div id="weather-highlow">
-					<p>{Math.floor(props.weather_info.temp_max)} / </p>
-					<p>{Math.floor(props.weather_info.temp_min)}</p>
-				</div>
-				<p id="weather-feels-like">
-					Currently feels like {props.weather_info.feels_like} °F
-				</p>
-				<p id="weather-desc">{props.weather_info.weather_desc}</p>
-				<p id="weather-clouds">{props.weather_info.clouds}% Cloudy</p>
-				<p id="weather-humidity">{props.weather_info.humidity}% Humidity</p>
-			</div>
-		</>
-	);
+  return (
+    <>
+      <div id="weather-left">
+        <div id="weather-icon">
+          <i className={getTempIcon(props.weather_info.weather_main)}></i>
+        </div>
+        <p id="temp">{props.weather_info.temp} °F</p>
+        <div id="weather-highlow">
+          <p>{Math.floor(props.weather_info.temp_max)} / </p>
+          <p>{Math.floor(props.weather_info.temp_min)}</p>
+        </div>
+        <p id="weather-feels-like">
+          Currently feels like {props.weather_info.feels_like} °F
+        </p>
+        <p id="weather-desc">{props.weather_info.weather_desc}</p>
+        <p id="weather-clouds">{props.weather_info.clouds}% Cloudy</p>
+        <p id="weather-humidity">{props.weather_info.humidity}% Humidity</p>
+      </div>
+    </>
+  );
 
-	// function for getting the correct weather icon from our icon list
-	function getTempIcon(desc) {
-		// set up base weather as sunny
-		const base = "wi wi-";
-		var weather = "";
+  // function for getting the correct weather icon from our icon list
+  function getTempIcon(desc) {
+    // set up base weather as sunny
+    const base = "wi wi-";
+    var weather = "";
 
-		switch (desc) {
-			case "Thunderstorm":
-				weather = "thunderstorm";
-				break;
-			case "Drizzle":
-				weather = "sprinkle";
-				break;
-			case "Rain":
-				weather = "rain";
-				break;
-			case "Snow":
-				weather = "snow";
-				break;
-			case "Mist":
-				weather = "rain-mix";
-				break;
-			case "Smoke":
-				weather = "owm-711";
-				break;
-			case "Haze":
-				weather = "owm-721";
-				break;
-			case "Fog":
-				weather = "owm-741";
-				break;
-			case "Sand":
-				weather = "sandstorm";
-				break;
-			case "Dust":
-				weather = "dust";
-				break;
-			case "Ash":
-				weather = "volcano";
-				break;
-			case "Squall":
-				weather = "alien";
-				break;
-			case "Tornado":
-				weather = "tornado";
-				break;
-			case "Clear":
-				weather = "day-sunny";
-				break;
-			case "Clouds":
-				weather = "cloudy";
-				break;
-			default:
-				weather = "thermometer";
-		}
+    switch (desc) {
+      case "Thunderstorm":
+        weather = "thunderstorm";
+        break;
+      case "Drizzle":
+        weather = "sprinkle";
+        break;
+      case "Rain":
+        weather = "rain";
+        break;
+      case "Snow":
+        weather = "snow";
+        break;
+      case "Mist":
+        weather = "rain-mix";
+        break;
+      case "Smoke":
+        weather = "owm-711";
+        break;
+      case "Haze":
+        weather = "owm-721";
+        break;
+      case "Fog":
+        weather = "owm-741";
+        break;
+      case "Sand":
+        weather = "sandstorm";
+        break;
+      case "Dust":
+        weather = "dust";
+        break;
+      case "Ash":
+        weather = "volcano";
+        break;
+      case "Squall":
+        weather = "alien";
+        break;
+      case "Tornado":
+        weather = "tornado";
+        break;
+      case "Clear":
+        weather = "day-sunny";
+        break;
+      case "Clouds":
+        weather = "cloudy";
+        break;
+      default:
+        weather = "thermometer";
+    }
 
-		var finalClassName = base + weather;
-		return finalClassName;
-	}
+    var finalClassName = base + weather;
+    return finalClassName;
+  }
 }
 
 function Articles(props) {

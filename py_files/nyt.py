@@ -36,9 +36,6 @@ class nyt_client:
             }
             response = requests.get(BASE_URL, params=params)
             data = response.json()
-            # Requires [] due to the need to refrence which article from the json
-            # TODO: Make a list to iterate through the articles with the front end
-            # set [i] to be referenced from the frontend but it only goes to about 9 articles
 
             articles = data["response"]["docs"]
 

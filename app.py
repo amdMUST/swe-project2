@@ -87,7 +87,7 @@ def main():
 @bp.route("/index")
 @login_required
 def index():
-    
+
     DATA = {
         "city_list": c_manager.get_city_list(),
         "user_id": current_user.user_id,
@@ -101,6 +101,7 @@ def index():
         data=data,
     )
 
+
 # react fetch requests
 # saves city to users db and sends back an OK response if nothing goes wrong
 @app.route("/save_city", methods=["POST"])
@@ -112,13 +113,14 @@ def save_city():
     # send information back to the react frontend page
     return flask.jsonify({"fill out": "yes"})
 
+
 # gets info about the requested city and sends back the info
 @app.route("/get_city", methods=["POST"])
 @login_required
 def get_city():
 
     # retrieve name of city that we need to render
-    city = flask.request.json.get('city')
+    city = flask.request.json.get("city")
 
     # get all the information for that specific city
     i_client.get_cityimg_url(city)
@@ -139,6 +141,7 @@ def get_city():
 
     # send information back to the react frontend page
     return flask.jsonify(DATA)
+
 
 app.register_blueprint(bp)
 
@@ -263,6 +266,7 @@ def city():
     user_name = current_user.name
     user_pic = current_user.pic
 
+    print(city_image)
     return flask.render_template(
         "city.html",
         opentrip=opentrip,
@@ -289,6 +293,7 @@ def city():
         user_name=user_name,
         user_pic=user_pic,
     )
+
 
 # Function for checking if a user is already in the database already
 def isUserInDB(userID):

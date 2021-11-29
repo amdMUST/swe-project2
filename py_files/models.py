@@ -6,14 +6,19 @@ from app import db
 
 # UniqueID and Username db
 class UserDB(UserMixin, db.Model):
-    __tablename__ = 'UserDB'
+    __tablename__ = "UserDB"
     user_id = db.Column(db.Float, unique=True, primary_key=True)
     email = db.Column(db.String(80), unique=True)
     name = db.Column(db.String(80), unique=True)
     pic = db.Column(db.String(120), unique=True)
 
     def __repr__(self):
-        return '<User_id = %s, Email = %s, Name = %s, Pic = %s>' % (self.user_id, self.email, self.name, self.pic)
+        return "<User_id = %s, Email = %s, Name = %s, Pic = %s>" % (
+            self.user_id,
+            self.email,
+            self.name,
+            self.pic,
+        )
 
     def get_id(self):
         """Return the id from the username."""
@@ -24,18 +29,8 @@ class UserDB(UserMixin, db.Model):
         return True
 
 
-# UserID and Artist Id db
-# class SecondTable(UserMixin, db.Model):
-#     __tablename__ = 'ArtistID'
-#     id = db.Column(db.Integer, unique=True, primary_key=True)
-
-#     def __repr__(self):
-#         return '<UserID = %s, ArtistID = %s>' % (self.user_id, self.artist_id)
-
-#     def get_id(self):
-#         """Return the id from the username."""
-#         return self.id
-    
-#     def is_active(self):
-#         """True, as all users are active."""
-#         return True
+class CityDB(UserMixin, db.Model):
+    __tablename__ = "CityDB"
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Float)
+    city_name = db.Column(db.String(80), unique=True)

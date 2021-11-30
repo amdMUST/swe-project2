@@ -1,0 +1,187 @@
+<html>
+
+<head>
+    <style>
+        /* General styling */
+        body {
+            font-family: "Ubuntu", sans-serif;
+            color: black;
+            background-color: #e8e9f3;
+            font-size: 30px;
+            text-align: center;
+
+            background: linear-gradient(45deg, #d9a7c7, #fffcdc);
+            background-size: 600% 100%;
+            animation: gradient 12s linear infinite;
+            animation-direction: alternate;
+        }
+
+        a {
+            text-decoration: none;
+            transition-duration: 0.4s;
+            color: white;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            transition: 0.4s ease-in-out;
+            color: #bd0f43;
+        }
+
+        #title {
+            font-size: 100px;
+            margin: 0 auto;
+            padding-bottom: 2%;
+            display: inline-block;
+            text-decoration: none;
+            font-family: "Sansita Swashed", cursive;
+        }
+
+        .signup-block {
+            font-family: "Dela Gothic One", cursive;
+            margin: 5% auto 0 auto;
+            padding: 1% 0 2% 0;
+            max-width: 66%;
+            align-items: center;
+
+            background: rgba(255, 255, 255, 0.375);
+            box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+
+        .signup-block-content {
+            padding: 0 2%;
+        }
+
+        #signup-title {
+            margin-top: 0;
+            font-size: 45px;
+        }
+
+        .signup-flashes {
+            color: red;
+            list-style: none;
+            padding: 0;
+            font-size: smaller;
+        }
+
+        .signup-formfield {
+            padding: 3%;
+            border-radius: 1%;
+            margin-bottom: 5%;
+            border-style: none;
+        }
+
+        label {
+            font-size: 22px;
+            padding-right: 1%;
+        }
+
+        ::placeholder {
+            font-size: 15px;
+            vertical-align: baseline;
+        }
+
+        /* Button Styling */
+        .button {
+            font-family: "Dela Gothic One", cursive;
+            transition-duration: 0.4s;
+            text-align: center;
+            display: inline-block;
+            font-size: 30px;
+            padding: 15px 30px;
+
+            background: rgba(0, 0, 0, 0.88);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .button:hover {
+            background-color: #bd0f43;
+            cursor: pointer;
+            color: white;
+        }
+
+        #button-link {
+            color: white;
+            text-decoration: none;
+            transition-duration: 0.4s;
+            margin: 0 auto;
+        }
+
+        table {
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        /* Gradient Styling */
+        @keyframes gradient {
+            0% {
+                background-position: 0%;
+            }
+
+            25% {
+                background-position: 25%;
+            }
+
+            50% {
+                background-position: 50%;
+            }
+
+            75% {
+                background-position: 75%;
+            }
+
+            100% {
+                background-position: 100%;
+            }
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Sansita+Swashed:wght@500&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>CitySpit</title>
+</head>
+
+<body>
+    <div>
+        <h2>Welcome to your profile page {{user_name}}!</h2>
+        <img id="profile-pic" src={{user_pic}} alt="profile picture">
+    </div>
+    <br>
+    <div>
+        {% if listLength > 0 %}
+        <table>
+            <tr>
+                <th>Choose a city to view:</th>
+            </tr>
+            {% for city in cityList %}
+            <tr>
+                <td>
+                    <form action="{{ url_for('Static_City') }}" method="POST">
+                        <input type="submit" value={{city}} name="cityPost">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>Please like cities first to see your saved cities.</p>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

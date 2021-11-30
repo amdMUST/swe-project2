@@ -79,6 +79,41 @@
             margin: 1%;
         }
 
+        /* Table Styling */
+        .profile-table {
+            margin: auto;
+        }
+
+        .profile-form {
+            padding: 3%;
+        }
+
+        .table-button {
+            border: none;
+            border-radius: 10px;
+            background: none;
+            color: black;
+
+            box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5.5px);
+            -webkit-backdrop-filter: blur(5.5px);
+
+            font-family: "Dela Gothic One", cursive;
+            transition-duration: 0.4s;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            padding: 2% 5%;
+            width: 100%;
+        }
+
+        .table-button:hover {
+            background-color: #bd0f43;
+            cursor: pointer;
+            color: white;
+            transform: scale(1.1);
+        }
+
         /* Button Styling */
         .button {
             font-family: "Dela Gothic One", cursive;
@@ -198,15 +233,15 @@
 
                 <div>
                     {% if listLength > 0 %}
-                    <table>
+                    <table class="profile-table">
                         <tr>
-                            <th>Choose a city to view:</th>
+                            <th>Your liked cities</th>
                         </tr>
                         {% for city in cityList %}
                         <tr>
                             <td>
-                                <form action="{{ url_for('Static_City') }}" method="POST">
-                                    <input type="submit" value={{city}} name="cityPost">
+                                <form class="profile-form" action="{{ url_for('Static_City') }}" method="POST">
+                                    <input class="table-button" type="submit" value={{city}} name="cityPost">
                                 </form>
                             </td>
                         </tr>

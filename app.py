@@ -257,10 +257,14 @@ def profile():
     )
 
 # city page
-@app.route("/city", methods=["POST", "GET"])
+@app.route("/city", methods=["POST"])
 @login_required
 def Static_City():
     city = flask.request.form["cityPost"]
+    # if no city, make it atlanta by default
+    if not city:
+        city = "Atlanta"
+
     i_client.get_cityimg_url(city)
     w_client.getWeather(city)
     n_client.get_article_data(city)

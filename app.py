@@ -109,10 +109,18 @@ def index():
 @login_required
 def save_city():
 
-    # need to fill out
+    city = flask.request.json.get("city")
+    db_city_check = CityDB.query.filter_by(city_name=city).all()
+    db_user_check = CityDB.query.filter_by(user_id=current_user.user_id).all()
 
-    # send information back to the react frontend page
-    return flask.jsonify({"fill out": "yes"})
+    # checks if the city is not in the DB and that its the current user that its checking
+    if not db_city_check and db_user_check:
+        liked_city = CityDB(user_id=current_user.user_id, city_name=city)
+        db.session.add(liked_city)
+        db.session.commit()
+        return flask.jsonify({"Saved_City": "yes"})
+
+    return flask.jsonify({"Saved_City": "No, city has already been saved"})
 
 
 # gets info about the requested city and sends back the info

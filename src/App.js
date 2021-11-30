@@ -345,6 +345,7 @@ function App() {
 
     // here is where you make fetch to DB to save to users db
     // just copied pasted. needs to be filled out
+    console.log(city)
     fetch("/save_city", {
       method: "POST",
       headers: {
@@ -352,11 +353,14 @@ function App() {
       },
       body: JSON.stringify({
         // fill in what we are passing to flask
+        city: city
       })
     })
       .then((response) => response.json())
       .then((data) => {
-        // fill this in if we need anything
+        //response to the console if there is or is not a city in the DB
+        console.log("User data has been saved: ", data.Saved_City)
+
       }).catch(function (error) {
         console.log("Caught error while saving city to user's DB: " + error);
       });

@@ -110,9 +110,13 @@ def index():
 def save_city():
 
     # need to fill out
+    city = flask.request.json.get("city")
 
+    likedCity = CityDB(user_id=current_user.user_id, city_name=city)
+    db.session.add(likedCity)
+    db.session.commit()
     # send information back to the react frontend page
-    return flask.jsonify({"fill out": "yes"})
+    return flask.jsonify({"Saved_City_In_DB": "yes"})
 
 
 # gets info about the requested city and sends back the info

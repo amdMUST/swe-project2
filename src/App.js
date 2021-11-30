@@ -358,7 +358,7 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        // fill this in if we need anything
+        //response to the console if there is or is not a city in the DB
         console.log("User data has been saved: ", data.Saved_City)
 
       }).catch(function (error) {

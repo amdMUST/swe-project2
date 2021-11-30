@@ -126,7 +126,6 @@ a:hover {
 	padding: 5px;
 	margin: 5px;
 	border-radius: 10px;
-	border: 2px solid rgba(0, 0, 0, 1);
 
 	box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(5.5px);
@@ -219,7 +218,6 @@ a:hover {
 	backdrop-filter: blur(10.5px);
 	-webkit-backdrop-filter: blur(10.5px);
 	border-radius: 10px;
-	border: 5px solid rgba(0, 255, 34, 0.18);
 }
 #location-title {
 	font-family: "Sansita Swashed", cursive;

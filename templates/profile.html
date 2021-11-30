@@ -7,19 +7,23 @@
             font-family: "Ubuntu", sans-serif;
             color: black;
             background-color: #e8e9f3;
-            font-size: 30px;
+            font-size: 25px;
             text-align: center;
 
-            background: linear-gradient(45deg, #d9a7c7, #fffcdc);
+            background: linear-gradient(19deg, #d9a7c7, #fffcdc);
             background-size: 600% 100%;
-            animation: gradient 12s linear infinite;
-            animation-direction: alternate;
+            animation: gradient 10s linear infinite;
+            animation-direction: alternate-reverse;
+        }
+
+        h2 {
+            margin: 0;
         }
 
         a {
             text-decoration: none;
             transition-duration: 0.4s;
-            color: white;
+            color: black;
         }
 
         a:visited {
@@ -33,58 +37,46 @@
         }
 
         #title {
-            font-size: 100px;
-            margin: 0 auto;
-            padding-bottom: 2%;
             display: inline-block;
-            text-decoration: none;
-            font-family: "Sansita Swashed", cursive;
+            padding-bottom: 2%;
+        }
+        .page-container {
+            padding: 0 5%;
         }
 
-        .signup-block {
-            font-family: "Dela Gothic One", cursive;
-            margin: 5% auto 0 auto;
-            padding: 1% 0 2% 0;
-            max-width: 66%;
-            align-items: center;
+        /* Panel styling */
+        .panels-container {
+            display: grid;
+        }
 
+        #title,
+        #panel-title,
+        #panel-subheading {
+            font-family: "Sansita Swashed", cursive;
+            text-decoration: none;
+            margin: 0 auto;
+        }
+
+        #panel-title {
+            font-size: 30px;
+            padding: 2%;
+        }
+
+        #panel {
+            margin: 0 auto;
+            padding: 1% 0 2% 0;
+            height: fit-content;
+            max-width: 80%;
             background: rgba(255, 255, 255, 0.375);
             box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
-            border-radius: 2rem;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.125);
         }
 
-        .signup-block-content {
-            padding: 0 2%;
-        }
-
-        #signup-title {
-            margin-top: 0;
-            font-size: 45px;
-        }
-
-        .signup-flashes {
-            color: red;
-            list-style: none;
-            padding: 0;
-            font-size: smaller;
-        }
-
-        .signup-formfield {
-            padding: 3%;
-            border-radius: 1%;
-            margin-bottom: 5%;
-            border-style: none;
-        }
-
-        label {
-            font-size: 22px;
-            padding-right: 1%;
-        }
-
-        ::placeholder {
-            font-size: 15px;
-            vertical-align: baseline;
+        #profile-pic {
+            max-width: 75px;
+            border-radius: 10px;
+            margin: 1%;
         }
 
         /* Button Styling */
@@ -93,8 +85,8 @@
             transition-duration: 0.4s;
             text-align: center;
             display: inline-block;
-            font-size: 30px;
-            padding: 15px 30px;
+            font-size: 18px;
+            padding: 2% 3%;
 
             background: rgba(0, 0, 0, 0.88);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -103,24 +95,20 @@
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
-
         .button:hover {
             background-color: #bd0f43;
             cursor: pointer;
             color: white;
         }
-
         #button-link {
             color: white;
             text-decoration: none;
             transition-duration: 0.4s;
             margin: 0 auto;
         }
-
-        table {
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
+        button {
+            cursor: pointer;
+            display: contents;
         }
 
         /* Gradient Styling */
@@ -128,21 +116,59 @@
             0% {
                 background-position: 0%;
             }
-
             25% {
                 background-position: 25%;
             }
-
             50% {
                 background-position: 50%;
             }
-
             75% {
                 background-position: 75%;
             }
-
             100% {
                 background-position: 100%;
+            }
+        }
+
+        /* Responsive styling */
+        @media screen and (max-width: 950px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: max-content;
+                padding: 3% 1%;
+                grid-template-areas:
+                    "citypic-panel"
+                    "like-panel-mobile"
+                    "info-panels"
+                    "interaction-panels";
+            }
+            .interaction-panels {
+                grid-template-rows: none;
+                grid-template-areas:
+                    "weather-panel"
+                    "userinfo-panel";
+            }
+            .like-panel {
+                display: none;
+            }
+            .like-panel-mobile {
+                display: block;
+            }
+            #panel {
+                max-width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .page-container {
+                padding: 0 6%;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            #citypic {
+                max-width: 66%;
             }
         }
     </style>
@@ -156,30 +182,58 @@
 </head>
 
 <body>
-    <div>
-        <h2>Welcome to your profile page {{user_name}}!</h2>
-        <img id="profile-pic" src={{user_pic}} alt="profile picture">
-    </div>
-    <br>
-    <div>
-        {% if listLength > 0 %}
-        <table>
-            <tr>
-                <th>Choose a city to view:</th>
-            </tr>
-            {% for city in cityList %}
-            <tr>
-                <td>
-                    <form action="{{ url_for('Static_City') }}" method="POST">
-                        <input type="submit" value={{city}} name="cityPost">
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% else %}
-            <p>Please like cities first to see your saved cities.</p>
-        {% endif %}
+    <a href="/">
+        <h1 id="title">CitySpit</h1>
+    </a>
+
+    <div class="page-container">
+        <div class="panels-container">
+            <div id="panel">
+                <div id="panel-title">
+                    <img id="profile-pic" src={{user_pic}} alt="profile picture">
+                    <h2>Welcome to your profile page {{user_name}}!</h2>
+                </div>
+
+                <br>
+
+                <div>
+                    {% if listLength > 0 %}
+                    <table>
+                        <tr>
+                            <th>Choose a city to view:</th>
+                        </tr>
+                        {% for city in cityList %}
+                        <tr>
+                            <td>
+                                <form action="{{ url_for('Static_City') }}" method="POST">
+                                    <input type="submit" value={{city}} name="cityPost">
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    {% else %}
+                        <p>Please like cities first to see your saved cities.</p>
+                    {% endif %}
+                    
+                    <br>
+
+                    <div class="button">
+                        <a id="button-link" href="/">
+                            Back
+                        </a>
+                    </div>
+                    <br></br>
+
+                    <div class="button">
+                        <a id="button-link" href="logout">
+                            Logout
+                        </a>
+                    </div>
+
+                </div>
+			</div>
+        </div>
     </div>
 
 </body>

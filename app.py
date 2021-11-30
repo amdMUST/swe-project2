@@ -231,7 +231,7 @@ def logout():
 cityList = []
 listLength = len(cityList)
 
-
+# profile page
 @app.route("/profile", methods=["POST", "GET"])
 @login_required
 def profile():
@@ -256,7 +256,7 @@ def profile():
         listLength=listLength,
     )
 
-
+# city page
 @app.route("/city", methods=["POST", "GET"])
 @login_required
 def Static_City():

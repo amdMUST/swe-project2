@@ -229,6 +229,66 @@ def profile():
     )
 
 
+@app.route("/Static_City", methods=["POST", "GET"])
+@login_required
+def Static_City():
+    city = flask.request.form["cityPost"]
+    i_client.get_cityimg_url(city)
+    w_client.getWeather(city)
+    n_client.get_article_data(city)
+    OpenMap.getInfo(city)
+    opentrip = OpenMap.names
+    opentripimages = OpenMap.img
+    city_imageinfo = i_client.getCityImg()
+    weather_info = w_client.getMap()
+    article_info = n_client.getArticle()
+    city_image = city_imageinfo[0][1]
+    article_info_headlines = article_info[0][1]
+    article_info_abstract = article_info[1][1]
+    article_info_img_url = article_info[2][1]
+    weather_main = weather_info[0][1]
+    weather_desc = weather_info[1][1]
+    temp = weather_info[2][1]
+    feels_like = [3][0]
+    temp_min = [4][0]
+    temp_max = [5][0]
+    pressure = weather_info[6][1]
+    humidity = weather_info[7][1]
+    clouds = weather_info[8][1]
+    wind = weather_info[9][1]
+    user_id = current_user.user_id
+    user_email = current_user.email
+    user_name = current_user.name
+    user_pic = current_user.pic
+
+    print(city_image)
+    return flask.render_template(
+        "Static_City.html",
+        opentrip=opentrip,
+        opentripimages=opentripimages,
+        city=city,
+        city_image=city_image,
+        weather_info=weather_info,
+        article_info_headlines=article_info_headlines,
+        article_info_abstract=article_info_abstract,
+        article_info_img_url=article_info_img_url,
+        weather_main=weather_main,
+        weather_desc=weather_desc,
+        temp=temp,
+        feels_like=feels_like,
+        temp_min=temp_min,
+        temp_max=temp_max,
+        pressure=pressure,
+        humidity=humidity,
+        clouds=clouds,
+        wind=wind,
+        user_id=user_id,
+        user_email=user_email,
+        user_name=user_name,
+        user_pic=user_pic,
+    )
+
+
 # Function for checking if a user is already in the database already
 def isUserInDB(userID):
 

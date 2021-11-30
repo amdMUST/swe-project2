@@ -165,11 +165,15 @@
         {% if listLength > 0 %}
         <table>
             <tr>
-                <th>City Name</th>
+                <th>Choose a city to view:</th>
             </tr>
             {% for city in cityList %}
             <tr>
-                <td>{{ city }}</td>
+                <td>
+                    <form action="{{ url_for('Static_City') }}" method="POST">
+                        <input type="submit" value={{city}} name="cityPost">
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>

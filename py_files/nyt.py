@@ -4,13 +4,18 @@ from dotenv import load_dotenv, find_dotenv
 # a class to handle all of the weather requests the web-app will make
 class nyt_client:
     def __init__(self):
+
+        # retrieve key and url for request
+        load_dotenv(find_dotenv())
+        self.API_KEY = os.environ.get("NYT_API_KEY")
+
         # configuration of variables
-        self.nyt_main = "null"
-        self.headlines = "null"
-        self.abstract = "null"
-        self.img_url = "null"
-        self.web_url = "null"
-        self.lead_paragraph = "null"
+        self.nyt_main = ""
+        self.headlines = ""
+        self.abstract = ""
+        self.img_url = ""
+        self.web_url = ""
+        self.lead_paragraph = ""
 
     def get_article_data(self, city):
 
@@ -21,27 +26,45 @@ class nyt_client:
         # retrieve key and url for request
         load_dotenv(find_dotenv())
         API_KEY = os.environ.get("NYT_API_KEY")
-        BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?"
+        BASE_URL = "https://api.nytimes.com/svc/search/v2/articlesearch.json"
 
-        params = {
-            "q": city,
-            "api-key": API_KEY,
-        }
-        # URL = BASE_URL + "api-key=" + API_KEY + "&q=" + city
         try:
+
+            params = {
+                "q": city,
+                "api-key": API_KEY,
+            }
             response = requests.get(BASE_URL, params=params)
-            # data = json.loads(response.text)
             data = response.json()
-            article = data["response"]["docs"][0]
 
-            # parse out data from correct response
-            # self.nyt_main = article
-            self.headlines = article["headline"]["main"]
-            self.abstract = article["abstract"]
-            self.img_url = article["multimedia"][1]["url"]
-            self.web_url = article["web_url"]
-            self.lead_paragraph = article["lead_paragraph"]
+            articles = data["response"]["docs"]
 
+            def get_headline(article):
+                return article["headline"]["main"]
+
+            def get_abstract(article):
+                return article["abstract"]
+
+            def get_img_url(article):
+                image = ""
+                try:
+                    image = "http://static01.nyt.com/" + article["multimedia"][0]["url"]
+                except:
+                    image = "http://www.clipartbest.com/cliparts/dc7/pE6/dc7pE6Rpi.png"
+                return image
+
+            # TypeError: list indices must be integers or slices, not str
+            def get_web_url(article):
+                return article["web_url"]
+
+            def get_lead_paragraph(article):
+                return article["lead_paragraph"]
+
+            self.headlines = map(get_headline, articles)
+            self.abstract = map(get_abstract, articles)
+            self.web_url = map(get_web_url, articles)
+            self.img_url = map(get_img_url, articles)
+            self.lead_paragraph = map(get_lead_paragraph, articles)
         except:
             print("nyt parsing error")
             return
@@ -55,13 +78,12 @@ class nyt_client:
 
     def getArticle(self):
         dict = [
-            ("headlines", self.headlines),
-            ("abstract", self.abstract),
-            ("image_url", self.img_url),
-            ("web_url", self.web_url),
-            ("lead_paragraph", self.lead_paragraph),
+            ("headlines", list(self.headlines)),
+            ("abstract", list(self.abstract)),
+            ("web_url", list(self.web_url)),
+            ("img_url", list(self.img_url)),
+            ("lead_paragraph", list(self.lead_paragraph)),
         ]
-        #print(dict)
         return dict
 
 

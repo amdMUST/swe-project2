@@ -10,6 +10,7 @@ from flask_login import (
 )
 from flask_login.utils import logout_user
 from oauthlib.oauth2 import WebApplicationClient
+from psycopg2.errors import UniqueViolation
 
 from py_files.nyt import *
 from py_files.tripmap import *
@@ -227,10 +228,39 @@ def logout():
     return flask.redirect(flask.url_for("main"))
 
 
-@app.route("/Static_City")
+cityList = []
+listLength = len(cityList)
+
+
+@app.route("/profile", methods=["POST", "GET"])
+@login_required
+def profile():
+    global cityList
+    global listLength
+
+    cityListDB = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    cityList.clear()
+    for city in cityListDB:
+        try:
+            cityList.extend([city.city_name])
+        except IndexError:
+            pass
+    listLength = len(cityList)
+
+    return flask.render_template(
+        "profile.html",
+        user_name=current_user.name,
+        user_id=current_user.user_id,
+        user_pic=current_user.pic,
+        cityList=cityList,
+        listLength=listLength,
+    )
+
+
+@app.route("/Static_City", methods=["POST", "GET"])
 @login_required
 def Static_City():
-    city = "Atlanta"
+    city = flask.request.form["cityPost"]
     i_client.get_cityimg_url(city)
     w_client.getWeather(city)
     n_client.get_article_data(city)

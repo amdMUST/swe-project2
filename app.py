@@ -104,15 +104,25 @@ def index():
 
 
 # react fetch requests
-# saves city to users db and sends back an OK response if nothing goes wrong
 @app.route("/save_city", methods=["POST"])
 @login_required
 def save_city():
 
-    # need to fill out
+    city = flask.request.json.get("city")
+    db_user_check = CityDB.query.filter_by(user_id=current_user.user_id).all()
 
-    # send information back to the react frontend page
-    return flask.jsonify({"fill out": "yes"})
+    # get all the cities the user has liked, if empty return false
+    if not db_user_check:
+
+        # now check if city is in users db already
+        if city not in db_user_check:
+
+            liked_city = CityDB(user_id=current_user.user_id, city_name=city)
+            db.session.add(liked_city)
+            db.session.commit()
+            return flask.jsonify({"Saved_City": "True"})
+
+    return flask.jsonify({"Saved_City": "False, city has already been saved"})
 
 
 # gets info about the requested city and sends back the info
@@ -260,6 +270,7 @@ def profile():
 @app.route("/city", methods=["POST"])
 @login_required
 def Static_City():
+
     city = flask.request.form["cityPost"]
     # if no city, make it atlanta by default
     if not city:
@@ -297,7 +308,6 @@ def Static_City():
     user_name = current_user.name
     user_pic = current_user.pic
 
-    print(city_image)
     return flask.render_template(
         "city.html",
         opentrip=opentrip,

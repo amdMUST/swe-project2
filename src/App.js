@@ -350,29 +350,29 @@ function App() {
 	}
 
 	// function that saves the current city to the users db and then increments the city to the next
-	function saveCityToDB(){
+  function saveCityToDB() {
 
-		// here is where you make fetch to DB to save to users db
-		// just copied pasted. needs to be filled out
-		fetch("/save_city", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify({
-				// fill in what we are passing to flask
-			})
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				// fill this in if we need anything
-			}).catch(function (error) {
-				console.log("Caught error while saving city to user's DB: " + error);
-			});
+    // here is where you make fetch to DB to save to users db
+    fetch("/save_city", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        city: city
+      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        //response to the console if there is or is not a city in the DB
+        console.log("User data has been saved: ", data.Saved_City);
+      }).catch(function (error) {
+        console.log("Caught error while saving city to user's DB: " + error);
+      });
 
-		// now increment the city
-		updateCityIndex();
-	}
+    // now increment the city
+    updateCityIndex();
+  }
 
 	// function to update the value of the city index and make sure it doesnt go out of bounds
 	function updateCityIndex() {

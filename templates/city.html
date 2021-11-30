@@ -530,24 +530,6 @@
                                             </a>
                                         </li>
                                     {% endfor %}
-
-
-
-
-                                    <!-- {headlines.map((headline, i) => (
-                                        <li key={i} class="art-list-item">
-                                            <a href={web_url[i]} target="_blank" rel="noreferrer">
-                                                <div class="art-list-pic">
-                                                    <img alt="thumbnail" id="art-pic" src={img_url[i]} />
-                                                </div>
-                                                <div class="art-list-name">
-                                                    <p id="art-name" data-testid="article_data1">
-                                                        {headline}
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    ))} -->
                                 </ul>
                             </div>
 						</div>
@@ -621,33 +603,6 @@
 			</div>
         </div>
     </div>
-
-    <!-- <div className="page-container">
-        <div className="panels-container">
-            <div id="panel">
-                <div className="grid-container">
-
-                    <div className="info-panels">
-                        <div className="article-panel">
-                            <p>Headline: {{article_info_headlines}}</p>
-                            <p>Abstract: {{article_info_abstract}}</p>
-                            <p>Image: {{article_info_img_url}}</p>
-                        </div>
-
-                        <div className="tripmap-panel">
-                            <h3>Cool locations near {{city}}</h3>
-                            {% for i in range(opentrip|length) %}
-                            <p><img src={{opentripimages[i]}} width="100" height="100"></img>
-                                {{opentrip[i]}}</p>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div className="interaction-panels">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 
 </html>

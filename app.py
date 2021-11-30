@@ -111,12 +111,17 @@ def save_city():
 
     # need to fill out
     city = flask.request.json.get("city")
+    db_city_check = CityDB.query.filter_by(city_name=city).all()
+    db_user_check = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    if not db_city_check and db_user_check:
+        liked_city = CityDB(user_id=current_user.user_id, city_name=city)
+        db.session.add(liked_city)
+        db.session.commit()
+        print(True)
+        return flask.jsonify({"Saved_City": "yes"})
 
-    likedCity = CityDB(user_id=current_user.user_id, city_name=city)
-    db.session.add(likedCity)
-    db.session.commit()
     # send information back to the react frontend page
-    return flask.jsonify({"Saved_City_In_DB": "yes"})
+    return flask.jsonify({"Saved_City": "No, city has already been saved"})
 
 
 # gets info about the requested city and sends back the info

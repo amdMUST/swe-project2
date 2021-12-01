@@ -265,6 +265,16 @@ def profile():
     )
 
 
+@app.route("/remove", methods=["POST", "GET"])
+@login_required
+def remove():
+    if flask.request.method == "POST":
+        city = flask.request.form["select"]
+        CityDB.query.filter_by(user_id=current_user.user_id, city_name=city).delete()
+        db.session.commit()
+        return flask.redirect("/profile")
+
+
 @app.route("/Static_City", methods=["POST", "GET"])
 @login_required
 def Static_City():

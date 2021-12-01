@@ -99,7 +99,7 @@ function Articles(props) {
 						<li key={i} className="art-list-item">
 							<a href={web_url[i]} target="_blank" rel="noreferrer">
 								<div className="art-list-pic">
-									<img alt="thumbnail" id="art-pic" src={img_url[i]} />
+									{/* <img alt="thumbnail" id="art-pic" src={img_url[i]} /> */}
 								</div>
 								<div className="art-list-name">
 									<p id="art-name" data-testid="article_data1">

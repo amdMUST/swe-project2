@@ -90,7 +90,7 @@ def main():
 def index():
 
     DATA = {
-        "city_list": ["Osaka"],#c_manager.get_city_list(),
+        "city_list": c_manager.get_city_list(),
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,

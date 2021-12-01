@@ -8,9 +8,9 @@ from app import db
 class UserDB(UserMixin, db.Model):
     __tablename__ = "UserDB"
     user_id = db.Column(db.Float, unique=True, primary_key=True)
-    email = db.Column(db.String(80), unique=True)
-    name = db.Column(db.String(80), unique=True)
-    pic = db.Column(db.String(120), unique=True)
+    email = db.Column(db.String(80))
+    name = db.Column(db.String(80))
+    pic = db.Column(db.String(120))
 
     def __repr__(self):
         return "<User_id = %s, Email = %s, Name = %s, Pic = %s>" % (

@@ -90,7 +90,7 @@ def main():
 def index():
 
     DATA = {
-        "city_list": c_manager.get_city_list(),
+        "city_list": ["Osaka"],#c_manager.get_city_list(),
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
@@ -249,10 +249,13 @@ def profile():
     cityList.clear()
     for city in cityListDB:
         try:
+            print([city.city_name])
             cityList.extend([city.city_name])
         except IndexError:
             pass
     listLength = len(cityList)
+
+    print(cityList)
 
     return flask.render_template(
         "profile.html",

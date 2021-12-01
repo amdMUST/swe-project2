@@ -129,6 +129,7 @@ function OpenTripMap(props) {
 									alt="location"
 									id="loc-pic"
 									src={props.locationimg[i]}
+									onError={(e)=>{e.target.onerror = null; e.target.src="https://image.freepik.com/free-icon/set-of-buildings-in-a-city_318-41262.jpg"}}
 								/>
 							</div>
 							<div className="loc-list-name">

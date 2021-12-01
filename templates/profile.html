@@ -253,6 +253,16 @@
                     
                     <br>
 
+                    <form action="{{ url_for('remove') }}" method="POST">
+                        <label for="select">Choose a city to remove from your likes list:</label>
+                        <select onchange="this.form.submit()" id="select" name="select">
+                            <option>None</option>
+                            {% for city in cityList %}
+                                <option value="{{city}}" name='cityRemove'>{{ city }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
                     <div class="button">
                         <a id="button-link" href="index">
                             Back

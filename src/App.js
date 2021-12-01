@@ -86,6 +86,7 @@ function Weather(props) {
 }
 
 function Articles(props) {
+
 	const headlines = props.article_info.headlines;
 	const img_url = props.article_info.img_url;
 	const web_url = props.article_info.web_url;

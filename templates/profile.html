@@ -114,6 +114,27 @@
             transform: scale(1.1);
         }
 
+        #subheading {
+            border-bottom: 3px solid #000;
+            padding-bottom: 2%;
+            font-size: 25px;
+        }
+
+        #subheading-remove {
+            border-bottom: 3px solid #000;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        .formfield {
+            width: 30%;
+            padding: 2%;
+            border-radius: 10px;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            border-style: none;
+        }
+
         /* Button Styling */
         .button {
             font-family: "Dela Gothic One", cursive;
@@ -235,7 +256,7 @@
                     {% if listLength > 0 %}
                     <table class="profile-table">
                         <tr>
-                            <th>Your liked cities</th>
+                            <th id="subheading">Your liked cities</th>
                         </tr>
                         {% for city in cityList %}
                         <tr>
@@ -247,21 +268,21 @@
                         </tr>
                         {% endfor %}
                     </table>
-                    {% else %}
-                        <p>Please like cities first to see your saved cities.</p>
-                    {% endif %}
-                    
-                    <br>
 
                     <form action="{{ url_for('remove') }}" method="POST">
-                        <label for="select">Choose a city to remove from your likes list:</label>
-                        <select onchange="this.form.submit()" id="select" name="select">
+                        <label id="subheading-remove" for="select">Remove cities</label>
+                        <br>
+                        <select class="formfield" onchange="this.form.submit()" id="select" name="select">
                             <option>None</option>
                             {% for city in cityList %}
-                                <option value="{{city}}" name='cityRemove'>{{ city }}</option>
+                            <option value="{{city}}" name='cityRemove'>{{ city }}</option>
                             {% endfor %}
                         </select>
                     </form>
+
+                    {% else %}
+                        <p>Please like cities first to see your saved cities.</p>
+                    {% endif %}
 
                     <div class="button">
                         <a id="button-link" href="index">

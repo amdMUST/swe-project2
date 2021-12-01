@@ -255,8 +255,6 @@ def profile():
             pass
     listLength = len(cityList)
 
-    print(cityList)
-
     return flask.render_template(
         "profile.html",
         user_name=current_user.name,

@@ -2,7 +2,7 @@
 
 <head>
     <style>
-        /* General styling */
+        /* General Styling */
         body {
             font-family: "Ubuntu", sans-serif;
             color: black;
@@ -42,7 +42,6 @@
         }
 
         .signup-block {
-            font-family: "Dela Gothic One", cursive;
             margin: 5% auto 0 auto;
             padding: 1% 0 2% 0;
             max-width: 66%;
@@ -60,10 +59,11 @@
 
         #signup-title {
             margin-top: 0;
-            font-size: 45px;
+            font-size: 25px;
         }
 
         .signup-flashes {
+            font-family: "Dela Gothic One", cursive;
             color: red;
             list-style: none;
             padding: 0;
@@ -87,8 +87,18 @@
             vertical-align: baseline;
         }
 
-        #app-info{
+        #app-info {
             font-size: 15px;
+        }
+
+        .subheading {
+            font-family: "Dela Gothic One", cursive;
+            font-weight: 400;
+            margin: 0;
+        }
+        .info {
+            font-weight: 700;
+            margin: 1%;
         }
 
         /* Button Styling */
@@ -159,38 +169,40 @@
     </a>
 
     <div class="signup-block">
-
-        <div id="app-info">
-
-            <div>
-                <h4>Functionality</h4>
-                <p>Our app will provide brief real time information about the random cities.
-                    Information will include attractions to visit, news updates, and weather
-                    information about the cities. User will be able to save the cities based
-                    on interests. Later by accessing the liked list users will be ready to
-                    experience new adventures and have easy planning to favorite cities.</p>
-            </div>
-        
-            <div>
-                <h4>Purpose</h4>
-                <p>Our app allows users to find new experiences randomly, which open doors
-                    to new adventures and new activities. Our goal is to deliver users
-                    informative platform to save time and plan their future travel easily.</p>
-            </div>
-        
-            <div>
-                <h4>Creators</h4>
-                <p>Ahmed Mustafa @amdMUST</p>
-                <p>Joan Galicia @Jgalicia2</p>
-                <p>Michael Dinh @mdinh5</p>
-                <p>Mehmet Filik @mfilik</p>
-            </div>
-
-        </div>
-
-        <p id="signup-title">LOGIN</p>
-
         <div class="signup-block-content">
+            <div id="app-info">
+
+                <div>
+					<h4 class="subheading">Functionality</h4>
+					<p class="info">Our app will provide brief real time information about the random cities.
+						Information will include attractions to visit, news updates, and weather
+						information about the cities. User will be able to save the cities based
+						on interests. Later by accessing the liked list users will be ready to
+						experience new adventures and have easy planning to favorite cities.</p>
+				</div>
+
+				<div>
+					<h4 class="subheading">Purpose</h4>
+					<p class="info">Our app allows users to find new experiences randomly, which open doors
+						to new adventures and new activities. Our goal is to deliver users
+						informative platform to save time and plan their future travel easily.</p>
+				</div>
+
+				<div>
+					<h4 class="subheading">Creators</h4>
+					<p class="info">Ahmed Mustafa @amdMUST</p>
+					<p class="info">Joan Galicia @Jgalicia2</p>
+					<p class="info">Michael Dinh @mdinh5</p>
+					<p class="info">Mehmet Filik @mfilik</p>
+				</div>
+
+            </div>
+
+            <br>
+
+            <div class="button">
+                <a id="button-link" href="/login_post">Login</a>
+            </div>
 
             {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -201,10 +213,6 @@
             </ul>
             {% endif %}
             {% endwith %}
-
-            <div class="button">
-                <a id="button-link" href="/login_post">Login</a>
-            </div>
         </div>
     </div>
 </body>

@@ -1,3 +1,4 @@
+from flask.helpers import url_for
 import requests, os, json, flask
 from dotenv import load_dotenv, find_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -89,13 +90,37 @@ def main():
 @login_required
 def index():
 
+    original_list = c_manager.get_city_list()
+    print(original_list)
+    mutated_list = []
+    print(len(original_list))
+    for i in original_list:
+        db_liked_city_check = CityDB.query.filter_by(
+            user_id=current_user.user_id, city_name=i
+        )
+        if db_liked_city_check:
+            original_list.remove(i)
+
     DATA = {
-        "city_list": c_manager.get_city_list(),
+        "city_list": original_list
+        # "Lyon",
+        # "Portland",
+        # "Seoul",
+        # "New orleans",
+        # "Chicago",
+        # "Edmonton",
+        # "Seattle",
+        # "Rio de janeiro",
+        # "Ottawa",
+        ,  # c_manager.get_city_list(),
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
         "user_pic": current_user.pic,
     }
+    print(original_list)
+    print(len(original_list))
+
     data = json.dumps(DATA)
     return flask.render_template(
         "index.html",

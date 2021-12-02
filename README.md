@@ -1,3 +1,10 @@
+## Heroku Deployments
+We had 2 sprints for our project the first heroku link could be found here
+
+Sprint 1 = http://cityspit.herokuapp.com/
+
+Sprint 2 = http://cityspit2.herokuapp.com/
+
 # CitySpit
 
 Have you ever been on dating apps, like tinder and bumble? Do you want to go on a much needed vacation, but don't 
@@ -124,9 +131,3 @@ API Used:
     </li>
 </ol>
 
-## Heroku
-We had 2 sprints for our project the first heroku link could be found here
-
-Sprint 1 = http://cityspit.herokuapp.com/
-
-Sprint 2 = http://cityspit2.herokuapp.com/

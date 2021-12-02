@@ -109,17 +109,18 @@ def index():
 def save_city():
 
     city = flask.request.json.get("city")
-    db_user_check = CityDB.query.filter_by(user_id=current_user.user_id, city_name=city).all()
+    db_check = CityDB.query.filter_by(
+        user_id=current_user.user_id, city_name=city
+    ).all()
 
-    # if result is empty then we know the user doesnt have this city in their db
-    if not db_user_check:
-
+    # checks if the city is not in the DB and that its the current user that its checking
+    if not db_check:
         liked_city = CityDB(user_id=current_user.user_id, city_name=city)
         db.session.add(liked_city)
         db.session.commit()
         return flask.jsonify({"Saved_City": "True"})
 
-    return flask.jsonify({"Saved_City": "False, city has already been saved"})
+    return flask.jsonify({"Saved_City": "False"})
 
 
 # gets info about the requested city and sends back the info

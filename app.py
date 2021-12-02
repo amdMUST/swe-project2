@@ -45,6 +45,7 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 db = SQLAlchemy(app)
 from py_files.models import *
 
+
 db.create_all()
 
 # initialize items needed for flask-login
@@ -377,6 +378,18 @@ def removeLikedCities(original_list):
         filtered_list.remove(city.city_name)
         
     return filtered_list
+
+# Function for removing any cities from the list if the user has liked them already
+def removeLikedCities(original_list):
+    filtered_list = original_list
+
+    db_list = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    # loop through original list and add cities to filtered list that arent in there
+    for city in db_list:
+        filtered_list.remove(city.city_name)
+
+    return filtered_list
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))

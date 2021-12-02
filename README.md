@@ -1,9 +1,10 @@
 # CitySpit
 
-Have you ever been on dating apps, like tinder and bumble? Have you ever wanted to go on vacation, but don't know where to go? 
-Well, look no further! Introducing CitySpit, a web application where you can like or dislike location based on cool things to do there 
-interesting news articles, or even if the weather is just not for you. You as a user have your very own account where you can like a city
-and it well be saved to your profile so you can take a look at you city at another time with real live updates!
+Have you ever been on dating apps, like tinder and bumble? Do you want to go on a much needed vacation, but don't 
+know where to go? Well, look no further! Introducing CitySpit, a web application where you can like or dislike location 
+based on cool things to do there, interesting news articles, or even if the weather is just not for you. You as a user 
+have your very own account where you can like a city and it will be saved to your profile so you can take a look at 
+your city at another time with real live updates!
 
 ## Contributors
 Ahmed Mustafa<br>

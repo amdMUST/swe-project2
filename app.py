@@ -89,14 +89,26 @@ def main():
 @login_required
 def index():
 
+    city_list = c_manager.get_city_list()
+    filtered_list = removeLikedCities(city_list)
+
     DATA = {
-        "city_list": c_manager.get_city_list(),
+        "city_list": filtered_list,
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
         "user_pic": current_user.pic,
     }
     data = json.dumps(DATA)
+
+    # if no cities left, send them to that specific no city left page
+    if len(filtered_list) == 0:
+        return flask.render_template(
+            "empty.html",
+            user_name=current_user.name,
+            user_pic=current_user.pic,
+        )
+
     return flask.render_template(
         "index.html",
         data=data,
@@ -355,6 +367,17 @@ def isUserInDB(userID):
 
     return False
 
+# Function for removing any cities from the list if the user has liked them already
+def removeLikedCities(original_list):
+    filtered_list = []
+
+    db_list = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    print(db_list)
+
+
+    # loop through original list and add cities to filtered list that arent in ther
+
+    return filtered_list
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=int(os.getenv("PORT", 8080)))

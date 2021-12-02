@@ -1,4 +1,3 @@
-from flask.helpers import url_for
 import requests, os, json, flask
 from dotenv import load_dotenv, find_dotenv
 from flask_sqlalchemy import SQLAlchemy
@@ -46,6 +45,7 @@ client = WebApplicationClient(GOOGLE_CLIENT_ID)
 db = SQLAlchemy(app)
 from py_files.models import *
 
+
 db.create_all()
 
 # initialize items needed for flask-login
@@ -90,38 +90,26 @@ def main():
 @login_required
 def index():
 
-    original_list = c_manager.get_city_list()
-    print(original_list)
-    mutated_list = []
-    print(len(original_list))
-    for i in original_list:
-        db_liked_city_check = CityDB.query.filter_by(
-            user_id=current_user.user_id, city_name=i
-        )
-        if db_liked_city_check:
-            original_list.remove(i)
+    city_list = c_manager.get_city_list()
+    filtered_list = removeLikedCities(city_list)
 
     DATA = {
-        "city_list": original_list
-        # "Lyon",
-        # "Portland",
-        # "Seoul",
-        # "New orleans",
-        # "Chicago",
-        # "Edmonton",
-        # "Seattle",
-        # "Rio de janeiro",
-        # "Ottawa",
-        ,  # c_manager.get_city_list(),
+        "city_list": filtered_list,
         "user_id": current_user.user_id,
         "user_email": current_user.email,
         "user_name": current_user.name,
         "user_pic": current_user.pic,
     }
-    print(original_list)
-    print(len(original_list))
-
     data = json.dumps(DATA)
+
+    # if no cities left, send them to that specific no city left page
+    if len(filtered_list) == 0:
+        return flask.render_template(
+            "empty.html",
+            user_name=current_user.name,
+            user_pic=current_user.pic,
+        )
+
     return flask.render_template(
         "index.html",
         data=data,
@@ -129,7 +117,6 @@ def index():
 
 
 # react fetch requests
-# saves city to users db and sends back an OK response if nothing goes wrong
 @app.route("/save_city", methods=["POST"])
 @login_required
 def save_city():
@@ -144,9 +131,9 @@ def save_city():
         liked_city = CityDB(user_id=current_user.user_id, city_name=city)
         db.session.add(liked_city)
         db.session.commit()
-        return flask.jsonify({"Saved_City": "yes"})
+        return flask.jsonify({"Saved_City": "True"})
 
-    return flask.jsonify({"Saved_City": "No, city has already been saved"})
+    return flask.jsonify({"Saved_City": "False"})
 
 
 # gets info about the requested city and sends back the info
@@ -265,7 +252,7 @@ def logout():
 cityList = []
 listLength = len(cityList)
 
-
+# profile page
 @app.route("/profile", methods=["POST", "GET"])
 @login_required
 def profile():
@@ -291,6 +278,7 @@ def profile():
     )
 
 
+# remove page
 @app.route("/remove", methods=["POST", "GET"])
 @login_required
 def remove():
@@ -301,48 +289,57 @@ def remove():
         return flask.redirect("/profile")
 
 
-@app.route("/Static_City", methods=["POST", "GET"])
+# city page
+@app.route("/Static_City", methods=["POST"])
 @login_required
 def Static_City():
+
     city = flask.request.form["cityPost"]
+    # if no city, make it atlanta by default
+    if not city:
+        city = "Atlanta"
+
     i_client.get_cityimg_url(city)
     w_client.getWeather(city)
     n_client.get_article_data(city)
     OpenMap.getInfo(city)
-    opentrip = OpenMap.names
-    opentripimages = OpenMap.img
     city_imageinfo = i_client.getCityImg()
     weather_info = w_client.getMap()
     article_info = n_client.getArticle()
+
     city_image = city_imageinfo[0][1]
+
+    opentrip = OpenMap.names
+    opentripimages = OpenMap.img
+
     article_info_headlines = article_info[0][1]
-    article_info_abstract = article_info[1][1]
-    article_info_img_url = article_info[2][1]
+    article_info_web_url = article_info[2][1]
+    article_info_img_url = article_info[3][1]
+
     weather_main = weather_info[0][1]
     weather_desc = weather_info[1][1]
     temp = weather_info[2][1]
-    feels_like = [3][0]
-    temp_min = [4][0]
-    temp_max = [5][0]
+    feels_like = weather_info[3][1]
+    temp_min = weather_info[4][1]
+    temp_max = weather_info[5][1]
     pressure = weather_info[6][1]
     humidity = weather_info[7][1]
     clouds = weather_info[8][1]
     wind = weather_info[9][1]
-    user_id = current_user.user_id
+
     user_email = current_user.email
     user_name = current_user.name
     user_pic = current_user.pic
 
-    print(city_image)
     return flask.render_template(
-        "Static_City.html",
+        "city.html",
         opentrip=opentrip,
         opentripimages=opentripimages,
         city=city,
         city_image=city_image,
         weather_info=weather_info,
         article_info_headlines=article_info_headlines,
-        article_info_abstract=article_info_abstract,
+        article_info_web_url=article_info_web_url,
         article_info_img_url=article_info_img_url,
         weather_main=weather_main,
         weather_desc=weather_desc,
@@ -354,7 +351,6 @@ def Static_City():
         humidity=humidity,
         clouds=clouds,
         wind=wind,
-        user_id=user_id,
         user_email=user_email,
         user_name=user_name,
         user_pic=user_pic,
@@ -371,6 +367,18 @@ def isUserInDB(userID):
         return True
 
     return False
+
+
+# Function for removing any cities from the list if the user has liked them already
+def removeLikedCities(original_list):
+    filtered_list = original_list
+
+    db_list = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    # loop through original list and add cities to filtered list that arent in there
+    for city in db_list:
+        filtered_list.remove(city.city_name)
+
+    return filtered_list
 
 
 if __name__ == "__main__":

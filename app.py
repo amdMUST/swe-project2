@@ -250,7 +250,6 @@ def profile():
     cityList.clear()
     for city in cityListDB:
         try:
-            print([city.city_name])
             cityList.extend([city.city_name])
         except IndexError:
             pass

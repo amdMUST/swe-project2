@@ -369,14 +369,13 @@ def isUserInDB(userID):
 
 # Function for removing any cities from the list if the user has liked them already
 def removeLikedCities(original_list):
-    filtered_list = []
+    filtered_list = original_list
 
     db_list = CityDB.query.filter_by(user_id=current_user.user_id).all()
-    print(db_list)
-
-
-    # loop through original list and add cities to filtered list that arent in ther
-
+    # loop through original list and add cities to filtered list that arent in there
+    for city in db_list:
+        filtered_list.remove(city.city_name)
+        
     return filtered_list
 
 if __name__ == "__main__":

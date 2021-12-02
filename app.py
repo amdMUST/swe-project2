@@ -110,11 +110,12 @@ def index():
 def save_city():
 
     city = flask.request.json.get("city")
-    db_city_check = CityDB.query.filter_by(city_name=city).all()
-    db_user_check = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    db_check = CityDB.query.filter_by(
+        user_id=current_user.user_id, city_name=city
+    ).all()
 
     # checks if the city is not in the DB and that its the current user that its checking
-    if not db_city_check and db_user_check:
+    if not db_check:
         liked_city = CityDB(user_id=current_user.user_id, city_name=city)
         db.session.add(liked_city)
         db.session.commit()

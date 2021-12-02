@@ -1,0 +1,315 @@
+<html>
+
+<head>
+    <style>
+        /* General styling */
+        body {
+            font-family: "Ubuntu", sans-serif;
+            color: black;
+            background-color: #e8e9f3;
+            font-size: 25px;
+            text-align: center;
+
+            background: linear-gradient(19deg, #d9a7c7, #fffcdc);
+            background-size: 600% 100%;
+            animation: gradient 10s linear infinite;
+            animation-direction: alternate-reverse;
+        }
+
+        h2 {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: none;
+            transition-duration: 0.4s;
+            color: black;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            transition: 0.4s ease-in-out;
+            color: #bd0f43;
+        }
+
+        #title {
+            display: inline-block;
+            padding-bottom: 2%;
+        }
+
+        .page-container {
+            padding: 0 5%;
+        }
+
+        /* Panel styling */
+        .panels-container {
+            display: grid;
+        }
+
+        #title,
+        #panel-title,
+        #panel-subheading {
+            font-family: "Sansita Swashed", cursive;
+            text-decoration: none;
+            margin: 0 auto;
+        }
+
+        #panel-title {
+            font-size: 30px;
+            padding: 2%;
+        }
+
+        #panel {
+            margin: 0 auto;
+            padding: 1% 0 2% 0;
+            height: fit-content;
+            max-width: 80%;
+            background: rgba(255, 255, 255, 0.375);
+            box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+
+        #profile-pic {
+            max-width: 75px;
+            border-radius: 10px;
+            margin: 1%;
+        }
+
+        /* Table Styling */
+        .profile-table {
+            margin: auto;
+        }
+
+        .profile-form {
+            padding: 3%;
+        }
+
+        .table-button {
+            border: none;
+            border-radius: 10px;
+            background: none;
+            color: black;
+
+            box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5.5px);
+            -webkit-backdrop-filter: blur(5.5px);
+
+            font-family: "Dela Gothic One", cursive;
+            transition-duration: 0.4s;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            padding: 2% 5%;
+            width: 100%;
+        }
+
+        .table-button:hover {
+            background-color: #bd0f43;
+            cursor: pointer;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        #subheading {
+            border-bottom: 3px solid #000;
+            padding-bottom: 2%;
+            font-size: 25px;
+        }
+
+        #subheading-remove {
+            border-bottom: 3px solid #000;
+            font-size: 25px;
+            font-weight: 600;
+        }
+
+        .formfield {
+            width: 30%;
+            padding: 2%;
+            border-radius: 10px;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            border-style: none;
+        }
+
+        /* UserInfo Styling */
+        .userinfo-panel {
+            display: block;
+            margin: 2%;
+            padding: 3%;
+            height: fit-content;
+
+            grid-area: userinfo-panel;
+            box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+        }
+
+        #profile-pic {
+            max-width: 75px;
+            border-radius: 10px;
+            margin: 1%;
+        }
+
+        /* Button Styling */
+        .button {
+            font-family: "Dela Gothic One", cursive;
+            transition-duration: 0.4s;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            padding: 2% 3%;
+
+            background: rgba(0, 0, 0, 0.88);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .button:hover {
+            background-color: #bd0f43;
+            cursor: pointer;
+            color: white;
+        }
+
+        #button-link {
+            color: white;
+            text-decoration: none;
+            transition-duration: 0.4s;
+            margin: 0 auto;
+        }
+
+        button {
+            cursor: pointer;
+            display: contents;
+        }
+
+        /* Gradient Styling */
+        @keyframes gradient {
+            0% {
+                background-position: 0%;
+            }
+
+            25% {
+                background-position: 25%;
+            }
+
+            50% {
+                background-position: 50%;
+            }
+
+            75% {
+                background-position: 75%;
+            }
+
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        /* Responsive styling */
+        @media screen and (max-width: 950px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: max-content;
+                padding: 3% 1%;
+                grid-template-areas:
+                    "citypic-panel"
+                    "like-panel-mobile"
+                    "info-panels"
+                    "interaction-panels";
+            }
+
+            .interaction-panels {
+                grid-template-rows: none;
+                grid-template-areas:
+                    "weather-panel"
+                    "userinfo-panel";
+            }
+
+            .like-panel {
+                display: none;
+            }
+
+            .like-panel-mobile {
+                display: block;
+            }
+
+            #panel {
+                max-width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .page-container {
+                padding: 0 6%;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            #citypic {
+                max-width: 66%;
+            }
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Sansita+Swashed:wght@500&display=swap"
+        rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>CitySpit</title>
+</head>
+
+<body>
+    <a href="/">
+        <h1 id="title">CitySpit</h1>
+    </a>
+
+    <div class="page-container">
+        <div class="panels-container">
+            <div id="panel">
+                <div id="panel-title">
+                    <h2>More cities soon!</h2>
+                </div>
+
+                <br>
+
+                <div class="userinfo-panel">
+                    <div id="user-info" data-testid="user-info">
+                        <br></br>
+                        <img id="profile-pic" src="{{user_pic}}" alt="profile pic" />
+
+                        <p>Sorry {{user_name}}, you have looked through all our cities!</p>
+                        <p>Thanks for being a big fan of our site!</p>
+
+                        <div class="button">
+                            <a id="button-link" href="profile">
+                                View your Likes!
+                            </a>
+                        </div>
+                    </div>
+                    <br></br>
+
+                    <div class="button">
+                        <a id="button-link" href="logout">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

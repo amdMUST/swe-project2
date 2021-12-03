@@ -386,7 +386,8 @@ def removeLikedCities(original_list):
     db_list = CityDB.query.filter_by(user_id=current_user.user_id).all()
     # loop through original list and add cities to filtered list that arent in there
     for city in db_list:
-        filtered_list.remove(city.city_name)
+        if city in filtered_list:
+            filtered_list.remove(city.city_name)
 
     return filtered_list
 

@@ -277,7 +277,6 @@ def profile():
         listLength=listLength,
     )
 
-
 # remove page
 @app.route("/remove", methods=["POST", "GET"])
 @login_required
@@ -287,7 +286,6 @@ def remove():
         CityDB.query.filter_by(user_id=current_user.user_id, city_name=city).delete()
         db.session.commit()
         return flask.redirect("/profile")
-
 
 # city page
 @app.route("/Static_City", methods=["POST"])
@@ -311,7 +309,7 @@ def Static_City():
 
     opentrip = OpenMap.names
     opentripimages = OpenMap.img
-
+    
     article_info_headlines = article_info[0][1]
     article_info_web_url = article_info[2][1]
     article_info_img_url = article_info[3][1]
@@ -341,6 +339,7 @@ def Static_City():
         article_info_headlines=article_info_headlines,
         article_info_web_url=article_info_web_url,
         article_info_img_url=article_info_img_url,
+
         weather_main=weather_main,
         weather_desc=weather_desc,
         temp=temp,
@@ -351,6 +350,7 @@ def Static_City():
         humidity=humidity,
         clouds=clouds,
         wind=wind,
+        
         user_email=user_email,
         user_name=user_name,
         user_pic=user_pic,
@@ -368,6 +368,16 @@ def isUserInDB(userID):
 
     return False
 
+# Function for removing any cities from the list if the user has liked them already
+def removeLikedCities(original_list):
+    filtered_list = original_list
+
+    db_list = CityDB.query.filter_by(user_id=current_user.user_id).all()
+    # loop through original list and add cities to filtered list that arent in there
+    for city in db_list:
+        filtered_list.remove(city.city_name)
+        
+    return filtered_list
 
 # Function for removing any cities from the list if the user has liked them already
 def removeLikedCities(original_list):

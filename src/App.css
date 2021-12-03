@@ -11,13 +11,7 @@ body {
 	animation: gradient 10s linear infinite;
 	animation-direction: alternate-reverse;
 }
-#item {
-	display: inline-block;
-	width: 100px;
-	height: 100px;
-	font-size: x-small;
-	
-  }
+
 a {
 	text-decoration: none;
 	transition-duration: 0.4s;
@@ -39,7 +33,7 @@ a:hover {
 	padding-bottom: 2%;
 }
 .page-container {
-	padding: 0 15%;
+	padding: 0 5%;
 }
 
 /* Panel styling */
@@ -75,7 +69,6 @@ a:hover {
 	display: grid;
 	margin: 0 1%;
 	grid-template-columns: 1.1fr 0.9fr;
-	grid-template-rows: 1fr;
 	gap: 0px 0px;
 	grid-template-areas:
 		"citypic-panel  interaction-panels"
@@ -103,7 +96,7 @@ a:hover {
 	grid-area: interaction-panels;
 }
 
-/* City Profile pic Styling*/
+/* City Profile pic Styling */
 .citypic-panel {
 	grid-area: citypic-panel;
 }
@@ -121,6 +114,46 @@ a:hover {
 }
 
 /* Article Styling */
+.article-panel {
+	display: block;
+	margin: 2%;
+	padding: 1%;
+	max-height: 300px;
+	overflow: clip;
+	overflow-y: auto;
+	grid-area: article-panel;
+
+	padding: 5px;
+	margin: 5px;
+	border-radius: 10px;
+
+	box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(5.5px);
+	-webkit-backdrop-filter: blur(5.5px);
+}
+.art-list-item-contents {
+	width: 100%;
+}
+.art-list-pic {
+	float: left;
+	width: 100%;
+	flex-shrink: 0;
+}
+.art-list-name {
+	float: right;
+	width: 100%;
+	margin: auto;
+}
+#art-name {
+	font-size: 15px;
+	margin: 0;
+	vertical-align: middle;
+}
+#art-pic {
+	max-width: 85px;
+	border-radius: 10px;
+	vertical-align: middle;
+}
 #article-title {
 	font-family: "Sansita Swashed", cursive;
 	font-size: 20px;
@@ -176,14 +209,58 @@ a:hover {
 	display: block;
 	margin: 2%;
 	padding: 1%;
-	height: fit-content;
+	max-height: 300px;
+	overflow: clip;
+	overflow-y: auto;
 	grid-area: tripmap-panel;
 
 	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 	backdrop-filter: blur(10.5px);
 	-webkit-backdrop-filter: blur(10.5px);
 	border-radius: 10px;
-	border: 5px solid rgba(0, 255, 34, 0.18);
+}
+#location-title {
+	font-family: "Sansita Swashed", cursive;
+	font-size: 20px;
+	margin: 5px;
+}
+#location-list {
+	display: grid;
+}
+.loc-list {
+	list-style: none;
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+.loc-list-item {
+	display: flex;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 10px;
+	border: 2px solid rgba(0, 0, 0, 1);
+
+	box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(5.5px);
+	-webkit-backdrop-filter: blur(5.5px);
+}
+.loc-list-pic {
+	flex-shrink: 0;
+}
+.loc-list-name {
+	margin: auto;
+}
+#loc-name {
+	font-size: 18px;
+	margin: 0;
+	float: left;
+	vertical-align: middle;
+}
+#loc-pic {
+	max-width: 50px;
+	border-radius: 10px;
+	float: right;
+	vertical-align: middle;
 }
 
 /* Weather Styling */

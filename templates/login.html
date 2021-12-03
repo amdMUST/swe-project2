@@ -2,7 +2,6 @@
 
 <head>
     <style>
-        /* General styling */
         body {
             font-family: "Ubuntu", sans-serif;
             color: black;
@@ -42,16 +41,22 @@
         }
 
         .signup-block {
-            font-family: "Dela Gothic One", cursive;
-            margin: 5% auto 0 auto;
+            animation-name: floating;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+
+            margin: 2% auto 0 auto;
             padding: 1% 0 2% 0;
             max-width: 66%;
             align-items: center;
+            border-radius: 10px;
 
             background: rgba(255, 255, 255, 0.375);
             box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.125);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         .signup-block-content {
@@ -60,10 +65,11 @@
 
         #signup-title {
             margin-top: 0;
-            font-size: 45px;
+            font-size: 25px;
         }
 
         .signup-flashes {
+            font-family: "Dela Gothic One", cursive;
             color: red;
             list-style: none;
             padding: 0;
@@ -85,6 +91,35 @@
         ::placeholder {
             font-size: 15px;
             vertical-align: baseline;
+        }
+
+        #app-info {
+            font-size: 15px;
+        }
+
+        .subheading {
+            font-family: "Dela Gothic One", cursive;
+            font-weight: 400;
+            margin: 0;
+        }
+        .info {
+            font-weight: 700;
+            padding: 0 5%;
+            margin: 1%;
+        }
+
+        .giphy {
+            margin: 0 auto;
+            max-width: 50%;
+            position: relative;
+        }
+        .giphy-embed {
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.375);
+            box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.125);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
         }
 
         /* Button Styling */
@@ -139,6 +174,39 @@
                 background-position: 100%;
             }
         }
+
+        /* animation found on https://www.geeksforgeeks.org/css-floating-animation/ */
+
+        @keyframes floating {
+            0% {
+                transform: translate(0, 0px);
+            }
+            50% {
+                transform: translate(0, 15px);
+            }
+            100% {
+                transform: translate(0, -0px);
+            }
+        }
+
+        /* Responsive styling */
+        @media screen and (max-width: 700px) {
+            .giphy-embed {
+                max-width: 70%;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .giphy-embed {
+                max-width: 60%;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .giphy-embed {
+                max-width: 50%;
+            }
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,53 +219,51 @@
 
 <body>
     <a href="/">
-        <h1 id="title">CitySpit</h1>
-    </a>
+		<h1 id="title">CitySpit</h1>
+	</a>
 
-    <div class="signup-block">
-        <p id="signup-title">LOGIN</p>
+	<div class="signup-block">
+		<div class="signup-block-content">
+			<div id="app-info">
 
-        <div class="signup-block-content">
+				<div>
 
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul class="signup-flashes">
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            {% endwith %}
+					<div class="giphy">
+						<img src="https://media4.giphy.com/media/3ohze1JslWBrRxa3Dy/giphy.gif?cid=790b7611e45cc7eacb22fb82a4badd1303e2092f60099a44&rid=giphy.gif&ct=g" frameBorder="0" class="giphy-embed"></img>
+					</div>
 
-            <div class="button">
-                <a id="button-link" href="/login_post">Login</a>
-            </div>
-        </div>
-    </div>
+					<h4 class="subheading">About</h4>
+					<p class="info">
+						CitySpit is an app which provides real time information about a random citiy in a fun dating-app way.
+						Information including attractions to visit, news updates, and current weather stats.
+						You will be able to see many cities and decide if you like or dislike the city based on your priorities.
+						You will be able to visit the city again at any time!
+					</p>
+				</div>
 
-    <div>
-        <h2>Functionality</h2>
-        <p>Our app will provide brief real time information about the random cities.
-            Information will include attractions to visit, news updates, and weather
-            information about the cities. User will be able to save the cities based
-            on interests. Later by accessing the liked list users will be ready to
-            experience new adventures and have easy planning to favorite cities.</p>
-    </div>
+				<div>
+					<h4 class="subheading">Purpose</h4>
+					<p class="info">Our app allows users to find new experiences randomly, which open doors
+						to new adventures and new activities. Our goal is to deliver users an
+						informative platform to save time and plan their future travel easily.</p>
+				</div>
 
-    <div>
-        <h2>Purpose</h2>
-        <p>Our app allows users to find new experiences randomly, which open doors
-            to new adventures and new activities. Our goal is to deliver users
-            informative platform to save time and plan their future travel easily.</p>
-    </div>
+				<div>
+					<h4 class="subheading">Creators</h4>
+					<p class="info">Ahmed Mustafa @amdMUST</p>
+					<p class="info">Joan Galicia @Jgalicia2</p>
+					<p class="info">Michael Dinh @mdinh5</p>
+					<p class="info">Mehmet Filik @mfilik</p>
+				</div>
 
-    <div>
-        <h2>Creators</h2>
-        <p>Ahmed Mustafa @amdMUST</p>
-        <p>Joan Galicia @Jgalicia2</p>
-        <p>Michael Dinh @mdinh5</p>
-        <p>Mehmet Filik @mfilik</p>
-    </div>
+			</div>
+
+			<br>
+			<div class="button">
+				<a id="button-link" href="/login_post">Login with Google</a>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

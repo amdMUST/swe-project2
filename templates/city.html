@@ -1,0 +1,608 @@
+<html>
+
+<head>
+    <style>
+        /* General styling */
+        body {
+            font-family: "Ubuntu", sans-serif;
+            color: black;
+            background-color: #e8e9f3;
+            font-size: 25px;
+            text-align: center;
+
+            background: linear-gradient(19deg, #d9a7c7, #fffcdc);
+            background-size: 600% 100%;
+            animation: gradient 10s linear infinite;
+            animation-direction: alternate-reverse;
+        }
+
+        a {
+            text-decoration: none;
+            transition-duration: 0.4s;
+            color: black;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            transition: 0.4s ease-in-out;
+            color: #bd0f43;
+        }
+
+        #title {
+            display: inline-block;
+            padding-bottom: 2%;
+        }
+        .page-container {
+            padding: 0 5%;
+        }
+
+        /* Panel styling */
+        .panels-container {
+            display: grid;
+        }
+
+        #title,
+        #panel-title,
+        #panel-subheading {
+            font-family: "Sansita Swashed", cursive;
+            text-decoration: none;
+            margin: 0 auto;
+        }
+
+        #panel-title {
+            font-size: 55px;
+            padding-bottom: 2%;
+        }
+
+        #panel {
+            margin: 0 auto;
+            padding: 1% 0 2% 0;
+            height: fit-content;
+            max-width: 80%;
+            background: rgba(255, 255, 255, 0.375);
+            box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+
+        .grid-container {
+            display: grid;
+            margin: 0 1%;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 0px 0px;
+            grid-template-areas:
+                "citypic-panel  interaction-panels"
+                "info-panels interaction-panels";
+        }
+
+        .info-panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+            gap: 0px 0px;
+            grid-template-areas: "article-panel tripmap-panel";
+            grid-area: info-panels;
+        }
+
+        .interaction-panels {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 0.1fr 0.2fr 0.5fr;
+            gap: 0px 0px;
+            grid-template-areas:
+                "like-panel"
+                "weather-panel"
+                "userinfo-panel";
+            grid-area: interaction-panels;
+        }
+
+        /* City Profile pic Styling */
+        .citypic-panel {
+            grid-area: citypic-panel;
+        }
+        #citypic {
+            display: block;
+            max-width: 99%;
+            max-height: 420px;
+            margin: 0 auto;
+
+            box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+        }
+
+        /* Article Styling */
+        .article-panel {
+            display: block;
+            margin: 2%;
+            padding: 1%;
+            max-height: 300px;
+            overflow: clip;
+            overflow-y: auto;
+            grid-area: article-panel;
+
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 5px solid rgba(0, 255, 255, 0.18);
+        }
+        #article-title {
+            font-family: "Sansita Swashed", cursive;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #article-list {
+            display: grid;
+        }
+        .art-list {
+            list-style: none;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+        .art-list-item {
+            display: grid;
+
+            padding: 5px;
+            margin: 5px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 0, 0, 1);
+
+            box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5.5px);
+            -webkit-backdrop-filter: blur(5.5px);
+        }
+        .art-list-item-contents {
+            width: 100%;
+        }
+        .art-list-pic {
+            float: left;
+            width: 100%;
+            flex-shrink: 0;
+        }
+        .art-list-name {
+            float: right;
+            width: 100%;
+            margin: auto;
+        }
+        #art-name {
+            font-size: 15px;
+            margin: 0;
+            vertical-align: middle;
+        }
+        #art-pic {
+            max-width: 140px;
+            border-radius: 10px;
+            vertical-align: middle;
+        }
+
+        /* TripMap Styling */
+        .tripmap-panel {
+            display: block;
+            margin: 2%;
+            padding: 1%;
+            max-height: 300px;
+            overflow: clip;
+            overflow-y: auto;
+            grid-area: tripmap-panel;
+
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 5px solid rgba(0, 255, 34, 0.18);
+        }
+        #location-title {
+            font-family: "Sansita Swashed", cursive;
+            font-size: 20px;
+            margin: 5px;
+        }
+        #location-list {
+            display: grid;
+        }
+        .loc-list {
+            list-style: none;
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+        }
+        .loc-list-item {
+            display: flex;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 10px;
+            border: 2px solid rgba(0, 0, 0, 1);
+
+            box-shadow: 0 4px 8px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(5.5px);
+            -webkit-backdrop-filter: blur(5.5px);
+        }
+        .loc-list-pic {
+            flex-shrink: 0;
+        }
+        .loc-list-name {
+            margin: auto;
+        }
+        #loc-name {
+            font-size: 18px;
+            margin: 0;
+            float: left;
+            vertical-align: middle;
+        }
+        #loc-pic {
+            max-width: 50px;
+            border-radius: 10px;
+            float: right;
+            vertical-align: middle;
+        }
+
+        /* Weather Styling */
+        .weather-panel {
+            display: block;
+            margin: 2%;
+            padding: 3%;
+            height: fit-content;
+            grid-area: weather-panel;
+
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        #weather-left {
+            margin-left: 3px;
+            text-align: left;
+            font-size: 16px;
+            float: left;
+        }
+        #weather-icon {
+            font-size: 100px;
+            margin: 3%;
+        }
+        #temp {
+            margin: 0;
+            font-size: 40px;
+        }
+        #weather-highlow p {
+            margin: 0;
+            display: inline;
+            font-size: 16px;
+        }
+        #weather-feels-like {
+            margin: 0;
+            font-size: 16px;
+        }
+        #weather-desc {
+            margin: 0;
+            font-size: 19px;
+        }
+        #weather-clouds {
+            margin: 0;
+            font-size: 18px;
+        }
+        #weather-humidity {
+            margin: 0;
+            font-size: 18px;
+        }
+        #cold {
+            background: rgba(109, 169, 244, 0.65);
+        }
+        #cool {
+            background: rgba(109, 244, 227, 0.65);
+        }
+        #average {
+            background: rgba(109, 244, 123, 0.65);
+        }
+        #warm {
+            background: rgba(255, 103, 11, 0.65);
+        }
+        #hot {
+            background: rgba(255, 0, 0, 0.65);
+        }
+
+        /* Like/Dislike Styling */
+        button {
+            cursor: pointer;
+            display: contents;
+        }
+
+        /* UserInfo Styling */
+        .userinfo-panel {
+            display: block;
+            margin: 2%;
+            padding: 3%;
+            height: fit-content;
+
+            grid-area: userinfo-panel;
+            box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+        }
+        #profile-pic {
+            max-width: 75px;
+            border-radius: 10px;
+            margin: 1%;
+        }
+
+        /* Button Styling */
+        .button {
+            font-family: "Dela Gothic One", cursive;
+            transition-duration: 0.4s;
+            text-align: center;
+            display: inline-block;
+            font-size: 18px;
+            padding: 3% 5%;
+
+            background: rgba(0, 0, 0, 0.88);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        .button:hover {
+            background-color: #bd0f43;
+            cursor: pointer;
+            color: white;
+        }
+        #button-link {
+            color: white;
+            text-decoration: none;
+            transition-duration: 0.4s;
+            margin: 0 auto;
+        }
+
+        /* Gradient Styling */
+        @keyframes gradient {
+            0% {
+                background-position: 0%;
+            }
+            25% {
+                background-position: 25%;
+            }
+            50% {
+                background-position: 50%;
+            }
+            75% {
+                background-position: 75%;
+            }
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        /* Carousel Loading div */
+        .grid-container-loading {
+            display: grid;
+            margin: 0 1%;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            gap: 0px 0px;
+        }
+
+        .loading-panel {
+            display: block;
+            margin: auto;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            grid-area: loading-panel;
+
+            box-shadow: 0 1px 6px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(10.5px);
+            -webkit-backdrop-filter: blur(10.5px);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.18);
+            z-index: 10;
+        }
+
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -30px 0 0 -50px;
+            border-radius: 10px;
+            z-index: 10;
+        }
+        .loading:before,
+        .loading:after {
+            content: "";
+            display: block;
+            background: #fffcdc;
+            text-align: center;
+            width: 115px;
+            height: 80px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 35px;
+            animation: loading 2s linear 0s infinite;
+        }
+        .loading:after {
+            background: #d9a7c7;
+            animation: loading 1.5s linear 1.5s infinite;
+        }
+        @keyframes loading {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive styling */
+        @media screen and (max-width: 950px) {
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: max-content;
+                padding: 3% 1%;
+                grid-template-areas:
+                    "citypic-panel"
+                    "like-panel-mobile"
+                    "info-panels"
+                    "interaction-panels";
+            }
+            .interaction-panels {
+                grid-template-rows: none;
+                grid-template-areas:
+                    "weather-panel"
+                    "userinfo-panel";
+            }
+            .like-panel {
+                display: none;
+            }
+            .like-panel-mobile {
+                display: block;
+            }
+            #panel {
+                max-width: 100%;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .page-container {
+                padding: 0 6%;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            #citypic {
+                max-width: 66%;
+            }
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Sansita+Swashed:wght@500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>CitySpit</title>
+</head>
+
+<div>
+
+    <a href="/">
+        <h1 id="title">CitySpit</h1>
+    </a>
+
+    <div class="page-container">
+        <div class="panels-container">
+            <div id="panel">
+				<p id="panel-title" data-testid="CityTitle">
+					{{city}}
+				</p>
+
+				<div class="grid-container">
+
+					<div class="citypic-panel">
+						<img id="citypic" src={{city_image}} alt="city profile pic" />
+					</div>
+
+					<div class="info-panels">
+						<div class="article-panel">
+							<h5 id="article-title">Whats going on here</h5>
+                            <div id="article-list">
+                                <ul class="art-list">
+
+                                    {% for i in range(article_info_headlines|length) %}
+                                        <li key={{i}} class="art-list-item">
+                                            <a href={{article_info_web_url[i]}} target="_blank" rel="noreferrer">
+                                                <div class="art-list-pic">
+                                                    <img alt="thumbnail" id="art-pic" src={{article_info_img_url[i]}} />
+                                                </div>
+                                                <div class="art-list-name">
+                                                    <p id="art-name" data-testid="article_data1">
+                                                        {{article_info_headlines[i]}}
+                                                    </p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+						</div>
+
+						<div class="tripmap-panel">
+							<h5 id="location-title">Cool Spots to visit</h5>
+                            <div id="location-list">
+                                <ul class="loc-list">
+
+                                    {% for i in range(opentrip|length) %}
+
+                                        <li key={{opentrip[i]}} class="loc-list-item">
+                                            <div class="loc-list-pic">
+                                                <img
+                                                    data-testid="CityImages"
+                                                    alt="location"
+                                                    id="loc-pic"
+                                                    src={{opentripimages[i]}}
+                                                />
+                                            </div>
+                                            <div class="loc-list-name">
+                                                <p id="loc-name" data-testid="CityLocation">
+                                                    {{opentrip[i]}}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+						</div>
+					</div>
+
+					<div class="interaction-panels">
+						<div class="weather-panel" id="average">
+							<div id="weather-left">
+                                <p id="temp">{{temp}} °F</p>
+                                <div id="weather-highlow">
+                                    <p>{{temp_max}} / </p>
+                                    <p>{{temp_min}}</p>
+                                </div>
+                                <p id="weather-feels-like">
+                                    Currently feels like {{feels_like}} °F
+                                </p>
+                                <p id="weather-desc">{{weather_desc}}</p>
+                                <p id="weather-clouds">{{clouds}}% Cloudy</p>
+                                <p id="weather-humidity">{{humidity}}% Humidity</p>
+                            </div>
+						</div>
+
+						<div class="userinfo-panel">
+
+                            <img id="profile-pic" src={{user_pic}} alt="profile pic" />
+
+                            <p>What do you think about {{city}} {{user_name}}?</p>
+
+							<div class="button">
+								<a id="button-link" href="profile">
+									Back
+								</a>
+							</div>
+							<br></br>
+
+							<div class="button">
+								<a id="button-link" href="logout">
+									Logout
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+</html>
